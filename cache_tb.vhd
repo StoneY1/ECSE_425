@@ -28,7 +28,9 @@ port(
     m_readdata : in std_logic_vector (7 downto 0);
     m_write : out std_logic;
     m_writedata : out std_logic_vector (7 downto 0);
-    m_waitrequest : in std_logic
+    m_waitrequest : in std_logic;
+
+    stateFlag : out integer range 0 to 8
 );
 end component;
 
@@ -67,6 +69,7 @@ signal m_readdata : std_logic_vector (7 downto 0);
 signal m_write : std_logic;
 signal m_writedata : std_logic_vector (7 downto 0);
 signal m_waitrequest : std_logic; 
+signal stateFlag : integer range 0 to 8;
 
 begin
 
@@ -89,7 +92,9 @@ port map(
     m_readdata => m_readdata,
     m_write => m_write,
     m_writedata => m_writedata,
-    m_waitrequest => m_waitrequest
+    m_waitrequest => m_waitrequest,
+
+    stateFlag => stateFlag
 );
 
 MEM : memory
@@ -116,6 +121,25 @@ test_process : process
 begin
 
 -- put your tests here
+s_read <= '0';
+s_write <= '0';
+wait for 1 ns;
+
+s_addr <= std_logic_vector(to_unsigned(0,s_addr'length));
+s_writedata <= "00000000000000000000000000000011";
+s_write <= '1';
+
+wait for 50 ns;
+
+s_read <= '0';
+s_write <= '0';
+wait for 1 ns;
+
+s_addr <= std_logic_vector(to_unsigned(0,s_addr'length));
+s_read <= '1';
+
+
+wait for 50 ns;
 	
 end process;
 	
