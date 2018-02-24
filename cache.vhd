@@ -51,177 +51,177 @@ PROCESS (clock, reset)
 BEGIN
 	IF reset = '1' THEN
     		state <= startState;
-   	 ELSIF (clock'EVENT AND clock = '1') THEN
+   	ELSIF (clock'EVENT AND clock = '1') THEN
         
-	CASE state IS
-		WHEN startState=>
-			s_waitrequest <= '1';
-           	s_readdata <= std_logic_vector(to_unsigned(0,s_readdata'length));
-            MEMsaveIteration <= 0;
-          	MEMloadIteration <= 0;
+		CASE state IS
+			WHEN startState=>
+				s_waitrequest <= '1';
+	           	s_readdata <= std_logic_vector(to_unsigned(0,s_readdata'length));
+	            MEMsaveIteration <= 0;
+	          	MEMloadIteration <= 0;
 
-			IF s_read = '1' THEN
-				state <= readState;
-			ELSIF s_write = '1' THEN
-				state <= writeState;
-			ELSE
-				state <= startState;
-			END IF;
+				IF s_read = '1' THEN
+					state <= readState;
+				ELSIF s_write = '1' THEN
+					state <= writeState;
+				ELSE
+					state <= startState;
+				END IF;
 
-		WHEN readState=>
-            s_waitrequest <= '1';
-            s_readdata <= std_logic_vector(to_unsigned(0,s_readdata'length));
+			WHEN readState=>
+	            s_waitrequest <= '1';
+	            s_readdata <= std_logic_vector(to_unsigned(0,s_readdata'length));
 
-            --checking validity, get index from s_adr[] and check V bit (mod32 needed?)
-            row <= to_integer(unsigned(s_addr(6 DOWNTO 2)));
-           	offset <= to_integer(unsigned(s_addr(1 DOWNTO 0)));
-           	valid <= cache_block(row)(144);
-           	dirtyBit <= cache_block(row)(143);
-          	cacheTag <= cache_block(row)(142 DOWNTO 128);
-           	addrTag <= s_addr(21 DOWNTO 7);
-            --See if tags match...
-           	IF addrTag = cacheTag THEN
-            	tagMatch <= 1;
-           	ELSE
-            	tagMatch <= 0;
-           	END IF;
+	            --checking validity, get index from s_adr[] and check V bit (mod32 needed?)
+	            row <= to_integer(unsigned(s_addr(6 DOWNTO 2)));
+	           	offset <= to_integer(unsigned(s_addr(1 DOWNTO 0)));
+	           	valid <= cache_block(row)(144);
+	           	dirtyBit <= cache_block(row)(143);
+	          	cacheTag <= cache_block(row)(142 DOWNTO 128);
+	           	addrTag <= s_addr(21 DOWNTO 7);
+	            --See if tags match...
+	           	IF addrTag = cacheTag THEN
+	            	tagMatch <= 1;
+	           	ELSE
+	            	tagMatch <= 0;
+	           	END IF;
 
-			IF valid = '0' THEN
-				state <= loadMemReadState;
-			ELSIF tagMatch = 1 THEN
-				state <= readFromCache;
-			ELSIF dirtyBit = '1' THEN
-				state <= saveMemReadState;
-			ELSE 
-				state <= readFromCache;
-			END IF;
+				IF valid = '0' THEN
+					state <= loadMemReadState;
+				ELSIF tagMatch = 1 THEN
+					state <= readFromCache;
+				ELSIF dirtyBit = '1' THEN
+					state <= saveMemReadState;
+				ELSE 
+					state <= readFromCache;
+				END IF;
 
-		WHEN writeState=>
-            		s_waitrequest <= '1';
-           		 s_readdata <= std_logic_vector(to_unsigned(0,s_readdata'length));
+			WHEN writeState=>
+	            s_waitrequest <= '1';
+	           	s_readdata <= std_logic_vector(to_unsigned(0,s_readdata'length));
 
-           		 --checking validity, get index from s_adr[] and check V bit
-           		 row <= to_integer(unsigned(s_addr(6 DOWNTO 2)));
-           		 valid <= cache_block(row)(144);
-           		 dirtyBit <= cache_block(row)(143);
-           		 cacheTag <= cache_block(row)(142 DOWNTO 128);
-           		 addrTag <= s_addr(21 DOWNTO 7);
+	           	--checking validity, get index from s_adr[] and check V bit
+	           	row <= to_integer(unsigned(s_addr(6 DOWNTO 2)));
+	           	valid <= cache_block(row)(144);
+	           	dirtyBit <= cache_block(row)(143);
+	           	cacheTag <= cache_block(row)(142 DOWNTO 128);
+	           	addrTag <= s_addr(21 DOWNTO 7);
 
-           		 --See if tags match...
-          		  IF addrTag = cacheTag THEN
-          		  	tagMatch <= 1;
-           		 ELSE
-           		 	tagMatch <= 0;
-         		   END IF;
+	           	--See if tags match...
+	          	IF addrTag = cacheTag THEN
+	          		tagMatch <= 1;
+	           	ELSE
+	           		 tagMatch <= 0;
+	         	END IF;
 
-			IF valid = '0' THEN
-				state <= loadMemWriteState;
-			ELSIF tagMatch = 1 THEN
-				state <= writeToCache;
-			ELSIF dirtyBit = '1' THEN
-				state <= saveMemWriteState;
-			ELSE
-				state <= loadMemWriteState;
-			END IF;
+				IF valid = '0' THEN
+					state <= loadMemWriteState;
+				ELSIF tagMatch = 1 THEN
+					state <= writeToCache;
+				ELSIF dirtyBit = '1' THEN
+					state <= saveMemWriteState;
+				ELSE
+					state <= loadMemWriteState;
+				END IF;
 
-		WHEN saveMemReadState=>
-			m_write <= '1';
-			m_read <= '0';
-			-- We need to write 128 bits to mem, only a byte can be saved at a time, need to do 16 save operations per load and save to MM
-			m_addr <= to_integer(unsigned(cacheTag)) + MEMsaveIteration;
-			m_writedata <= cache_block(row)((MEMsaveIteration*8+7) DOWNTO (MEMsaveIteration*8));
+			WHEN saveMemReadState=>
+				m_write <= '1';
+				m_read <= '0';
+				-- We need to write 128 bits to mem, only a byte can be saved at a time, need to do 16 save operations per load and save to MM
+				m_addr <= to_integer(unsigned(cacheTag)) + MEMsaveIteration;
+				m_writedata <= cache_block(row)((MEMsaveIteration*8+7) DOWNTO (MEMsaveIteration*8));
 
-			IF m_waitrequest = '0' THEN
-				MEMsaveIteration <= MEMsaveIteration + 1;
-			END IF;
+				IF m_waitrequest = '0' THEN
+					MEMsaveIteration <= MEMsaveIteration + 1;
+				END IF;
 
-			IF MEMsaveIteration = 16 THEN -- checking for MM done signal (low clock cycle)
-				state <= loadMemReadState;
-			ELSE 
-				state <= saveMemReadState;
-			END IF;
+				IF MEMsaveIteration = 16 THEN -- checking for MM done signal (low clock cycle)
+					state <= loadMemReadState;
+				ELSE 
+					state <= saveMemReadState;
+				END IF;
 
-		WHEN loadMemReadState=>
-			m_write <= '0';
-			m_read <= '1';
+			WHEN loadMemReadState=>
+				m_write <= '0';
+				m_read <= '1';
 
-			m_addr <= to_integer(unsigned(addrTag)) + MEMloadIteration;
-			cache_block(row)((MEMloadIteration*8+7) DOWNTO (MEMloadIteration*8)) <= m_readdata;
+				m_addr <= to_integer(unsigned(addrTag)) + MEMloadIteration;
+				cache_block(row)((MEMloadIteration*8+7) DOWNTO (MEMloadIteration*8)) <= m_readdata;
 
-			IF m_waitrequest = '0' THEN
-				MEMloadIteration <= MEMloadIteration + 1;
-			END IF;
-
-
-			IF MEMloadIteration = 16 THEN -- checking for MM done signal (low clock cycle)
-				cache_block(row)(143) <= '0'; --set dirtyBit to clean
-				cache_block(row)(144) <= '1'; --set valid
-				state <= readFromCache;
-			ELSE
-				state <= loadMemReadState;
-			END IF;
-
-		WHEN readFromCache=>
-			s_waitrequest <= '0';
-			s_readdata <= cache_block(row)((offset*32+31) DOWNTO (offset*32));
-
-			IF s_read = '0' THEN
-				state <= startState;
-			ELSE
-				state <= readFromCache;
-			END IF;
-
-		WHEN saveMemWriteState=>
-			m_write <= '1';
-			m_read <= '0';
-			-- We need to write 128 bits to mem, only a byte can be saved at a time, need to do 16 save operations per load and save to MM
-			m_addr <= to_integer(unsigned(cacheTag)) + MEMsaveIteration;
-			m_writedata <= cache_block(row)((MEMsaveIteration*8+7) DOWNTO (MEMsaveIteration*8));
-
-			IF m_waitrequest = '0' THEN
-				MEMsaveIteration <= MEMsaveIteration + 1;
-			END IF;
-
-			IF MEMsaveIteration = 16 THEN -- checking for MM done signal (low clock cycle)
-				state <= loadMemWriteState;
-			ELSE 
-				state <= saveMemWriteState;
-			END IF;
-
-		WHEN loadMemWriteState=>
-			m_write <= '0';
-			m_read <= '1';
-
-			m_addr <= to_integer(unsigned(addrTag)) + MEMloadIteration;
-			cache_block(row)((MEMloadIteration*8+7) DOWNTO (MEMloadIteration*8)) <= m_readdata;
-
-			IF m_waitrequest = '0' THEN
-				MEMloadIteration <= MEMloadIteration + 1;
-			END IF;
+				IF m_waitrequest = '0' THEN
+					MEMloadIteration <= MEMloadIteration + 1;
+				END IF;
 
 
-			IF MEMloadIteration = 16 THEN
-				cache_block(row)(143) <= '0'; --set dirtyBit to clean
-				cache_block(row)(144) <= '1'; --set valid
-				state <= writeToCache;
-			ELSE
-				state <= loadMemWriteState;
-			END IF;
+				IF MEMloadIteration = 16 THEN -- checking for MM done signal (low clock cycle)
+					cache_block(row)(143) <= '0'; --set dirtyBit to clean
+					cache_block(row)(144) <= '1'; --set valid
+					state <= readFromCache;
+				ELSE
+					state <= loadMemReadState;
+				END IF;
 
-		WHEN writeToCache=>
-			s_waitrequest <= '0';
-			cache_block(row)((offset*32+31) DOWNTO (offset*32)) <= s_writedata;
-			cache_block(row)(143) <= '1'; --set dirtyBit
+			WHEN readFromCache=>
+				s_waitrequest <= '0';
+				s_readdata <= cache_block(row)((offset*32+31) DOWNTO (offset*32));
 
-			IF s_write = '0' THEN
-				state <= startState;
-			ELSE
-				state <= writeToCache;
-			END IF;
-           
-		END CASE;
+				IF s_read = '0' THEN
+					state <= startState;
+				ELSE
+					state <= readFromCache;
+				END IF;
 
-		END IF;
+			WHEN saveMemWriteState=>
+				m_write <= '1';
+				m_read <= '0';
+				-- We need to write 128 bits to mem, only a byte can be saved at a time, need to do 16 save operations per load and save to MM
+				m_addr <= to_integer(unsigned(cacheTag)) + MEMsaveIteration;
+				m_writedata <= cache_block(row)((MEMsaveIteration*8+7) DOWNTO (MEMsaveIteration*8));
+
+				IF m_waitrequest = '0' THEN
+					MEMsaveIteration <= MEMsaveIteration + 1;
+				END IF;
+
+				IF MEMsaveIteration = 16 THEN -- checking for MM done signal (low clock cycle)
+					state <= loadMemWriteState;
+				ELSE 
+					state <= saveMemWriteState;
+				END IF;
+
+			WHEN loadMemWriteState=>
+				m_write <= '0';
+				m_read <= '1';
+
+				m_addr <= to_integer(unsigned(addrTag)) + MEMloadIteration;
+				cache_block(row)((MEMloadIteration*8+7) DOWNTO (MEMloadIteration*8)) <= m_readdata;
+
+				IF m_waitrequest = '0' THEN
+					MEMloadIteration <= MEMloadIteration + 1;
+				END IF;
+
+
+				IF MEMloadIteration = 16 THEN
+					cache_block(row)(143) <= '0'; --set dirtyBit to clean
+					cache_block(row)(144) <= '1'; --set valid
+					state <= writeToCache;
+				ELSE
+					state <= loadMemWriteState;
+				END IF;
+
+			WHEN writeToCache=>
+				s_waitrequest <= '0';
+				cache_block(row)((offset*32+31) DOWNTO (offset*32)) <= s_writedata;
+				cache_block(row)(143) <= '1'; --set dirtyBit
+
+				IF s_write = '0' THEN
+					state <= startState;
+				ELSE
+					state <= writeToCache;
+				END IF;
+	           
+			END CASE;
+
+	END IF;
 
 END PROCESS;
 
