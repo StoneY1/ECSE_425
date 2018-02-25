@@ -56,11 +56,11 @@ signal reset : std_logic := '0';
 signal clk : std_logic := '0';
 constant clk_period : time := 1 ns;
 
-signal s_addr : std_logic_vector (31 downto 0);
-signal s_read : std_logic;
-signal s_readdata : std_logic_vector (31 downto 0);
-signal s_write : std_logic;
-signal s_writedata : std_logic_vector (31 downto 0);
+signal s_addr : std_logic_vector (31 downto 0) := (others =>'0');
+signal s_read : std_logic :='0';
+signal s_readdata : std_logic_vector (31 downto 0):=(others =>'0');
+signal s_write : std_logic:='0';
+signal s_writedata : std_logic_vector (31 downto 0):=(others =>'0');
 signal s_waitrequest : std_logic;
 
 signal m_addr : integer range 0 to 2147483647;
@@ -125,22 +125,64 @@ s_read <= '0';
 s_write <= '0';
 wait for 1 ns;
 
-s_addr <= std_logic_vector(to_unsigned(0,s_addr'length));
-s_writedata <= "00000000000000000000000000000011";
-s_write <= '1';
+-- Invalid Read
+s_addr <= "00000000000000000000000000010111";
+s_read <= '1';
 
-wait for 50 ns;
-
+wait for 40 ns;
 s_read <= '0';
 s_write <= '0';
 wait for 1 ns;
+
+
+-- Invalid Write
+s_addr <= "00000000000000000000000000000000";
+s_writedata <= "00000000000000000000000000000100";
+s_write <= '1';
+
+wait for 35 ns;
+s_read <= '0';
+s_write <= '0';
+wait for 1 ns;
+
+--Valid read
 
 s_addr <= std_logic_vector(to_unsigned(0,s_addr'length));
 s_read <= '1';
 
 
-wait for 50 ns;
-	
+wait for 35 ns;
+s_read <= '0';
+s_write <= '0';
+wait for 1 ns;
+
+
+--Writing data to the cache
+s_addr <= "00000000000000000000000000000100";
+s_writedata <= "00000000000000000000000000000100";
+s_write <= '1';
+
+wait for 35 ns;
+s_read <= '0';
+s_write <= '0';
+wait for 1 ns;
+
+s_addr <= "00000000000000000000000000001000";
+s_writedata <= "00000000000000000000000000001000";
+s_write <= '1';
+
+wait for 35 ns;
+s_read <= '0';
+s_write <= '0';
+wait for 1 ns;
+
+
+
+-- 
+
+wait;
+
 end process;
 	
 end;
+
