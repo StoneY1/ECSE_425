@@ -16,8 +16,6 @@ proc AddWaves {} {
     add wave -position end sim:/cache_tb/m_write
     add wave -position end sim:/cache_tb/m_writedata
     add wave -position end sim:/cache_tb/m_waitrequest
-
-    add wave -position end sim:/cache_tb/stateFlag
 }
 
 vlib work
@@ -35,5 +33,5 @@ force -deposit clk 0 0 ns, 1 0.5 ns -repeat 1 ns
 ;# Add the waves
 AddWaves
 
-;# Run for 50 ns
-run 100ns
+;# Run for 800 ns
+run 650ns

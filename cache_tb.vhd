@@ -28,9 +28,8 @@ port(
     m_readdata : in std_logic_vector (7 downto 0);
     m_write : out std_logic;
     m_writedata : out std_logic_vector (7 downto 0);
-    m_waitrequest : in std_logic;
+    m_waitrequest : in std_logic
 
-    stateFlag : out integer range 0 to 8
 );
 end component;
 
@@ -69,7 +68,7 @@ signal m_readdata : std_logic_vector (7 downto 0);
 signal m_write : std_logic;
 signal m_writedata : std_logic_vector (7 downto 0);
 signal m_waitrequest : std_logic; 
-signal stateFlag : integer range 0 to 8;
+
 
 begin
 
@@ -92,9 +91,7 @@ port map(
     m_readdata => m_readdata,
     m_write => m_write,
     m_writedata => m_writedata,
-    m_waitrequest => m_waitrequest,
-
-    stateFlag => stateFlag
+    m_waitrequest => m_waitrequest
 );
 
 MEM : memory
@@ -120,63 +117,132 @@ end process;
 test_process : process
 begin
 
+reset <= '1';
+wait for 5 ns;
+
 -- put your tests here
+reset <= '0';
 s_read <= '0';
 s_write <= '0';
 wait for 1 ns;
 
--- Invalid Read
-s_addr <= "00000000000000000000000000010111";
+
+
+-- Invalid, not dirty, tag not equal, write
+s_addr <= "00000000000000000000000000000000";
+s_writedata <= "00000000011111111111100101010101";
+s_write <= '1';
+
+wait for 35 ns;
+s_read <= '0';
+s_write <= '0';
+wait for 10 ns;
+
+
+-- Valid, dirty, tag equal, write
+s_addr <= "00000000000000000000000000000000";
+s_writedata <= "00000000000000000000000010101010";
+s_write <= '1';
+
+wait for 35 ns;
+s_read <= '0';
+s_write <= '0';
+wait for 10 ns;
+
+-- Valid, dirty, tag not equal, write
+s_addr <= "00000000000000000100110000000000";
+s_writedata <= "00000000000000000000000011111111";
+s_write <= '1';
+
+wait for 35 ns;
+s_read <= '0';
+s_write <= '0';
+wait for 10 ns;
+
+-- Invalid, not dirty, tag not equal, read
+s_addr <= "00000000000000000000000000000100";
 s_read <= '1';
 
 wait for 40 ns;
 s_read <= '0';
 s_write <= '0';
-wait for 1 ns;
+wait for 10 ns;
 
 
--- Invalid Write
-s_addr <= "00000000000000000000000000000000";
-s_writedata <= "00000000000000000000000000000100";
+-- Valid, not dirty, tag equal, write
+s_addr <= "00000000000000000000000000000100";
+s_writedata <= "00000000000000000000000011111111";
 s_write <= '1';
 
 wait for 35 ns;
 s_read <= '0';
 s_write <= '0';
-wait for 1 ns;
+wait for 10 ns;
 
---Valid read
-
-s_addr <= std_logic_vector(to_unsigned(0,s_addr'length));
+-- Valid, dirty, tag not equal, read
+s_addr <= "00000000000000000011100000000100";
 s_read <= '1';
 
-
-wait for 35 ns;
+wait for 70 ns;
 s_read <= '0';
 s_write <= '0';
-wait for 1 ns;
+wait for 10 ns;
 
 
---Writing data to the cache
-s_addr <= "00000000000000000000000000000100";
-s_writedata <= "00000000000000000000000000000100";
+-- Valid, not dirty, tag not equal, write
+s_addr <= "00000000000000111111110000011100";
+s_read <= '1';
+
+wait for 40 ns;
+s_read <= '0';
+s_write <= '0';
+wait for 10 ns;
+
+
+s_addr <= "00000000000000000000000000011100";
+s_writedata <= "00000000000000000000000011111011";
 s_write <= '1';
 
 wait for 35 ns;
 s_read <= '0';
 s_write <= '0';
-wait for 1 ns;
+wait for 10 ns;
 
-s_addr <= "00000000000000000000000000001000";
-s_writedata <= "00000000000000000000000000001000";
-s_write <= '1';
 
-wait for 35 ns;
+-- Valid, dirty, tag equal, read
+s_addr <= "00000000000000000000000000000000";
+s_read <= '1';
+
+wait for 40 ns;
 s_read <= '0';
 s_write <= '0';
-wait for 1 ns;
+wait for 10 ns;
 
+-- Valid, not dirty, tag not equal, read
+s_addr <= "00000000000000000000000000001100";
+s_read <= '1';
 
+wait for 40 ns;
+s_read <= '0';
+s_write <= '0';
+wait for 10 ns;
+
+s_addr <= "00000000000000000000110000001100";
+s_read <= '1';
+
+wait for 40 ns;
+s_read <= '0';
+s_write <= '0';
+wait for 10 ns;
+
+-- Valid, not dirty, tag equal, read
+s_addr <= "00000000000000000000110000001100";
+s_read <= '1';
+
+wait for 40 ns;
+s_read <= '0';
+s_write <= '0';
+wait for 10 ns;
 
 -- 
 
