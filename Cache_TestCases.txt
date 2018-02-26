@@ -1,18 +1,19 @@
 valid/invalid, dirty/not dirty
 read/write, tag equal/tag not equal
 
-1) valid, dirty, read, tag equal
-2) valid, dirty, read, tag not equal
-3) valid, dirty, write, tag equal
-4) valid, dirty, write, tag not equal
-5) valid, not dirty, read, tag equal
-6) valid, not dirty, read, tag not equal
-7) valid, not dirty, write, tag equal
-8) valid, not dirty, write, tag not equal
+1) valid, dirty, read, tag equal - done
+2) valid, dirty, read, tag not equal - done
+3) valid, dirty, write, tag equal - done
+4) valid, dirty, write, tag not equal - done
+5) valid, not dirty, read, tag equal - 
+6) valid, not dirty, read, tag not equal - 
+7) valid, not dirty, write, tag equal - done
+8) valid, not dirty, write, tag not equal - 
+9) invalid, not dirty, read, tag not equal - done
+10) invalid, not dirty, write, tag not equal - done
 
-9) invalid, read - done **(only performs if first operation)
-10) invalid, write - done
-
+11) invalid, not dirty, read, tag equal - impossible
+12) invalid, not dirty, write, tag equal - impossible
 13) invalid, dirty, read, tag equal - impossible
 14) invalid, dirty, read, tag not equal - impossible
 15) invalid, dirty, write, tag equal - impossible
