@@ -5,12 +5,14 @@ read/write, tag equal/tag not equal
 2) valid, dirty, read, tag not equal - done
 3) valid, dirty, write, tag equal - done
 4) valid, dirty, write, tag not equal - done
-5) valid, not dirty, read, tag equal - 
-6) valid, not dirty, read, tag not equal - 
+5) valid, not dirty, read, tag equal - done
+6) valid, not dirty, read, tag not equal - done
 7) valid, not dirty, write, tag equal - done
-8) valid, not dirty, write, tag not equal - 
+8) valid, not dirty, write, tag not equal - done
 9) invalid, not dirty, read, tag not equal - done
 10) invalid, not dirty, write, tag not equal - done
+
+ALL DONE
 
 11) invalid, not dirty, read, tag equal - impossible
 12) invalid, not dirty, write, tag equal - impossible
