@@ -123,6 +123,7 @@ BEGIN
 
 	           	--checking validity, get index from s_adr[] and check V bit
 	           	row <= to_integer(unsigned(s_addr(6 DOWNTO 2)));
+			offset <= to_integer(unsigned(s_addr(1 DOWNTO 0)));
 	           	valid <= cache_block(row)(144);
 	           	dirtyBit <= cache_block(row)(143);
 	           	cacheTag <= cache_block(row)(142 DOWNTO 128);
@@ -177,6 +178,8 @@ BEGIN
 				IF m_waitrequest = '0' THEN
 					memFlag <= '1';
 				END IF;
+
+				
 				m_addr <= to_integer(unsigned(addrTag)) + MEMloadIteration;
 				cache_block(row)((MEMloadIteration*8+7) DOWNTO (MEMloadIteration*8)) <= m_readdata;
 

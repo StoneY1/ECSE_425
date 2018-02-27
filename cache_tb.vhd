@@ -128,45 +128,84 @@ wait for 1 ns;
 
 
 
--- Invalid, not dirty, tag not equal, write
+-- Writing to addr 0, block 0
 s_addr <= "00000000000000000000000000000000";
-s_writedata <= "00000000011111111111100101010101";
+s_writedata <= "00000000000000100100100100100100";
 s_write <= '1';
 
-wait for 35 ns;
+wait for 40 ns;
+s_read <= '0';
+s_write <= '0';
+wait for 20 ns;
+
+
+-- Writing to addr 0, block 1
+s_addr <= "00000000000000000000000000000001";
+s_writedata <= "00000000000000011011011011011011";
+s_write <= '1';
+
+wait for 40 ns;
 s_read <= '0';
 s_write <= '0';
 wait for 10 ns;
 
-
--- Valid, dirty, tag equal, write
-s_addr <= "00000000000000000000000000000000";
-s_writedata <= "00000000000000000000000010101010";
+-- Writing to addr 0, block 2
+s_addr <= "00000000000000000000000000000010";
+s_writedata <= "00000000000011111111111111111111";
 s_write <= '1';
 
-wait for 35 ns;
+wait for 40 ns;
+s_read <= '0';
+s_write <= '0';
+wait for 10 ns;
+
+-- Writing to addr 0, block 3
+s_addr <= "00000000000000000000000000000011";
+s_writedata <= "10000000000011111111110000000001";
+s_write <= '1';
+
+wait for 50 ns;
+s_read <= '0';
+s_write <= '0';
+wait for 10 ns;
+
+-- Invalid, not dirty, tag not equal, read
+s_addr <= "00000000000000000000000000000001";
+s_read <= '1';
+
+wait for 55 ns;
 s_read <= '0';
 s_write <= '0';
 wait for 10 ns;
 
 -- Valid, dirty, tag not equal, write
 s_addr <= "00000000000000000100110000000000";
-s_writedata <= "00000000000000000000000011111111";
+s_writedata <= "11111111111111111111111111111111";
 s_write <= '1';
 
-wait for 35 ns;
+wait for 55 ns;
+s_read <= '0';
+s_write <= '0';
+wait for 10 ns;
+
+
+-- Invalid, not dirty, tag not equal, read
+s_addr <= "00000000000000000100110000000000";
+s_read <= '1';
+
+wait for 55 ns;
 s_read <= '0';
 s_write <= '0';
 wait for 10 ns;
 
 -- Invalid, not dirty, tag not equal, read
-s_addr <= "00000000000000000000000000000100";
+s_addr <= "00000000000000000000000000000010";
 s_read <= '1';
 
-wait for 40 ns;
+wait for 55 ns;
 s_read <= '0';
 s_write <= '0';
-wait for 10 ns;
+wait for 100 ns;
 
 
 -- Valid, not dirty, tag equal, write

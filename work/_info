@@ -9,7 +9,7 @@ z2
 cModel Technology
 Z0 dP:/ECSE_425
 Ecache
-Z1 w1519659758
+Z1 w1519688837
 Z2 DPx4 ieee 11 numeric_std 0 22 :ASDNFgHXf_ih3J@9F3Ze1
 Z3 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
 Z4 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
@@ -22,9 +22,9 @@ Vgb^LNW9DjK[[@;8HY]M4P2
 !s100 L[JiK^6]AFJ?M>Cjf9bmf3
 Z7 OV;C;10.5b;63
 32
-Z8 !s110 1519659846
+Z8 !s110 1519689473
 !i10b 1
-Z9 !s108 1519659846.000000
+Z9 !s108 1519689473.000000
 Z10 !s90 -reportprogress|300|cache.vhd|
 Z11 !s107 cache.vhd|
 !i113 1
@@ -36,8 +36,8 @@ R4
 DEx4 work 5 cache 0 22 gb^LNW9DjK[[@;8HY]M4P2
 l52
 L31
-V5_eDPkW[[@Y:VX2a1N5ze1
-!s100 O_9ULkDKJ=H1EhaCV^g2Z1
+V[1CHfNf5FQQ]bU>;2^>he3
+!s100 YmXWQE3C8PVO;fcCcU8a63
 R7
 32
 R8
@@ -48,7 +48,7 @@ R11
 !i113 1
 R12
 Ecache_tb
-Z13 w1519659819
+Z13 w1519689463
 R2
 R3
 R4
@@ -61,9 +61,9 @@ V7E4^229J[_6oaW@8H^^z00
 !s100 N8hTJD?ado=UI;TQE4:Ql3
 R7
 32
-Z16 !s110 1519659825
+Z16 !s110 1519689471
 !i10b 1
-Z17 !s108 1519659825.000000
+Z17 !s108 1519689470.000000
 Z18 !s90 -reportprogress|300|-work|work|-2002|-explicit|P:/ECSE_425/cache_tb.vhd|
 Z19 !s107 P:/ECSE_425/cache_tb.vhd|
 !i113 1
@@ -76,8 +76,8 @@ R4
 DEx4 work 8 cache_tb 0 22 7E4^229J[_6oaW@8H^^z00
 l73
 L8
-VA@HFe4GYi^=^f1bzFKVnl1
-!s100 TNWbm@bD`?j30C9^>5dn`3
+VW_Y40foCIMe?lN7Dc:H>K3
+!s100 zET<0OHXjjkSEoFP^i@:<2
 R7
 32
 R16
@@ -89,7 +89,7 @@ R19
 R20
 R12
 Ememory
-Z21 w1519515080
+Z21 w1519407801
 R2
 R3
 R4
@@ -128,24 +128,24 @@ R25
 !i113 1
 R12
 Ememory_tb
-Z29 w1519407801
+R21
 R2
 R3
 R4
 R0
-Z30 8P:/ECSE_425/memory_tb.vhd
-Z31 FP:/ECSE_425/memory_tb.vhd
+Z29 8P:/ECSE_425/memory_tb.vhd
+Z30 FP:/ECSE_425/memory_tb.vhd
 l0
 L5
 V_kiS2gc@klE4Vk3RdCF4^2
 !s100 K:h_7;_e46:2;TAj@4dAB3
 R7
 32
-Z32 !s110 1519513230
+Z31 !s110 1519684075
 !i10b 1
-Z33 !s108 1519513230.000000
-Z34 !s90 -reportprogress|300|-work|work|-2002|-explicit|P:/ECSE_425/memory_tb.vhd|
-Z35 !s107 P:/ECSE_425/memory_tb.vhd|
+Z32 !s108 1519684075.000000
+Z33 !s90 -reportprogress|300|-work|work|-2002|-explicit|P:/ECSE_425/memory_tb.vhd|
+Z34 !s107 P:/ECSE_425/memory_tb.vhd|
 !i113 1
 R20
 R12
@@ -160,11 +160,11 @@ VAIIG6V5IXNH>AnecMF_ib3
 !s100 :i96VH_8DL4G91ZkR7MdH1
 R7
 32
-R32
+R31
 !i10b 1
+R32
 R33
 R34
-R35
 !i113 1
 R20
 R12
