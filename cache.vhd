@@ -90,7 +90,7 @@ BEGIN
 	           	valid <= cache_block(row)(144);
 	           	dirtyBit <= cache_block(row)(143);
 	          	cacheTag <= cache_block(row)(142 DOWNTO 128);
-
+			
 
 	           	addrTag <= s_addr(21 DOWNTO 7);
 	            --See if tags match...
@@ -144,6 +144,7 @@ BEGIN
 					ELSIF tagMatch = 1 THEN
 						state <= writeToCache;
 					ELSIF dirtyBit = '1' THEN
+						m_addr <= to_integer(unsigned(cacheTag));
 						state <= saveMemWriteState;
 					ELSE
 						state <= loadMemWriteState;
@@ -160,14 +161,19 @@ BEGIN
 					memFlag <= '1';
 				END IF;
 				-- We need to write 128 bits to mem, only a byte can be saved at a time, need to do 16 save operations per load and save to MM
-				m_addr <= to_integer(unsigned(cacheTag)) + MEMsaveIteration;
-				m_writedata <= cache_block(row)((MEMsaveIteration*8+7) DOWNTO (MEMsaveIteration*8));
+				--IF memFlag = '1' THEN
+					--m_addr <= to_integer(unsigned(cacheTag)) + MEMsaveIteration;
+					--m_writedata <= cache_block(row)((MEMsaveIteration*8+7) DOWNTO (MEMsaveIteration*8));
+				--END IF;
 
 				IF (memFlag = '1' and MEMsaveIteration < 16) THEN
+					m_addr <= to_integer(unsigned(cacheTag)) + MEMsaveIteration;
+					m_writedata <= cache_block(row)((MEMsaveIteration*8+7) DOWNTO (MEMsaveIteration*8));
 					MEMsaveIteration <= MEMsaveIteration + 1;
 				END IF;
 
 				IF MEMsaveIteration = 16 THEN -- checking for MM done signal (low clock cycle)
+					memFlag <= '0';
 					state <= loadMemReadState;
 				END IF;
 
@@ -179,12 +185,22 @@ BEGIN
 					memFlag <= '1';
 				END IF;
 
-				
-				m_addr <= to_integer(unsigned(addrTag)) + MEMloadIteration;
-				cache_block(row)((MEMloadIteration*8+7) DOWNTO (MEMloadIteration*8)) <= m_readdata;
+				--IF memFlag = '1' THEN
+					--m_addr <= to_integer(unsigned(addrTag)) + MEMloadIteration;
+					--cache_block(row)((MEMloadIteration*8+7) DOWNTO (MEMloadIteration*8)) <= m_readdata;
+				--END IF;
 
-				IF (memFlag = '1' and MEMloadIteration < 16) THEN
-					MEMloadIteration <= MEMloadIteration + 1;
+				IF (memFlag = '1' and MEMloadIteration < 18) THEN
+					IF (MEMloadIteration < 16) THEN
+						m_addr <= to_integer(unsigned(addrTag)) + MEMloadIteration;
+					END IF;
+
+					IF (MEMloadIteration <= 1) THEN
+						MEMloadIteration <= MEMloadIteration + 1;
+					ELSE
+						cache_block(row)(((MEMloadIteration-2)*8+7) DOWNTO ((MEMloadIteration-2)*8)) <= m_readdata;
+						MEMloadIteration <= MEMloadIteration + 1;
+					END IF;
 					--memFlag <= '0';
 				END IF;
 
@@ -209,18 +225,24 @@ BEGIN
 				stateFlag <= 6;
 				m_write <= '1';
 				m_read <= '0';
+				
 				IF m_waitrequest = '0' THEN
 					memFlag <= '1';
 				END IF;
 				-- We need to write 128 bits to mem, only a byte can be saved at a time, need to do 16 save operations per load and save to MM
-				m_addr <= to_integer(unsigned(cacheTag)) + MEMsaveIteration;
-				m_writedata <= cache_block(row)((MEMsaveIteration*8+7) DOWNTO (MEMsaveIteration*8));
+				--IF memFlag = '1' and MEMsaveIteration < 16 THEN
+					--m_addr <= to_integer(unsigned(cacheTag)) + MEMsaveIteration;
+					--m_writedata <= cache_block(row)((MEMsaveIteration*8+7) DOWNTO (MEMsaveIteration*8));
+				--END IF;
 
 				IF (memFlag = '1' and MEMsaveIteration < 16) THEN
+					m_addr <= to_integer(unsigned(cacheTag)) + MEMsaveIteration;
+					m_writedata <= cache_block(row)((MEMsaveIteration*8+7) DOWNTO (MEMsaveIteration*8));
 					MEMsaveIteration <= MEMsaveIteration + 1;
 				END IF;
 
 				IF MEMsaveIteration = 16 THEN -- checking for MM done signal (low clock cycle)
+					memFlag <= '0';
 					state <= loadMemWriteState;
 				END IF;
 
@@ -232,13 +254,23 @@ BEGIN
 					memFlag <= '1';
 				END IF;
 
-				m_addr <= to_integer(unsigned(addrTag)) + MEMloadIteration;
-				cache_block(row)((MEMloadIteration*8+7) DOWNTO (MEMloadIteration*8)) <= m_readdata;
-
+				--IF (memFlag = '1' and MEMloadIteration < 16) THEN
+					--m_addr <= to_integer(unsigned(addrTag)) + MEMloadIteration;
+					--cache_block(row)((MEMloadIteration*8+7) DOWNTO (MEMloadIteration*8)) <= m_readdata;
+				--END IF;
 				
 
 				IF (memFlag = '1' and MEMloadIteration < 16) THEN
-					MEMloadIteration <= MEMloadIteration + 1;
+					IF (MEMloadIteration < 16) THEN
+						m_addr <= to_integer(unsigned(addrTag)) + MEMloadIteration;
+					END IF;
+
+					IF (MEMloadIteration <= 1) THEN
+						MEMloadIteration <= MEMloadIteration + 1;
+					ELSE
+						cache_block(row)(((MEMloadIteration-2)*8+7) DOWNTO ((MEMloadIteration-2)*8)) <= m_readdata;
+						MEMloadIteration <= MEMloadIteration + 1;
+					END IF;
 					--memFlag <= '0';
 				END IF;
 

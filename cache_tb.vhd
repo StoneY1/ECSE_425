@@ -169,7 +169,7 @@ s_read <= '0';
 s_write <= '0';
 wait for 10 ns;
 
--- Invalid, not dirty, tag not equal, read
+-- Reading addr 0, block 1
 s_addr <= "00000000000000000000000000000001";
 s_read <= '1';
 
@@ -178,7 +178,7 @@ s_read <= '0';
 s_write <= '0';
 wait for 10 ns;
 
--- Valid, dirty, tag not equal, write
+-- Writing addr 152, block 0
 s_addr <= "00000000000000000100110000000000";
 s_writedata <= "11111111111111111111111111111111";
 s_write <= '1';
@@ -189,7 +189,7 @@ s_write <= '0';
 wait for 10 ns;
 
 
--- Invalid, not dirty, tag not equal, read
+-- Reading addr 152, block 0
 s_addr <= "00000000000000000100110000000000";
 s_read <= '1';
 
@@ -198,8 +198,8 @@ s_read <= '0';
 s_write <= '0';
 wait for 10 ns;
 
--- Invalid, not dirty, tag not equal, read
-s_addr <= "00000000000000000000000000000010";
+-- Reading addr 0, block 0
+s_addr <= "00000000000000000000000000000000";
 s_read <= '1';
 
 wait for 55 ns;
@@ -207,83 +207,41 @@ s_read <= '0';
 s_write <= '0';
 wait for 100 ns;
 
-
--- Valid, not dirty, tag equal, write
-s_addr <= "00000000000000000000000000000100";
-s_writedata <= "00000000000000000000000011111111";
-s_write <= '1';
-
-wait for 35 ns;
-s_read <= '0';
-s_write <= '0';
-wait for 10 ns;
-
--- Valid, dirty, tag not equal, read
-s_addr <= "00000000000000000011100000000100";
+-- Reading addr 0, block 1
+s_addr <= "00000000000000000000000000000001";
 s_read <= '1';
 
-wait for 70 ns;
+wait for 55 ns;
 s_read <= '0';
 s_write <= '0';
-wait for 10 ns;
+wait for 20 ns;
 
-
--- Valid, not dirty, tag not equal, write
-s_addr <= "00000000000000111111110000011100";
+-- Reading addr 0, block 2
+s_addr <= "00000000000000000000000000000010";
 s_read <= '1';
 
-wait for 40 ns;
+wait for 55 ns;
 s_read <= '0';
 s_write <= '0';
-wait for 10 ns;
+wait for 20 ns;
 
-
-s_addr <= "00000000000000000000000000011100";
-s_writedata <= "00000000000000000000000011111011";
-s_write <= '1';
-
-wait for 35 ns;
-s_read <= '0';
-s_write <= '0';
-wait for 10 ns;
-
-
--- Valid, dirty, tag equal, read
-s_addr <= "00000000000000000000000000000000";
+-- Reading addr 0, block 3
+s_addr <= "00000000000000000000000000000011";
 s_read <= '1';
 
-wait for 40 ns;
+wait for 55 ns;
 s_read <= '0';
 s_write <= '0';
-wait for 10 ns;
+wait for 20 ns;
 
--- Valid, not dirty, tag not equal, read
-s_addr <= "00000000000000000000000000001100";
+-- Reading addr 152, block 0
+s_addr <= "00000000000000000100110000000000";
 s_read <= '1';
 
-wait for 40 ns;
+wait for 55 ns;
 s_read <= '0';
 s_write <= '0';
 wait for 10 ns;
-
-s_addr <= "00000000000000000000110000001100";
-s_read <= '1';
-
-wait for 40 ns;
-s_read <= '0';
-s_write <= '0';
-wait for 10 ns;
-
--- Valid, not dirty, tag equal, read
-s_addr <= "00000000000000000000110000001100";
-s_read <= '1';
-
-wait for 40 ns;
-s_read <= '0';
-s_write <= '0';
-wait for 10 ns;
-
--- 
 
 wait;
 
