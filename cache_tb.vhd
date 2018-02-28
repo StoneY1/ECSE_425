@@ -196,13 +196,13 @@ s_read <= '1';
 wait for 55 ns;
 s_read <= '0';
 s_write <= '0';
-wait for 10 ns;
+wait for 20 ns;
 
 -- Reading addr 0, block 0
 s_addr <= "00000000000000000000000000000000";
 s_read <= '1';
 
-wait for 55 ns;
+wait for 75 ns;
 s_read <= '0';
 s_write <= '0';
 wait for 100 ns;
