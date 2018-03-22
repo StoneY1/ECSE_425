@@ -8,3 +8,151 @@ z2
 !i10f 100
 cModel Technology
 dC:/intelFPGA_lite/16.1
+Eadder
+Z0 w1521677788
+Z1 DPx4 ieee 11 numeric_std 0 22 :ASDNFgHXf_ih3J@9F3Ze1
+Z2 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z3 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
+Z4 dP:/ECSE_425/Assignment 4
+Z5 8P:/ECSE_425/Assignment 4/adder.vhd
+Z6 FP:/ECSE_425/Assignment 4/adder.vhd
+l0
+L6
+VNWmL8<e^?@0HEkKa82XLM2
+!s100 =Wb98KQ[@`PcdMmP[Vaja3
+Z7 OV;C;10.5b;63
+32
+Z8 !s110 1521678148
+!i10b 1
+Z9 !s108 1521678148.000000
+Z10 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|P:/ECSE_425/Assignment 4/adder.vhd|
+Z11 !s107 P:/ECSE_425/Assignment 4/adder.vhd|
+!i113 1
+Z12 o-work work -2002 -explicit
+Z13 tExplicit 1 CvgOpt 0
+Abehavior
+R1
+R2
+R3
+DEx4 work 5 adder 0 22 NWmL8<e^?@0HEkKa82XLM2
+l16
+L14
+VO=GEfCi;38I<Z52JP@]aL2
+!s100 S`O@EeFAn[S9Ub`@eg08<1
+R7
+32
+R8
+!i10b 1
+R9
+R10
+R11
+!i113 1
+R12
+R13
+Pdefinitions
+R2
+R3
+w1521677966
+R4
+8P:/ECSE_425/Assignment 4/definitions.vhd
+FP:/ECSE_425/Assignment 4/definitions.vhd
+l0
+L4
+VGhNYzn:C0o[DEC^9EXXj73
+!s100 E3^Sd_[ThdWKXJQEF8XMD3
+R7
+32
+R8
+!i10b 1
+R9
+!s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|P:/ECSE_425/Assignment 4/definitions.vhd|
+!s107 P:/ECSE_425/Assignment 4/definitions.vhd|
+!i113 1
+R12
+R13
+Eif_id_stage
+Z14 w1521677040
+Z15 DPx4 work 11 definitions 0 22 GhNYzn:C0o[DEC^9EXXj73
+R1
+R2
+R3
+R4
+Z16 8P:/ECSE_425/Assignment 4/IF_ID_Stage.vhd
+Z17 FP:/ECSE_425/Assignment 4/IF_ID_Stage.vhd
+l0
+L6
+VXb[12TEeEl=I__dAoBTNI2
+!s100 7mhhN8k9bi@2z=`G_>z:_1
+R7
+32
+Z18 !s110 1521678149
+!i10b 1
+Z19 !s108 1521678149.000000
+Z20 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|P:/ECSE_425/Assignment 4/IF_ID_Stage.vhd|
+Z21 !s107 P:/ECSE_425/Assignment 4/IF_ID_Stage.vhd|
+!i113 1
+R12
+R13
+Abehavior
+R15
+R1
+R2
+R3
+Z22 DEx4 work 11 if_id_stage 0 22 Xb[12TEeEl=I__dAoBTNI2
+l24
+L21
+Z23 V_B^MBWQo7Y9Ge^T1^f?7o0
+Z24 !s100 :jIGFL7kNaM5ZmT_mKiUz3
+R7
+32
+R18
+!i10b 1
+R19
+R20
+R21
+!i113 1
+R12
+R13
+Epc
+Z25 w1521677988
+R15
+R1
+R2
+R3
+R4
+Z26 8P:/ECSE_425/Assignment 4/PC.vhd
+Z27 FP:/ECSE_425/Assignment 4/PC.vhd
+l0
+L6
+V`^gJ>NN2zBXQf^UcaO]S^1
+!s100 oGi^WhaV39j:Wf`=j4l@^2
+R7
+32
+R8
+!i10b 1
+R9
+Z28 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|P:/ECSE_425/Assignment 4/PC.vhd|
+Z29 !s107 P:/ECSE_425/Assignment 4/PC.vhd|
+!i113 1
+R12
+R13
+Abehavior
+R15
+R1
+R2
+R3
+DEx4 work 2 pc 0 22 `^gJ>NN2zBXQf^UcaO]S^1
+l20
+L18
+V7636f:h9oZJ]KzIiQJI;10
+!s100 BXMLlm9WV`@__8DGYO_h71
+R7
+32
+R8
+!i10b 1
+R9
+R28
+R29
+!i113 1
+R12
+R13

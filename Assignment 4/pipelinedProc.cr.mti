@@ -1,0 +1,27 @@
+{P:/ECSE_425/Assignment 4/PC.vhd} {1 {vcom -work work -2002 -explicit -stats=none {P:/ECSE_425/Assignment 4/PC.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package definitions
+-- Compiling entity PC
+-- Compiling architecture behavior of PC
+
+} {} {}} {P:/ECSE_425/Assignment 4/definitions.vhd} {1 {vcom -work work -2002 -explicit -stats=none {P:/ECSE_425/Assignment 4/definitions.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling package definitions
+
+} {} {}} {P:/ECSE_425/Assignment 4/adder.vhd} {1 {vcom -work work -2002 -explicit -stats=none {P:/ECSE_425/Assignment 4/adder.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity adder
+-- Compiling architecture behavior of adder
+
+} {} {}}
