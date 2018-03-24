@@ -47,11 +47,11 @@ begin
 			register1_value_out <= (others => '0');
 			register2_value_out <= (others => '0');
 			immediate_value_out <= (others => '0');
-			store_out <= '0';
-			load_out <= '0';
+			store_out <= (others => '0');
+			load_out <= (others => '0');
 			dest_register_out <= (others => '0');
-			immediate_operation_out <= '0';
-			write_back_out <= '0';
+			immediate_operation_out <= (others => '0');
+			write_back_out <= (others => '0');
 			
 		elsif rising_edge(clk) then
 			ALU_code_out <= ALU_code_in;

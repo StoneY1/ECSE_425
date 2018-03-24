@@ -25,6 +25,7 @@ begin
 
 	-- handle stalling here
 
+
 	process(reset,clk)
 	begin 
 		-- if reset is high
@@ -40,3 +41,6 @@ begin
 	end process;
 
 end behavior;
+
+
+
