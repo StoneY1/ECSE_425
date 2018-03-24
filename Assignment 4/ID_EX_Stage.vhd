@@ -12,6 +12,8 @@ entity ID_EX_Stage is
 	; register1_value_out : out word_type
 	; register2_value_in : in word_type
 	; register2_value_out : out word_type
+	; immediate_value_in : in word_type
+	; immediate_value_out : out word_type
         ; store_in      : in    std_logic
         ; store_out     : out   std_logic
 	; load_in	: in std_logic
@@ -22,16 +24,15 @@ entity ID_EX_Stage is
 	; immediate_operation_out : out std_logic
 	; write_back_in : in std_logic
 	; write_back_out : out std_logic
-        ; insert_stall        : in    std_logic
         ; reset               : in    std_logic
         ; clk                 : in    std_logic
         );
            
-end IF_ID_Stage;
+end ID_EX_Stage;
 
 
 
-architecture behavior of IF_ID_Stage is 
+architecture behavior of ID_EX_Stage is 
 -- Create signals here: last instruction, stall
 
 begin
@@ -42,14 +43,27 @@ begin
 	begin 
 		-- if reset is high
 		if reset = '1' then
-			PC_out <= (others => '0');
-			inst_out <= (others => '0');
+			ALU_code_out <= (others => '0');
+			register1_value_out <= (others => '0');
+			register2_value_out <= (others => '0');
+			immediate_value_out <= (others => '0');
+			store_out <= '0';
+			load_out <= '0';
+			dest_register_out <= (others => '0');
+			immediate_operation_out <= '0';
+			write_back_out <= '0';
 			
 		elsif rising_edge(clk) then
-			PC_out <= PC_in;
-			inst_out <= inst_in;
+			ALU_code_out <= ALU_code_in;
+			register1_value_out <= register1_value_in;
+			register2_value_out <= register2_value_in;
+			immediate_value_out <= immediate_value_in;
+			store_out <= store_in;
+			load_out <= load_in;
+			dest_register_out <= dest_register_in;
+			immediate_operation_out <= immediate_operation_in;
+			write_back_out <= write_back_in;
 		end if;		
-		--else inputs = outputs
 	end process;
 
 end behavior;
