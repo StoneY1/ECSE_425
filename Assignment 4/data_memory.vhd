@@ -3,7 +3,7 @@ LIBRARY ieee;
 USE ieee.std_logic_1164.all;
 USE ieee.numeric_std.all;
 
-ENTITY memory IS
+ENTITY data_memory IS
 	GENERIC(
 		ram_size : INTEGER := 32768/4; --modified size of ram so that each entry of array is a 32-bit word while preserving size at 32768 bytes
 		mem_delay : time := 1 ns;
@@ -18,9 +18,9 @@ ENTITY memory IS
 		readdata: OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
 		waitrequest: OUT STD_LOGIC
 	);
-END memory;
+END data_memory;
 
-ARCHITECTURE rtl OF memory IS
+ARCHITECTURE rtl OF data_memory IS
 	TYPE MEM IS ARRAY(ram_size-1 downto 0) OF STD_LOGIC_VECTOR(31 DOWNTO 0);
 	SIGNAL ram_block: MEM;
 	SIGNAL read_address_reg: INTEGER RANGE 0 to ram_size-1;
