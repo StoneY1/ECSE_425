@@ -58,7 +58,7 @@ BEGIN
         wait for clk_period/2;
         clk <= '1';
         wait for clk_period/2;
-    end process;
+    END PROCESS;
 
     test_process : process
     BEGIN
