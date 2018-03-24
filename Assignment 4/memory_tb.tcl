@@ -1,3 +1,4 @@
+#run simulation to verify 32-bit mem and initialized to all zeroes
 proc AddWaves {} {
 	;#Add waves we're interested in to the Wave window
     add wave -position end sim:/memory_tb/clk

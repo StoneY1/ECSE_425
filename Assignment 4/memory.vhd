@@ -1,4 +1,4 @@
---Adapted from Example 12-15 of Quartus Design and Synthesis handbook
+--Adapted from Example 12-15 of Quartus Design and Synthesis handbook. Modified for 32-bit processing, changed delay to single clock cycle, intialized to zeroes
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
 USE ieee.numeric_std.all;
