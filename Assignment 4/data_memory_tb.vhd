@@ -1,15 +1,15 @@
---Tested to make sure memory initializes to all zero
+--Tested to make sure data memory initializes to all zero
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
 USE ieee.numeric_std.all;
 
-ENTITY memory_tb IS
-END memory_tb;
+ENTITY data_memory_tb IS
+END data_memory_tb;
 
-ARCHITECTURE behaviour OF memory_tb IS
+ARCHITECTURE behaviour OF data_memory_tb IS
 
 --Declare the component that you are testing:
-    COMPONENT memory IS
+    COMPONENT data_memory IS
         GENERIC(
             ram_size : INTEGER := 32768/4;
             mem_delay : time := 1 ns;
@@ -39,7 +39,7 @@ ARCHITECTURE behaviour OF memory_tb IS
 BEGIN
 
     --dut => Device Under Test
-    dut: memory GENERIC MAP(
+    dut: data_memory GENERIC MAP(
             ram_size => 15
                 )
                 PORT MAP(
