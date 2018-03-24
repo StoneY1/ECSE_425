@@ -25,17 +25,18 @@ begin
 
 	-- handle stalling here
 
-
 	process(reset,clk)
 	begin 
 		-- if reset is high
-		
-
-
+		if reset = '1' then
+			PC_out <= (others => '0');
+			inst_out <= (others => '0');
+			
+		elsif rising_edge(clk) then
+			PC_out <= PC_in;
+			inst_out <= inst_in;
+		end if;		
 		--else inputs = outputs
 	end process;
 
 end behavior;
-
-
-
