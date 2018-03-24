@@ -8,7 +8,7 @@ use ieee.std_logic_textio.all;
 entity instrFetchStage is
 	Port ( 
 		clock : in std_logic;
-		nextPC : in std_logic_vector(31 downto 0);
+		nextPC : out std_logic_vector(31 downto 0);
 		instruction : out std_logic_vector(31 downto 0)
 	);
 end instrFetchStage;
@@ -52,21 +52,22 @@ end component;
 
 -- Set signals
 signal reset : std_logic := '0';
-signal readData : std_logic_vector(31 downto 0);
-signal writeData : std_logic_vector(31 downto 0);
-signal address : integer range 0 to 1024-1;
-signal en : std_logic := '1';
-signal memRead : std_logic := '1';
-signal memWrite : std_logic := '0';
-signal waitRequest : std_logic;
-
 signal pcIn : std_logic_vector(31 downto 0);
 signal pcOut : std_logic_vector(31 downto 0);
-signal adder_out : std_logic_vector(31 downto 0);
+signal en : std_logic := '1';
+
+signal adderOut : std_logic_vector(31 downto 0);
+
+signal writeData : std_logic_vector(31 downto 0);
+signal addr : integer range 0 to 1024-1;
+signal memWrite : std_logic := '0';
+signal memRead : std_logic := '1';
+signal readData : std_logic_vector(31 downto 0);
+signal waitRequest : std_logic;
 
 begin
-pcIn <= nextPC;
-address <= to_integer(unsigned(adder_out(9 downto 0)))/4;
+nextPC <= adderOut;
+addr <= to_integer(unsigned(adderOut(9 downto 0)))/4;
 
 	programCounter : entity work.PC
 	port map ( 
@@ -77,17 +78,17 @@ address <= to_integer(unsigned(adder_out(9 downto 0)))/4;
 			enable => en
 		);
 
-	add : adder4
+	add : entity work.adder4
 	port map ( 
 			add_in => pcOut,
-			add_out => adder_out
+			add_out => nextPC
 		);
 			  
-	getInstr : fetchInstr
+	getInstr : entity work.fetchInstr
 	port map ( 
 			clock => clock,
 			writedata => writeData,
-			address => address,
+			address => addr,
 			memwrite => memWrite,
 			memread => memRead,
 			readdata => instruction,
