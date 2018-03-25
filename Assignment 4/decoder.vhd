@@ -4,7 +4,7 @@ use ieee.numeric_std.all;
 use work.definitions.all;
 
 entity decoder is
-    port (
+port (
         -- inputs
         reset : in std_logic;
         clk : in std_logic;
@@ -12,18 +12,18 @@ entity decoder is
 
 
         -- outputs
-        register1_address : out address_type;
-        register2_address : out address_type;
+        register1_address : out std_logic_vector (4 downto 0);
+        register2_address : out std_logic_vector (4 downto 0);
         ALU_function : out std_logic_vector (4 downto 0);
         shift_amount : out std_logic_vector(4 downto 0);
 
         mem_store : out std_logic; --flagged for mem Write
         mem_load : out std_logic; -- flagged for mem load
-        output_register : out word_type;
-        writeback_register : out word_type; --flaged when result needs to be saved back in registers
+        output_register : out std_logic_vector (4 downto 0);
+        writeback_register : out std_logic --flaged when result needs to be saved back in registers
 
     ) ;
-end entity ; -- decode
+end decoder ; -- decode
 
 -- Similar ALU functions (ie same ALU_function): 
                             -- add = addi = lw = sw
@@ -34,7 +34,7 @@ end entity ; -- decode
                             -- mfhi = mflo
 
 
-architecture arch of decoder is
+architecture behavioral of decoder is
 
 
 begin
@@ -47,7 +47,7 @@ begin
     variable rt : std_logic_vector(4 downto 0);
     variable rd : std_logic_vector(4 downto 0);
     variable shamt : std_logic_vector(4 downto 0);-- only used for shift instructions
-    variable function : std_logic_vector(5 downto 0);
+    variable I_function : std_logic_vector(5 downto 0);
 
     begin
         -- retreive opcode from Instruction
@@ -58,11 +58,11 @@ begin
             rt := instruction_in(20 downto 16);
             rd := instruction_in(15 downto 11);
             shamt := instruction_in(10 downto 6);
-            function := instruction_in(5 downto 0);
+            I_function := instruction_in(5 downto 0);
             mem_store <= '0';
             mem_load <= '0';
             writeback_register <= '1';
-            case (function) is
+            case (I_function) is
 
                 when "100000" => --add 
                     ALU_function <= "00001";
@@ -127,7 +127,7 @@ begin
 
 
 
-        else if  opcode = "000011" then -- J type
+        elsif  opcode = "000011" then -- J type
 
 
 
@@ -167,7 +167,7 @@ begin
 
 
                 when "000101" => -- bne
-                    ALU_function <= 10010";
+                    ALU_function <= "10010";
 
 
                 when others =>
