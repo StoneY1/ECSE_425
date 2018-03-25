@@ -91,25 +91,25 @@ R21
 R12
 R22
 Ealu
-Z23 w1521918772
+Z23 w1521924811
 Z24 DPx4 work 11 definitions 0 22 GhNYzn:C0o[DEC^9EXXj73
 R1
 R2
 R3
 R4
-Z25 8P:\ECSE_425\Assignment 4\ALU.vhd
-Z26 FP:\ECSE_425\Assignment 4\ALU.vhd
+Z25 8P:/ECSE_425/Assignment 4/ALU.vhd
+Z26 FP:/ECSE_425/Assignment 4/ALU.vhd
 l0
 L6
 V9AlOJmcd6n5WjE:j@S]Ma3
 !s100 oLY[7UoX3daLfAhaNIJ110
 R7
 32
-Z27 !s110 1521920348
+Z27 !s110 1522007008
 !i10b 1
-Z28 !s108 1521920347.000000
-Z29 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|P:\ECSE_425\Assignment 4\ALU.vhd|
-Z30 !s107 P:\ECSE_425\Assignment 4\ALU.vhd|
+Z28 !s108 1522007008.000000
+Z29 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|P:/ECSE_425/Assignment 4/ALU.vhd|
+Z30 !s107 P:/ECSE_425/Assignment 4/ALU.vhd|
 !i113 1
 R12
 R13
@@ -176,47 +176,154 @@ R37
 !i113 1
 R12
 R13
-Pdefinitions
-R2
-R3
-Z38 w1521921370
-R4
-8P:/ECSE_425/Assignment 4/definitions.vhd
-FP:/ECSE_425/Assignment 4/definitions.vhd
-l0
-L4
-V@]NkgXL2e^3eVO32QU[LB2
-!s100 E3^Sd_[ThdWKXJQEF8XMD3
-R17
-32
-!s110 1521924239
-!i10b 1
-!s108 1521924239.000000
-!s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|P:/ECSE_425/Assignment 4/definitions.vhd|
-!s107 P:/ECSE_425/Assignment 4/definitions.vhd|
-!i113 1
-R12
-R22
-Eex_mem_stage
-Z39 w1521920172
+Edecoder
+Z38 w1522008749
 R24
 R1
 R2
 R3
 R4
-Z40 8P:\ECSE_425\Assignment 4\EX_MEM_Stage.vhd
-Z41 FP:\ECSE_425\Assignment 4\EX_MEM_Stage.vhd
+Z39 8P:/ECSE_425/Assignment 4/decoder.vhd
+Z40 FP:/ECSE_425/Assignment 4/decoder.vhd
+l0
+L6
+V?Bj5Qc0Nz>Y1if0K78]2H2
+!s100 7UU]XDJ1]hROm:2RNU_:G1
+R7
+32
+Z41 !s110 1522008761
+!i10b 1
+Z42 !s108 1522008761.000000
+Z43 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|P:/ECSE_425/Assignment 4/decoder.vhd|
+Z44 !s107 P:/ECSE_425/Assignment 4/decoder.vhd|
+!i113 1
+R12
+R13
+Abehavioral
+R24
+R1
+R2
+R3
+DEx4 work 7 decoder 0 22 ?Bj5Qc0Nz>Y1if0K78]2H2
+l40
+L37
+V3F>JzSU_miS5nWlh>V9c63
+!s100 XoRB721H02ZSdZlXR;5Da2
+R7
+32
+R41
+!i10b 1
+R42
+R43
+R44
+!i113 1
+R12
+R13
+Aarch
+R24
+R1
+R2
+R3
+DEx4 work 7 decoder 0 22 n=lWzGz;<;`0U1UlaDDMH2
+l40
+L37
+V`8YlJ]I@B1[VF=_lK_JiB1
+!s100 9512eURb5:DMM`S4k1Y@i0
+R7
+32
+!s110 1522008358
+!i10b 1
+!s108 1522008358.000000
+R43
+R44
+!i113 1
+R12
+R13
+w1522008354
+Edecodestage
+Z45 w1522014740
+R24
+R1
+R2
+R3
+R4
+Z46 8P:/ECSE_425/Assignment 4/DecodeStage.vhd
+Z47 FP:/ECSE_425/Assignment 4/DecodeStage.vhd
+l0
+L7
+VlABPAO6D:;?9O=Tee`M4W2
+!s100 2:DUK8_3zYOfQjLQiOd5g3
+R7
+32
+Z48 !s110 1522014744
+!i10b 1
+Z49 !s108 1522014744.000000
+Z50 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|P:/ECSE_425/Assignment 4/DecodeStage.vhd|
+Z51 !s107 P:/ECSE_425/Assignment 4/DecodeStage.vhd|
+!i113 1
+R12
+R13
+Abehavioral
+R24
+R1
+R2
+R3
+DEx4 work 11 decodestage 0 22 lABPAO6D:;?9O=Tee`M4W2
+l69
+L34
+VMgY^<`=0cK`[aml^7fRJ60
+!s100 `3KQSJA<l8bWgNLmkW9i92
+R7
+32
+R48
+!i10b 1
+R49
+R50
+R51
+!i113 1
+R12
+R13
+Pdefinitions
+R2
+R3
+w1521677966
+R4
+8P:/ECSE_425/Assignment 4/definitions.vhd
+FP:/ECSE_425/Assignment 4/definitions.vhd
+l0
+L4
+VGhNYzn:C0o[DEC^9EXXj73
+!s100 E3^Sd_[ThdWKXJQEF8XMD3
+R7
+32
+!s110 1522006918
+!i10b 1
+!s108 1522006918.000000
+!s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|P:/ECSE_425/Assignment 4/definitions.vhd|
+!s107 P:/ECSE_425/Assignment 4/definitions.vhd|
+!i113 1
+R12
+R13
+Eex_mem_stage
+Z52 w1521920172
+R24
+R1
+R2
+R3
+R4
+Z53 8P:\ECSE_425\Assignment 4\EX_MEM_Stage.vhd
+Z54 FP:\ECSE_425\Assignment 4\EX_MEM_Stage.vhd
 l0
 L6
 VDzX3@H=`TQ^ZH4IW;TbX51
 !s100 VW0n0lJUb7VOTRN?gI5fQ3
 R7
 32
-Z42 !s110 1521920175
+Z55 !s110 1521920175
 !i10b 1
-Z43 !s108 1521920175.000000
-Z44 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|P:\ECSE_425\Assignment 4\EX_MEM_Stage.vhd|
-Z45 !s107 P:\ECSE_425\Assignment 4\EX_MEM_Stage.vhd|
+Z56 !s108 1521920175.000000
+Z57 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|P:\ECSE_425\Assignment 4\EX_MEM_Stage.vhd|
+Z58 !s107 P:\ECSE_425\Assignment 4\EX_MEM_Stage.vhd|
 !i113 1
 R12
 R13
@@ -232,39 +339,39 @@ VoF3kAj1Y2znZiV?Ak8>k12
 !s100 dnhMFI>8R2N^61WV4;0_L3
 R7
 32
-R42
+R55
 !i10b 1
-R43
-R44
-R45
+R56
+R57
+R58
 !i113 1
 R12
 R13
 Efetchinstr
-Z46 w1521922616
-Z47 DPx4 ieee 16 std_logic_textio 0 22 V5TSK`;aJKC<l]CEg1>mz1
+Z59 w1521922616
+Z60 DPx4 ieee 16 std_logic_textio 0 22 V5TSK`;aJKC<l]CEg1>mz1
 R1
 R2
 R3
 R4
-Z48 8P:/ECSE_425/Assignment 4/FetchInstruction.vhd
-Z49 FP:/ECSE_425/Assignment 4/FetchInstruction.vhd
+Z61 8P:/ECSE_425/Assignment 4/FetchInstruction.vhd
+Z62 FP:/ECSE_425/Assignment 4/FetchInstruction.vhd
 l0
 L8
 Vbb;l]E5l=XfC<;5jPAU:N0
 !s100 9hzKlcOc08jmHi;KhofCo0
 R17
 32
-Z50 !s110 1521922622
+Z63 !s110 1521922622
 !i10b 1
-Z51 !s108 1521922622.000000
-Z52 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|P:/ECSE_425/Assignment 4/FetchInstruction.vhd|
-Z53 !s107 P:/ECSE_425/Assignment 4/FetchInstruction.vhd|
+Z64 !s108 1521922622.000000
+Z65 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|P:/ECSE_425/Assignment 4/FetchInstruction.vhd|
+Z66 !s107 P:/ECSE_425/Assignment 4/FetchInstruction.vhd|
 !i113 1
 R12
 R22
 Artl
-R47
+R60
 R1
 R2
 R3
@@ -275,34 +382,34 @@ Vi3=_l[UN]jQdkBeXXa1f73
 !s100 F@^N9ABjQaPeZUFL=4>2j2
 R17
 32
-R50
+R63
 !i10b 1
-R51
-R52
-R53
+R64
+R65
+R66
 !i113 1
 R12
 R22
 Eid_ex_stage
-Z54 w1521920213
+Z67 w1521920213
 R24
 R1
 R2
 R3
 R4
-Z55 8P:\ECSE_425\Assignment 4\ID_EX_Stage.vhd
-Z56 FP:\ECSE_425\Assignment 4\ID_EX_Stage.vhd
+Z68 8P:\ECSE_425\Assignment 4\ID_EX_Stage.vhd
+Z69 FP:\ECSE_425\Assignment 4\ID_EX_Stage.vhd
 l0
 L6
 V65[j5TzoO0K3Rh>1WYm1B2
 !s100 h>Oc5_cOLIPo`HL]`g@ad1
 R7
 32
-Z57 !s110 1521920216
+Z70 !s110 1521920216
 !i10b 1
-Z58 !s108 1521920216.000000
-Z59 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|P:\ECSE_425\Assignment 4\ID_EX_Stage.vhd|
-Z60 !s107 P:\ECSE_425\Assignment 4\ID_EX_Stage.vhd|
+Z71 !s108 1521920216.000000
+Z72 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|P:\ECSE_425\Assignment 4\ID_EX_Stage.vhd|
+Z73 !s107 P:\ECSE_425\Assignment 4\ID_EX_Stage.vhd|
 !i113 1
 R12
 R13
@@ -318,34 +425,34 @@ V3a<?oHOHSY<gSz7D`MgzW2
 !s100 R>J5PXOVJVWK]JQLn]]6R3
 R7
 32
-R57
+R70
 !i10b 1
-R58
-R59
-R60
+R71
+R72
+R73
 !i113 1
 R12
 R13
 Eif_id_stage
-Z61 w1521683657
+Z74 w1521683657
 R24
 R1
 R2
 R3
 R4
-Z62 8P:\ECSE_425\Assignment 4\IF_ID_Stage.vhd
-Z63 FP:\ECSE_425\Assignment 4\IF_ID_Stage.vhd
+Z75 8P:\ECSE_425\Assignment 4\IF_ID_Stage.vhd
+Z76 FP:\ECSE_425\Assignment 4\IF_ID_Stage.vhd
 l0
 L6
 VXb[12TEeEl=I__dAoBTNI2
 !s100 7mhhN8k9bi@2z=`G_>z:_1
 R7
 32
-Z64 !s110 1521920234
+Z77 !s110 1521920234
 !i10b 1
-Z65 !s108 1521920234.000000
-Z66 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|P:\ECSE_425\Assignment 4\IF_ID_Stage.vhd|
-Z67 !s107 P:\ECSE_425\Assignment 4\IF_ID_Stage.vhd|
+Z78 !s108 1521920234.000000
+Z79 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|P:\ECSE_425\Assignment 4\IF_ID_Stage.vhd|
+Z80 !s107 P:\ECSE_425\Assignment 4\IF_ID_Stage.vhd|
 !i113 1
 R12
 R13
@@ -361,34 +468,34 @@ V0Y]5:WF`>bSg_cBCS>=GD3
 !s100 Iz^9YF0Fa`6`Shz5D^RO81
 R7
 32
-R64
+R77
 !i10b 1
-R65
-R66
-R67
+R78
+R79
+R80
 !i113 1
 R12
 R13
 Eimm_mux
-Z68 w1521847976
+Z81 w1521847976
 R24
 R1
 R2
 R3
 R4
-R25
-R26
+Z82 8P:\ECSE_425\Assignment 4\ALU.vhd
+Z83 FP:\ECSE_425\Assignment 4\ALU.vhd
 l0
 L6
 V^9ln33@TM0mhTi4N04haX2
 !s100 ?XU`I4[@5dUfJBAPSQ[U^3
 R7
 32
-Z69 !s110 1521913397
+Z84 !s110 1521913397
 !i10b 1
-Z70 !s108 1521913397.000000
-R29
-R30
+Z85 !s108 1521913397.000000
+Z86 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|P:\ECSE_425\Assignment 4\ALU.vhd|
+Z87 !s107 P:\ECSE_425\Assignment 4\ALU.vhd|
 !i113 1
 R12
 R13
@@ -404,77 +511,77 @@ VZVCK?Mgfhe48^MoFGMO_Y2
 !s100 YhO6L@<8hD@50X93NGIeG3
 R7
 32
-R69
+R84
 !i10b 1
-R70
-R29
-R30
+R85
+R86
+R87
 !i113 1
 R12
 R13
 Einstrfetchstage
-Z71 w1521925960
-R47
+Z88 w1521925960
+R60
 R1
 R2
 R3
 R4
-Z72 8P:/ECSE_425/Assignment 4/InstructionFetchStage.vhd
-Z73 FP:/ECSE_425/Assignment 4/InstructionFetchStage.vhd
+Z89 8P:/ECSE_425/Assignment 4/InstructionFetchStage.vhd
+Z90 FP:/ECSE_425/Assignment 4/InstructionFetchStage.vhd
 l0
 L8
 VWPZFKgNE4`15WKl^ieTg53
 !s100 oe85WVViN`6k8RRH<;ez21
 R17
 32
-Z74 !s110 1521925963
+Z91 !s110 1521925963
 !i10b 1
-Z75 !s108 1521925963.000000
-Z76 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|P:/ECSE_425/Assignment 4/InstructionFetchStage.vhd|
-Z77 !s107 P:/ECSE_425/Assignment 4/InstructionFetchStage.vhd|
+Z92 !s108 1521925963.000000
+Z93 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|P:/ECSE_425/Assignment 4/InstructionFetchStage.vhd|
+Z94 !s107 P:/ECSE_425/Assignment 4/InstructionFetchStage.vhd|
 !i113 1
 R12
 R22
 Abehaviour
-R47
+R60
 R1
 R2
 R3
-Z78 DEx4 work 15 instrfetchstage 0 22 WPZFKgNE4`15WKl^ieTg53
+DEx4 work 15 instrfetchstage 0 22 WPZFKgNE4`15WKl^ieTg53
 l68
 L17
-Z79 Vj0R:O4PbPlGAdQX>RNnVA2
-Z80 !s100 F_UbCj8Bb4;0K58LkZ=gU2
+Vj0R:O4PbPlGAdQX>RNnVA2
+!s100 F_UbCj8Bb4;0K58LkZ=gU2
 R17
 32
-R74
+R91
 !i10b 1
-R75
-R76
-R77
+R92
+R93
+R94
 !i113 1
 R12
 R22
 Emem_wb_stage
-Z81 w1521920334
+Z95 w1521920334
 R24
 R1
 R2
 R3
 R4
-Z82 8P:\ECSE_425\Assignment 4\MEM_WB_Stage.vhd
-Z83 FP:\ECSE_425\Assignment 4\MEM_WB_Stage.vhd
+Z96 8P:\ECSE_425\Assignment 4\MEM_WB_Stage.vhd
+Z97 FP:\ECSE_425\Assignment 4\MEM_WB_Stage.vhd
 l0
 L6
 VW2noCe^NRVz<EbR5JAUEb2
 !s100 MmFFS;k@HB_C:T>:AcR[I3
 R7
 32
-Z84 !s110 1521920337
+Z98 !s110 1521920337
 !i10b 1
-Z85 !s108 1521920337.000000
-Z86 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|P:\ECSE_425\Assignment 4\MEM_WB_Stage.vhd|
-Z87 !s107 P:\ECSE_425\Assignment 4\MEM_WB_Stage.vhd|
+Z99 !s108 1521920337.000000
+Z100 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|P:\ECSE_425\Assignment 4\MEM_WB_Stage.vhd|
+Z101 !s107 P:\ECSE_425\Assignment 4\MEM_WB_Stage.vhd|
 !i113 1
 R12
 R13
@@ -490,39 +597,39 @@ V55D>2l8j^_139n?:eg6ZQ1
 !s100 9gkCo<eD7fd?FUKeFAk;W2
 R7
 32
-R84
+R98
 !i10b 1
-R85
-R86
-R87
+R99
+R100
+R101
 !i113 1
 R12
 R13
 Ememory
-Z88 w1521920408
-R47
+Z102 w1521920408
+R60
 R1
 R2
 R3
 R4
-R48
-R49
+R61
+R62
 l0
 L8
 Vbocmenz[^=W>al_`zFTnU0
 !s100 Hj8EEKRPOK_0aFAD?33^33
 R17
 32
-Z89 !s110 1521921518
+Z103 !s110 1521921518
 !i10b 1
-Z90 !s108 1521921518.000000
-R52
-R53
+Z104 !s108 1521921518.000000
+R65
+R66
 !i113 1
 R12
 R22
 Artl
-R47
+R60
 R1
 R2
 R3
@@ -533,34 +640,34 @@ VWGcT4@a;9QhW5h?IN4]ec0
 !s100 LGU^zCQJcJ1cJbVB`Ioml0
 R17
 32
-R89
+R103
 !i10b 1
-R90
-R52
-R53
+R104
+R65
+R66
 !i113 1
 R12
 R22
 Epc
-R38
+Z105 w1521921370
 R24
 R1
 R2
 R3
 R4
-Z91 8P:/ECSE_425/Assignment 4/PC.vhd
-Z92 FP:/ECSE_425/Assignment 4/PC.vhd
+Z106 8P:/ECSE_425/Assignment 4/PC.vhd
+Z107 FP:/ECSE_425/Assignment 4/PC.vhd
 l0
 L6
 VdnW3@5b;<cJ<cVJIbJ1Ke1
 !s100 oGi^WhaV39j:Wf`=j4l@^2
 R17
 32
-Z93 !s110 1521923880
+Z108 !s110 1521923880
 !i10b 1
-Z94 !s108 1521923880.000000
-Z95 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|P:/ECSE_425/Assignment 4/PC.vhd|
-Z96 !s107 P:/ECSE_425/Assignment 4/PC.vhd|
+Z109 !s108 1521923880.000000
+Z110 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|P:/ECSE_425/Assignment 4/PC.vhd|
+Z111 !s107 P:/ECSE_425/Assignment 4/PC.vhd|
 !i113 1
 R12
 R22
@@ -576,11 +683,54 @@ VL`XGSFD9BNf3^nmoaEPL60
 !s100 BXMLlm9WV`@__8DGYO_h71
 R17
 32
-R93
+R108
 !i10b 1
-R94
-R95
-R96
+R109
+R110
+R111
 !i113 1
 R12
 R22
+Eregister_file
+Z112 w1522012667
+R24
+R1
+R2
+R3
+R4
+Z113 8P:/ECSE_425/Assignment 4/register_file.vhd
+Z114 FP:/ECSE_425/Assignment 4/register_file.vhd
+l0
+L7
+VBAkfdbWfQ25<EZFVhEj[H2
+!s100 nVP7Hf3`6o8TPSiLb^VVA3
+R7
+32
+Z115 !s110 1522012670
+!i10b 1
+Z116 !s108 1522012670.000000
+Z117 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|P:/ECSE_425/Assignment 4/register_file.vhd|
+Z118 !s107 P:/ECSE_425/Assignment 4/register_file.vhd|
+!i113 1
+R12
+R13
+Abehaviour
+R24
+R1
+R2
+R3
+DEx4 work 13 register_file 0 22 BAkfdbWfQ25<EZFVhEj[H2
+l27
+L21
+V[7CfTRhN?I1d:7_hEDP192
+!s100 `aF1P>6]8=5`;;J^o6hP]2
+R7
+32
+R115
+!i10b 1
+R116
+R117
+R118
+!i113 1
+R12
+R13
