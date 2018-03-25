@@ -21,7 +21,10 @@ begin
 
 	process (clock,reset)
 	begin
-	
+		if (now < 1 ps) THEN	
+			PC_out <=  std_logic_vector(to_unsigned(1, 32));
+		end if; 
+
 		if (reset = '1') then
 			PC_out <= (others => '0');
 		elsif (rising_edge(clock) and clock = '1') then 	

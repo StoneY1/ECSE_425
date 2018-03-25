@@ -69,7 +69,7 @@ begin
 nextPC <= adderOut;
 addr <= to_integer(unsigned(adderOut(9 downto 0)))/4;
 
-	programCounter : entity work.PC
+	programCounter : PC
 	port map ( 
 			clock => clock,
 			reset => reset,
@@ -78,13 +78,13 @@ addr <= to_integer(unsigned(adderOut(9 downto 0)))/4;
 			enable => en
 		);
 
-	add : entity work.adder4
+	add : adder4
 	port map ( 
 			add_in => pcOut,
 			add_out => nextPC
 		);
 			  
-	getInstr : entity work.fetchInstr
+	getInstr : fetchInstr
 	port map ( 
 			clock => clock,
 			writedata => writeData,

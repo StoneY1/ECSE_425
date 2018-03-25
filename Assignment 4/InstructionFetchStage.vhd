@@ -33,7 +33,7 @@ component adder4 is
 	);
 end component;
 
-component fetchInstr is
+component FetchInstruction is
 	GENERIC(
 		ram_size : integer := 1024;
 		mem_delay : time := 0 ns;
@@ -84,7 +84,7 @@ addr <= to_integer(unsigned(adderOut(9 downto 0)))/4;
 			add_out => nextPC
 		);
 			  
-	getInstr : fetchInstr
+	getInstr : FetchInstruction
 	port map ( 
 			clock => clock,
 			writedata => writeData,

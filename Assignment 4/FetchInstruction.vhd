@@ -5,7 +5,7 @@ USE ieee.numeric_std.all;
 USE std.textio.all;
 USE ieee.std_logic_textio.all;
 
-ENTITY fetchInstr IS
+ENTITY FetchInstruction IS
 	GENERIC(
 		ram_size : integer := 1024;
 		mem_delay : time := 0 ns;
@@ -20,9 +20,9 @@ ENTITY fetchInstr IS
 		readdata: out std_logic_vector (31 downto 0);
 		waitrequest: out std_logic
 	);
-END fetchInstr;
+END FetchInstruction;
 
-ARCHITECTURE rtl OF fetchInstr IS
+ARCHITECTURE rtl OF FetchInstruction IS
 	TYPE MEM IS ARRAY(ram_size-1 downto 0) OF STD_LOGIC_VECTOR(31 DOWNTO 0);
 	SIGNAL ram_block: MEM;
 	SIGNAL read_address_reg: INTEGER RANGE 0 to ram_size-1;
