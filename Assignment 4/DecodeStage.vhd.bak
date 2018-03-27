@@ -33,7 +33,7 @@ end DecodeStage;
 
 architecture behavioral of DecodeStage is
 --component declaration
-component register_file port	PORT (
+component register_file port (
 		clock: IN STD_LOGIC;
 		r1, r2, write_address: IN STD_LOGIC_VECTOR (4 DOWNTO 0); --register addresses taken from instruction decoder and write info from WB stage
 		write_data : IN word_type;
@@ -70,8 +70,8 @@ begin
 
 ID_stage_register : register_file port map(	clock => clk,
 						write_enable =>	write_enable,
-						r1 => regAdd_r1,
-						r2 => regAdd_r2,
+						r1 => register1_address,
+						r2 => register2_address,
 						write_address => register_write_address,
 						write_data => write_data,
 						r1_out => R1,
@@ -80,8 +80,8 @@ ID_stage_register : register_file port map(	clock => clk,
 decoderComp : decoder port map(			reset => reset,
 						clk =>	clk,
 						instruction_in => instruction_in,
-						register1_address => regAdd_r1,
-						register2_address => regAdd_r2,
+						register1_address => r1,
+						register2_address => r2,
 						ALU_function => ALU_function,
 						shift_amount => shift_amount,
 						mem_store => mem_store,
