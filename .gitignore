@@ -1,0 +1,10 @@
+#ModelSim Project file
+*.mpf*
+*mti
+*.bak
+*.wlf
+
+#work folder ignore
+Assignment\ 3/work/*
+Assignment\ 4/work/*
+
