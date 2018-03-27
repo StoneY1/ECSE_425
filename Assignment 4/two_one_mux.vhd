@@ -4,7 +4,7 @@ use ieee.numeric_std.all;
 
 entity two_one_mux is
 port (clk : in std_logic;
-      sel : in bit;
+      sel : in std_logic;
       in1, in2 : in std_logic_vector(31 downto 0);
       output : out std_logic_vector(31 downto 0)
   );
@@ -18,6 +18,7 @@ architecture behavioural of two_one_mux is
         case sel is
           when '0' => output <= in1;
           when '1' => output <= in2;
+	  when OTHERS => output <= in1;
         end case;
       end if;
   end process;
