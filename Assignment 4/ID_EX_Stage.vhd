@@ -6,8 +6,8 @@ use work.definitions.all;
 entity ID_EX_Stage is
     Port 
 	--Check ALU code lengths
-        ( ALU_code_in   : in    address_type
-        ; ALU_code_out  : out   address_type
+        ( ALU_code_in   : in    std_logic_vector(4 downto 0)
+        ; ALU_code_out  : out   std_logic_vector(4 downto 0)
 	; register1_value_in : in word_type
 	; register1_value_out : out word_type
 	; register2_value_in : in word_type
@@ -18,8 +18,8 @@ entity ID_EX_Stage is
         ; store_out     : out   std_logic
 	; load_in	: in std_logic
 	; load_out	: out std_logic
-	; dest_register_in : in address_type
-	; dest_register_out : out address_type
+	; dest_register_in : in word_type
+	; dest_register_out : out word_type
 	; immediate_operation_in : in std_logic
 	; immediate_operation_out : out std_logic
 	; write_back_in : in std_logic

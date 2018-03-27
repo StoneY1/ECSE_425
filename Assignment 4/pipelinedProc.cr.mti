@@ -44,6 +44,16 @@ Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  
 -- Compiling entity decoder
 -- Compiling architecture behavioral of decoder
 
+} {} {}} {P:/ECSE_425/Assignment 4/ExecuteStage.vhd} {1 {vcom -work work -2002 -explicit -stats=none {P:/ECSE_425/Assignment 4/ExecuteStage.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package definitions
+-- Compiling entity ExecuteStage
+-- Compiling architecture behavioral of ExecuteStage
+
 } {} {}} {P:/ECSE_425/Assignment 4/MEM_WB_Stage.vhd} {1 {vcom -work work -2002 -explicit -stats=none {P:/ECSE_425/Assignment 4/MEM_WB_Stage.vhd}
 Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
 -- Loading package STANDARD
@@ -83,17 +93,7 @@ Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  
 -- Compiling entity PC
 -- Compiling architecture behavior of PC
 
-} {} {}} {P:/ECSE_425/Assignment 4/imm_mux.vhd} {1 {vcom -work work -2002 -explicit -stats=none {P:/ECSE_425/Assignment 4/imm_mux.vhd}
-Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package NUMERIC_STD
--- Loading package definitions
--- Compiling entity imm_mux
--- Compiling architecture behavioral of imm_mux
-
-} {} {}} {P:/ECSE_425/Assignment 4/ID_EX_Stage.vhd} {1 {vcom -work work -2002 -explicit -stats=none {P:/ECSE_425/Assignment 4/ID_EX_Stage.vhd}
+} {} {}} {P:/ECSE_425/Assignment 4/ID_EX_Stage.vhd} {1 {vcom -work work -2002 -explicit -stats=none {P:\ECSE_425\Assignment 4\ID_EX_Stage.vhd}
 Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
 -- Loading package STANDARD
 -- Loading package TEXTIO
@@ -103,7 +103,7 @@ Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  
 -- Compiling entity ID_EX_Stage
 -- Compiling architecture behavior of ID_EX_Stage
 
-} {} {}} {P:/ECSE_425/Assignment 4/register_file.vhd} {1 {vcom -work work -2002 -explicit -stats=none {P:\ECSE_425\Assignment 4\register_file.vhd}
+} {} {}} {P:/ECSE_425/Assignment 4/register_file.vhd} {1 {vcom -work work -2002 -explicit -stats=none {P:/ECSE_425/Assignment 4/register_file.vhd}
 Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
 -- Loading package STANDARD
 -- Loading package TEXTIO
@@ -112,6 +112,16 @@ Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  
 -- Loading package definitions
 -- Compiling entity register_file
 -- Compiling architecture behaviour of register_file
+
+} {} {}} {P:/ECSE_425/Assignment 4/imm_mux.vhd} {1 {vcom -work work -2002 -explicit -stats=none {P:/ECSE_425/Assignment 4/imm_mux.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package definitions
+-- Compiling entity imm_mux
+-- Compiling architecture behavioral of imm_mux
 
 } {} {}} {P:/ECSE_425/Assignment 4/2_to_1_mux.vhd} {1 {vcom -work work -2002 -explicit -stats=none {P:/ECSE_425/Assignment 4/2_to_1_mux.vhd}
 Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
