@@ -18,6 +18,13 @@ Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  
 -- Compiling entity FetchInstruction
 -- Compiling architecture rtl of FetchInstruction
 
+} {} {}} {P:/ECSE_425/Assignment 4/definitions.vhd} {1 {vcom -work work -2002 -explicit -stats=none {P:/ECSE_425/Assignment 4/definitions.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling package definitions
+
 } {} {}} {P:/ECSE_425/Assignment 4/adder4.vhd} {1 {vcom -work work -2002 -explicit -stats=none {P:/ECSE_425/Assignment 4/adder4.vhd}
 Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
 -- Loading package STANDARD
@@ -27,12 +34,15 @@ Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  
 -- Compiling entity adder4
 -- Compiling architecture behaviour of adder4
 
-} {} {}} {P:/ECSE_425/Assignment 4/definitions.vhd} {1 {vcom -work work -2002 -explicit -stats=none {P:/ECSE_425/Assignment 4/definitions.vhd}
+} {} {}} {P:/ECSE_425/Assignment 4/decoder.vhd} {1 {vcom -work work -2002 -explicit -stats=none {P:/ECSE_425/Assignment 4/decoder.vhd}
 Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
--- Compiling package definitions
+-- Loading package NUMERIC_STD
+-- Loading package definitions
+-- Compiling entity decoder
+-- Compiling architecture behavioral of decoder
 
 } {} {}} {P:/ECSE_425/Assignment 4/MEM_WB_Stage.vhd} {1 {vcom -work work -2002 -explicit -stats=none {P:/ECSE_425/Assignment 4/MEM_WB_Stage.vhd}
 Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
@@ -44,6 +54,15 @@ Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  
 -- Compiling entity MEM_WB_Stage
 -- Compiling architecture behavior of MEM_WB_Stage
 
+} {} {}} {P:/ECSE_425/Assignment 4/data_memory.vhd} {1 {vcom -work work -2002 -explicit -stats=none {P:/ECSE_425/Assignment 4/data_memory.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity data_memory
+-- Compiling architecture rtl of data_memory
+
 } {} {}} {P:/ECSE_425/Assignment 4/ALU.vhd} {1 {vcom -work work -2002 -explicit -stats=none {P:/ECSE_425/Assignment 4/ALU.vhd}
 Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
 -- Loading package STANDARD
@@ -53,6 +72,16 @@ Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  
 -- Loading package definitions
 -- Compiling entity ALU
 -- Compiling architecture behavioral of ALU
+
+} {} {}} {P:/ECSE_425/Assignment 4/PC.vhd} {1 {vcom -work work -2002 -explicit -stats=none {P:/ECSE_425/Assignment 4/PC.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package definitions
+-- Compiling entity PC
+-- Compiling architecture behavior of PC
 
 } {} {}} {P:/ECSE_425/Assignment 4/imm_mux.vhd} {1 {vcom -work work -2002 -explicit -stats=none {P:/ECSE_425/Assignment 4/imm_mux.vhd}
 Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
@@ -74,6 +103,25 @@ Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  
 -- Compiling entity ID_EX_Stage
 -- Compiling architecture behavior of ID_EX_Stage
 
+} {} {}} {P:/ECSE_425/Assignment 4/register_file.vhd} {1 {vcom -work work -2002 -explicit -stats=none {P:\ECSE_425\Assignment 4\register_file.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package definitions
+-- Compiling entity register_file
+-- Compiling architecture behaviour of register_file
+
+} {} {}} {P:/ECSE_425/Assignment 4/2_to_1_mux.vhd} {1 {vcom -work work -2002 -explicit -stats=none {P:/ECSE_425/Assignment 4/2_to_1_mux.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity two_one_mux
+-- Compiling architecture behavioural of two_one_mux
+
 } {} {}} {P:/ECSE_425/Assignment 4/EX_MEM_Stage.vhd} {1 {vcom -work work -2002 -explicit -stats=none {P:/ECSE_425/Assignment 4/EX_MEM_Stage.vhd}
 Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
 -- Loading package STANDARD
@@ -94,15 +142,14 @@ Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  
 -- Compiling entity IF_ID_Stage
 -- Compiling architecture behavior of IF_ID_Stage
 
-} {} {}} {P:/ECSE_425/Assignment 4/InstructionFetchStage.vhd} {1 {vcom -work work -2002 -explicit -stats=none {P:/ECSE_425/Assignment 4/InstructionFetchStage.vhd}
+} {} {}} {P:/ECSE_425/Assignment 4/data_memory_tb.vhd} {1 {vcom -work work -2002 -explicit -stats=none {P:/ECSE_425/Assignment 4/data_memory_tb.vhd}
 Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
 -- Loading package NUMERIC_STD
--- Loading package std_logic_textio
--- Compiling entity instrFetchStage
--- Compiling architecture behaviour of instrFetchStage
+-- Compiling entity data_memory_tb
+-- Compiling architecture behaviour of data_memory_tb
 
 } {} {}} {P:/ECSE_425/Assignment 4/adder.vhd} {1 {vcom -work work -2002 -explicit -stats=none {P:/ECSE_425/Assignment 4/adder.vhd}
 Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
@@ -112,5 +159,25 @@ Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  
 -- Loading package NUMERIC_STD
 -- Compiling entity adder
 -- Compiling architecture behavior of adder
+
+} {} {}} {P:/ECSE_425/Assignment 4/DecodeStage.vhd} {1 {vcom -work work -2002 -explicit -stats=none {P:/ECSE_425/Assignment 4/DecodeStage.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package definitions
+-- Compiling entity DecodeStage
+-- Compiling architecture behavioral of DecodeStage
+
+} {} {}} {P:/ECSE_425/Assignment 4/InstructionFetchStage.vhd} {1 {vcom -work work -2002 -explicit -stats=none {P:/ECSE_425/Assignment 4/InstructionFetchStage.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package std_logic_textio
+-- Compiling entity instrFetchStage
+-- Compiling architecture behaviour of instrFetchStage
 
 } {} {}}

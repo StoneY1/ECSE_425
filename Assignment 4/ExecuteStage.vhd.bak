@@ -53,7 +53,6 @@ component imm_mux port (
 --signal declaration
 signal firstInput : word_type;
 signal secondInput : word_type;
-signal immediateMuxOutput : word_type;
 
 begin 
 
@@ -66,20 +65,12 @@ aluInputOne : ALU_Input_MUX port map(
 	outputSelect => inputOneSelect,
 	output => firstInput);
 
-immediateMux : imm_mux port map(
-	clk => clk,
-	registerValue => register2_value_in,
-	immediateValue => immediate_value_in,
-	outputSelect => immediate_operation_in,
-	output => immediateMuxOutput);
-	
-
 aluInputTwo : ALU_Input_MUX port map(
 	clk => clk,
 	executeForward => executeForward,
 	memForward => memForward,
 	wbForward => wbForward,
-	registerValue => immediateMuxOutput,
+	registerValue => register2_value_in,
 	outputSelect => inputTwoSelect,
 	output => secondInput);
 

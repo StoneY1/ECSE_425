@@ -14,7 +14,7 @@ ENTITY register_file IS
 		write_data : IN word_type;
 		write_enable: IN STD_LOGIC;
 
-		r1_out, r2_out: OUT word_type --contents retrieved from register for execution stage
+		r1_out, r2_out: OUT STD_LOGIC_VECTOR (31 DOWNTO 0) --contents retrieved from register for execution stage
 	);
 END register_file;
 
