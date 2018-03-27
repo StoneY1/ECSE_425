@@ -96,6 +96,34 @@ component ExecuteStage port (
 	; write_back_in : in std_logic
 	; ALU_value_out : out word_type
 ); end component;
+
+
+component EX_MEM_Stage port (
+	--Check ALU code lengths
+        ALU_value_in   : in    word_type
+        ; ALU_value_out  : out   word_type
+	; register2_value_in : in word_type
+	; register2_value_out : out word_type
+        ; store_in      : in    std_logic
+        ; store_out     : out   std_logic
+	; load_in	: in std_logic
+	; load_out	: out std_logic
+	; dest_register_in : in address_type
+	; dest_register_out : out address_type
+	; write_back_in : in std_logic
+	; write_back_out : out std_logic
+        ; reset               : in    std_logic
+        ; clk                 : in    std_logic
+
+); end component;
+
+component MemoryStage port (
+--TODO write port component
+
+); end component;
+
+
+
 -- declaring signals
 signal R1_ID : word_type;
 signal R2_ID : word_type;
