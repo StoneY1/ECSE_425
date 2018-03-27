@@ -8,7 +8,6 @@ use ieee.std_logic_textio.all;
 entity instrFetchStage is
 	Port ( 
 		clock : in std_logic;
-		nextPC : out std_logic_vector(31 downto 0);
 		instruction : out std_logic_vector(31 downto 0)
 	);
 end instrFetchStage;
@@ -33,20 +32,14 @@ component adder4 is
 	);
 end component;
 
-component FetchInstruction is
+component fetchInstr is
 	GENERIC(
-		ram_size : integer := 1024;
-		mem_delay : time := 0 ns;
-		clock_period : time := 1 ns
+		ram_size : integer := 1024
 	);
 	PORT (
 		clock: in std_logic;
-		writedata: in std_logic_vector (31 downto 0);
 		address: in integer range 0 to ram_size-1;
-		memwrite: in std_logic;
-		memread: in std_logic;
-		readdata: out std_logic_vector (31 downto 0);
-		waitrequest: out std_logic
+		readdata: out std_logic_vector (31 downto 0)
 	);
 end component;
 
@@ -57,16 +50,10 @@ signal pcOut : std_logic_vector(31 downto 0);
 signal en : std_logic := '1';
 
 signal adderOut : std_logic_vector(31 downto 0);
-
-signal writeData : std_logic_vector(31 downto 0);
 signal addr : integer range 0 to 1024-1;
-signal memWrite : std_logic := '0';
-signal memRead : std_logic := '1';
-signal readData : std_logic_vector(31 downto 0);
-signal waitRequest : std_logic;
 
 begin
-nextPC <= adderOut;
+pcIn <= adderOut;
 addr <= to_integer(unsigned(adderOut(9 downto 0)))/4;
 
 	programCounter : PC
@@ -81,18 +68,14 @@ addr <= to_integer(unsigned(adderOut(9 downto 0)))/4;
 	add : adder4
 	port map ( 
 			add_in => pcOut,
-			add_out => nextPC
+			add_out => adderOut
 		);
 			  
-	getInstr : FetchInstruction
+	getInstr : fetchInstr
 	port map ( 
 			clock => clock,
-			writedata => writeData,
 			address => addr,
-			memwrite => memWrite,
-			memread => memRead,
-			readdata => instruction,
-			waitrequest => waitRequest
+			readdata => instruction
 		);
 
 end behaviour;
