@@ -5,15 +5,15 @@ use ieee.numeric_std.all;
 use std.textio.all;
 use ieee.std_logic_textio.all;
 
-entity instrFetchStage is
+entity InstrFetchStage is
 	Port ( 
 		clock : in std_logic;
 		instruction : out std_logic_vector(31 downto 0)
 	);
-end instrFetchStage;
+end InstrFetchStage;
 
 
-architecture behaviour of instrFetchStage is
+architecture behaviour of InstrFetchStage is
 
 component pc is
 	Port ( 

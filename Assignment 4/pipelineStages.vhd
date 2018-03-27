@@ -8,7 +8,6 @@ port (
 		--inputs
 		reset : in std_logic;
 		clk : in std_logic;
-		instruction_in : in word_type;
 		
 		write_enable : in std_logic;
 		register_write_address : in std_logic_vector(4 downto 0);
@@ -31,6 +30,13 @@ end pipelineStages;
 architecture behavioral of pipelineStages is
 
 --declaring components
+component InstructionFetchStage port (
+
+	clock : in std_logic;
+	instruction : out std_logic_vector(31 downto 0)
+
+); end component;
+
 component DecodeStage port (
 	-- inputs
     reset : in std_logic;
@@ -134,8 +140,14 @@ signal ALU_function_ex : std_logic_vector(4 downto 0);
 signal mem_store_id : std_logic;
 signal mem_load_id : std_logic;
 signal output_register_id : std_logic_vector(4 downto 0); 
+signal instruction_in : word_type;
 
 begin 
+
+IF_Stage : InstructionFetchStage port map(
+							clock => clk,
+							instruction => instruction_in
+								);
 
 ID_Stage : DecodeStage port map(
 							reset => reset,
