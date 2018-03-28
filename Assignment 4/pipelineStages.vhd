@@ -196,33 +196,42 @@ signal writeback_register_MEM_WB_OUT :  std_logic; --flaged when result needs to
 begin 
 
 IF_Stage : InstructionFetchStage port map(
+							--INPUT PORTS
 							clock => clk,
+							
+							--OUTPUT PORTS
 							instruction => instruction_IN
 								);
 
 IF_ID : IF_ID_Stage port map(
-							inst_in => instruction_IN,
-							inst_out => instruction_OUT,
+							--INPUT PORTS
 							reset => reset,
-							clk => clk
+							clk => clk,
+							--PC_in => ,
+							inst_in => instruction_IN,
+							--insert_stall => ,
+
+							--OUTPUT PORTS
+							--PC_out  => ,
+							inst_out => instruction_OUT
+
 							);
 								
 								
 ID_Stage : DecodeStage port map(
+							--INPUT PORTS
 							reset => reset,
 							clk => clk,
 							instruction_in => instruction_OUT,
-
 							write_enable => write_enable,
 							register_write_address => register_write_address,
 							write_data => write_data,
 
-
-							-- outputs to EX stage
+							--OUTPUT PORTS
 							R1 => R1_ID,
 							R2 => R2_ID,
 							ALU_function => ALU_function_id,
-							
+							--shift_amount => ,
 							mem_store => mem_store_ID_EX_IN,--flagged for mem Write
 							mem_load => mem_load_ID_EX_IN,-- flagged for mem load
 							output_register => output_register_ID_EX_IN,
@@ -230,26 +239,33 @@ ID_Stage : DecodeStage port map(
 								);
 								
 ID_EX : ID_EX_Stage port map(
+							--INPUT PORTS
+							reset => '0', -- TODO: why is this set to low??
+							clk => clk
 							ALU_code_in => ALU_function_id,
-							ALU_code_out => ALU_function_ex,
-							register1_value_in => R1_ID,
-							register1_value_out => R1_EX,
-							register2_value_in => R2_ID,
-							register2_value_out => R2_EX,
-							immediate_value_in => (others => '0'),
 							store_in => mem_store_ID_EX_IN,
-							store_out => mem_store_ID_EX_OUT,
+							register1_value_in => R1_ID,
 							load_in => mem_load_ID_EX_IN,
-							load_out => mem_load_ID_EX_OUT,
+							register2_value_in => R2_ID,
 							dest_register_in => (others => '0'),
+							immediate_value_in => (others => '0'),
 							immediate_operation_in => '0',
 							write_back_in => '0',
-							reset => '0',
-							clk => clk
+							--OUTPUT PORTS
+							ALU_code_out => ALU_function_ex,
+							register1_value_out => R1_EX,
+							register2_value_out => R2_EX,
+							
+							store_out => mem_store_ID_EX_OUT,
+							
+							load_out => mem_load_ID_EX_OUT,
+							
+
 							
 								);
 								
 EX_Stage : ExecuteStage port map(
+							--INPUT PORTS
 							reset => reset,
 							clk => clk,
 							executeForward => (others => '0'),
@@ -266,28 +282,33 @@ EX_Stage : ExecuteStage port map(
 							write_back_in =>'0',
 							inputOneSelect => "00",
 							inputTwoSelect => "00",
+							
+							--OUTPUT PORTS
 							ALU_value_out => ALU_result_IN
 								);
 								
 								
 EX_MEM : EX_MEM_Stage port map(
-							ALU_value_in => ALU_result_IN,
-							ALU_value_out => ALU_result_OUT,
-							register2_value_in => R2_EX,
-							register2_value_out =>
-							store_in =>
-							store_out =>
-	 						load_in =>
-							load_out =>
-							dest_register_in =>
-							dest_register_out =>
-							write_back_in =>
-							write_back_out =>
+							--INPUT PORTS
 							reset => reset,
-							clk => clk
+							clk => clk,
+							ALU_value_in => ALU_result_IN,
+							register2_value_in => R2_EX,
+							dest_register_in =>
+							store_in => mem_store_ID_EX_OUT,
+							write_back_in =>
+	 						load_in => mem_load_ID_EX_OUT,
+							--OUTPUT PORTS
+							ALU_value_out => ALU_result_OUT,
+							register2_value_out =>
+							load_out =>
+							store_out =>
+							dest_register_out =>
+							write_back_out => ,
 								);
 
 memory_Stage : MemoryStage port map(
+							--INPUT PORTS
 							clk  => clk,
 							ALU_value_out => ,
 							store_enable => ,
@@ -295,23 +316,26 @@ memory_Stage : MemoryStage port map(
 							write_back_enable_in => ,
 							dest_register_in => ,
 							mem_data_in => ,
-
+							
+							--OUTPUT PORTS
 							ALU_value_forwarded => ,
 							dest_register_out => ,
 							write_back_enable_out => ,
 							mem_out => 
-
 								);
 								
 MEM_WB : MEM_WB_Stage port map(
-							MEM_value_in => ,
-							MEM_value_out => ,
-							dest_register_in => ,
-							dest_register_out => ,
-							write_back_in => ,
-							write_back_out => ,
+							--INPUT PORTS
 							reset => reset,
-							clk => clk
+							clk => clk,
+							MEM_value_in => ,
+							write_back_in => ,
+							dest_register_in => ,
+							
+							--OUTPUT PORTS
+							MEM_value_out => ,
+							dest_register_out => ,
+							write_back_out => 
 								);
 								
 
