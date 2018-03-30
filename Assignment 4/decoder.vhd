@@ -192,31 +192,31 @@ begin
 
                 when "001000" => -- addi OK
                     ALU_function <= "00001";
-			use_imm <= '1';
+			use_immediate <= '1';
 
 					
                 when "001100" => -- andi 
                     ALU_function <= "00110";
-			use_imm <= '1';
+			use_immediate <= '1';
 
                 when "001101" => -- ori
                     ALU_function <= "00111";
-			use_imm <= '1';
+			use_immediate <= '1';
 
                 when "001110" => -- xori
                     ALU_function <= "01001";
-			use_imm <= '1';
+			use_immediate <= '1';
 
 
                 when "100011" => -- lw
                     ALU_function <= "00000";
-			use_imm <= '0';
+			use_immediate <= '0';
 			mem_load <= '1';
 			writeback_register <= '1';
 
                 when "001111" => -- lui OK
                     ALU_function <= "10000"; --correct op code?
-			use_imm <= '1';
+			use_immediate <= '1';
 			writeback_register <= '1';
 
                 when "101011" => -- sw
@@ -228,16 +228,16 @@ begin
 
                 when "000100" => -- beq
                     ALU_function <= "00000";
-			use_imm <= '0';
-			branch_control <= '01';
+			use_immediate <= '0';
+			branch_control <= "01";
 
 			writeback_register <= '0';
 
 
                 when "000101" => -- bne
                     ALU_function <= "00000";
-			use_imm <= '0';
-			branch_control <= '10';
+			use_immediate <= '0';
+			branch_control <= "10";
 
 			
 			writeback_register <= '0';
