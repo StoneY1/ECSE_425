@@ -347,7 +347,7 @@ memory_Stage : MemoryStage port map(
 							mem_data_in => mem_data_in,
 							
 							--OUTPUT PORTS
-							--ALU_value_forwarded => ,
+							--ALU_value_forwarded => , --TODO: connect forwarded signal back to ExecuteStage.
 							--mem_out_forwarded => ,
 							dest_register_out => output_register_MEM_WB_IN,
 							write_back_enable_out => writeback_register_MEM_WB_IN,
