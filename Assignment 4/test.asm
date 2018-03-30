@@ -1,5 +1,6 @@
 addi $10,$10,4 #set R10 to 4 for memory addressing
 addi $7,$7,30 #register 7 will be 30 for the bne
+addi $8,$8,-30 #testing negative add immediate
 start: add $2,$1,$2 
 add $3,$2,$2
 bne $3,$7,start #keeps looping until R3 = R7 (30)
