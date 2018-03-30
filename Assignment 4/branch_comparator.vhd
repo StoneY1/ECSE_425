@@ -9,7 +9,7 @@ port(
 
 	register1 : in word_type;
 	register2 : in word_type;
-	control : in std_logic_vetor(1 downto 0);
+	control : in std_logic_vector(1 downto 0);
 	taken : out std_logic
 
 );

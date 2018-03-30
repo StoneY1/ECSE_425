@@ -7,8 +7,8 @@ use work.definitions.all;
 entity sign_zero_extend is 
 port(
 		shift_amount : in std_logic_vector(4 downto 0);
-		imm_out : word_type
-);
+		imm_out : out word_type
+); end sign_zero_extend;
 
 architecture behavioral of sign_zero_extend is
 begin 

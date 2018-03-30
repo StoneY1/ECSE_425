@@ -16,6 +16,7 @@ port (
         register2_address : out std_logic_vector (4 downto 0);
         ALU_function : out std_logic_vector (4 downto 0);
         shift_amount : out std_logic_vector(4 downto 0);
+		use_immediate : out std_logic;
 
         mem_store : out std_logic; --flagged for mem Write
         mem_load : out std_logic; -- flagged for mem load

@@ -31,7 +31,8 @@ port (
         mem_store : out std_logic; --flagged for mem Write
         mem_load : out std_logic; -- flagged for mem load
         output_register : out std_logic_vector (4 downto 0);
-        writeback_register : out std_logic --flaged when result needs to be saved back in registers
+        writeback_register : out std_logic; --flaged when result needs to be saved back in registers
+		offset : out std_logic
 
     ) ;
 end DecodeStage;
@@ -59,6 +60,7 @@ component decoder port (
         register2_address : out std_logic_vector (4 downto 0);
         ALU_function : out std_logic_vector (4 downto 0);
         shift_amount : out std_logic_vector(4 downto 0);
+		use_immediate : out std_logic;
 
         mem_store : out std_logic; --flagged for mem Write
         mem_load : out std_logic; -- flagged for mem load
@@ -74,64 +76,96 @@ component branch_comparator port (
 	--inputs
 	register1 : in word_type;
 	register2 : in word_type;
-	control : in std_logic_vetor(1 downto 0);
+	control : in std_logic_vector(1 downto 0);
 	--outputs
 	taken : out std_logic
-);
+);  end component;
 
 component adder port (
-    	input1 : in std_logic_vector(31 downto 0);
-		input2 : in std_logic_vector(31 downto 0);
-    	result : out std_logic_vector(31 downto 0)
-
-);
+    	input1 : in word_type;
+	input2 : in word_type;
+    	result : out word_type
+);  end component;
 
 component two_one_mux port (
       	sel : in std_logic;
       	in1 : in std_logic_vector(31 downto 0);
 		in2 : in std_logic_vector(31 downto 0);
       	output : out std_logic_vector(31 downto 0)
-);
+);  end component;
 
 component sign_zero_extend port (
 		shift_amount : in std_logic_vector(4 downto 0);
-		imm_out : word_type
-);
+		imm_out : out word_type
+);  end component;
+
+component tunnel32 port(
+		word_in : in word_type;
+		word_out : out word_type
+); end component;
+
+component tunnel_1 port(
+		word_in : in std_logic;
+		word_out : out std_logic
+); end component;
 
 --signal declaration
 signal regAdd_r1 : std_logic_vector(4 downto 0);
 signal regAdd_r2 : std_logic_vector(4 downto 0);
-signal R1 : word_type;
-signal R2 : word_type;
+signal R1_comp : word_type;
+signal R2_comp : word_type;
 signal branch_control : std_logic_vector(1 downto 0);
 signal offset : std_logic;
 --signal branch_control : std_logic;
 signal offset_mux_OUT : word_type;
 signal adder_OUT : word_type;
-signal shift_amount : out std_logic_vector(4 downto 0);
+signal shift_amount_OUT : std_logic_vector(4 downto 0);
+signal imm_Tunnel_IN : word_type;
+signal branch_taken_tunnel : std_logic;
+--signal use_imm : std_logic;
 
 begin 
 
-signZeroExt : sign_zero_extend port(
-						shift_amount => shift_amount,
-						imm_out => imm_out);
+tunnel_branchTaken : tunnel_1 port map(
+						word_in => branch_taken_tunnel,
+						word_out => branch_taken
+);
 
-address_mux : two_one_mux port(
-						sel => branch_taken,
+tunnel_imm : tunnel32 port map(
+						word_in => imm_Tunnel_IN,
+						word_out => imm_out
+);
+
+tunnel_R1 : tunnel32 port map(
+						word_in => R1_comp,
+						word_out => R1
+);
+
+tunnel_R2 : tunnel32 port map(
+						word_in => R2_comp,
+						word_out => R2
+);
+
+signZeroExt : sign_zero_extend port map(
+						shift_amount => shift_amount_OUT,
+						imm_out => imm_Tunnel_IN);
+
+address_mux : two_one_mux port map(
+						sel => branch_taken_tunnel,
 						in1 => PC_in,
 						in2 => adder_OUT,
 						output => branch_address);
 
-offset_mux : two_one_mux port(
+offset_mux : two_one_mux port map(
 						sel => offset,
-						in1 => R1,
-						in2 => imm_out,
+						in1 => R1_comp,
+						in2 => imm_Tunnel_IN,
 						output => offset_mux_OUT);
 
-PC_jump_adder : adder port(
+PC_jump_adder : adder port map(
 						input1 => PC_in,
 						input2 => offset_mux_OUT,
-						result => );
+						result => adder_OUT);
 
 ID_stage_register : register_file port map(	clock => clk,
 						write_enable =>	write_enable,
@@ -139,8 +173,8 @@ ID_stage_register : register_file port map(	clock => clk,
 						r2 => regAdd_r2,
 						write_address => register_write_address,
 						write_data => write_data,
-						r1_out => R1,
-						r2_out => R2);
+						r1_out => R1_comp,
+						r2_out => R2_comp);
 
 decoderComp : decoder port map(			reset => reset,
 						clk =>	clk,
@@ -148,18 +182,20 @@ decoderComp : decoder port map(			reset => reset,
 						register1_address => regAdd_r1,
 						register2_address => regAdd_r2,
 						ALU_function => ALU_function,
-						shift_amount => shift_amount,
+						shift_amount => shift_amount_OUT,
 						mem_store => mem_store,
 						mem_load => mem_load,
 						output_register => output_register,
 						writeback_register => writeback_register,
+						offset => offset,
+						use_immediate => imm_out,
 						branch_control => branch_control );
 
 comparator : branch_comparator port map(
-						register1 => R1,
-						register2 => R2,
+						register1 => R1_comp,
+						register2 => R2_comp,
 						control => branch_control,
-						taken => branch_taken
+						taken => branch_taken_tunnel
 
 );
 
