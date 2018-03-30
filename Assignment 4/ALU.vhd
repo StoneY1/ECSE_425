@@ -22,28 +22,29 @@ process (inputOne, inputTwo, ALU_function)
 	begin
 	
 
-	-- add, addi, lw, sw 
+	-- add, addi
 	if ALU_function = "00001" then
-		output <= std_logic_vector(unsigned(inputOne) + unsigned(inputTwo));
+		output <= std_logic_vector(signed(inputOne) + signed(inputTwo));
 
 	-- sub
 	elsif ALU_function = "00010" then
-		output <= std_logic_vector(unsigned(inputOne) - unsigned(inputTwo));
+		output <= std_logic_vector(signed(inputOne) - signed(inputTwo));
 
 	--mult
 	elsif ALU_function = "00011" then
-		output <= std_logic_vector(to_unsigned(to_integer(unsigned(inputOne)) * to_integer(unsigned(inputTwo)),32));
+		LO <= std_logic_vector(to_signed(to_integer(signed(inputOne)) * to_integer(signed(inputTwo)),32));
 		
 	--div
 	elsif ALU_function = "00100" then
-		output <= std_logic_vector(unsigned(inputOne) / unsigned(inputTwo));
+		LO <= std_logic_vector(signed(inputOne) / signed(inputTwo));
+		HI <= std_logic_vector(signed(inputOne) rem signed(inputTwo));
 
 	--slt, slti
 	elsif ALU_function = "00101" then
-		if unsigned(inputOne) < unsigned(inputTwo) then
-			output <= std_logic_vector(to_unsigned(1, 32));
+		if signed(inputOne) < signed(inputTwo) then
+			output <= std_logic_vector(to_signed(1, 32));
 		else
-			output <= std_logic_vector(to_unsigned(0, 32));
+			output <= std_logic_vector(to_signed(0, 32));
 		end if;
 		
 	--and, andi
@@ -62,33 +63,38 @@ process (inputOne, inputTwo, ALU_function)
 	elsif ALU_function = "01001" then
 		output <= inputOne xor inputTwo;
 
-	--mfhi, mflo
+	--mfhi
 	elsif ALU_function = "01011" then
-		output <= inputOne;
-		
+		output <= HI;
+	
+	--mflo
+	elsif ALU_function = "11011" then
+		output <= LO;
+
 	-- sll
 	elsif ALU_function = "01100" then
-		output <= std_logic_vector(shift_left(unsigned(inputOne), to_integer(unsigned(inputTwo))));
+		output <= std_logic_vector(shift_left(signed(inputOne), to_integer(signed(inputTwo))));
 		
 	--srl
 	elsif ALU_function = "01101" then
-		output <= std_logic_vector(shift_right(unsigned(inputOne), to_integer(unsigned(inputTwo))));
+		output <= std_logic_vector(shift_right(signed(inputOne), to_integer(signed(inputTwo))));
 
 	--sra
 	elsif ALU_function = "01110" then
-		output <= std_logic_vector(shift_right(unsigned(inputOne), to_integer(unsigned(inputTwo))));
+		output <= to_stdlogicvector(to_bitvector(inputOne) sra to_integer(signed(inputTwo)));
 
-	--jr
+	-- lw,sw
 	elsif ALU_function = "01111" then
-		output <= std_logic_vector(shift_right(unsigned(inputOne), to_integer(unsigned(inputTwo))));
+		output <= std_logic_vector(signed(inputOne) - signed(inputTwo));
+
 
 	-- lui
 	elsif ALU_function = "10000" then
-		output <=  std_logic_vector(shift_left(unsigned(inputTwo), 16));
+		output <=  std_logic_vector(shift_left(signed(inputTwo), 16));
 
 	-- no OP code
 	elsif ALU_function = "00000" then
-		output <= std_logic_vector(to_unsigned(0, 32));
+		output <= std_logic_vector(to_signed(0, 32));
 
 	end if;
 
