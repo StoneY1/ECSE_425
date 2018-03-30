@@ -33,6 +33,7 @@ component InstructionFetchStage port (
 	clock : in std_logic;
 	branch_taken : in std_logic;
 	dest_address : in std_logic_vector(31 downto 0);
+	nextPC : out std_logic_vector(31 downto 0);
 	instruction : out std_logic_vector(31 downto 0)
 
 ); end component;
@@ -214,7 +215,9 @@ IF_Stage : InstructionFetchStage port map(
 							clock => clk,
 							branch_taken => '1',
 							dest_address => (others => '0'),
+
 							--OUTPUT PORTS
+							nextPC => IF_ID_PC_IN,
 							instruction => instruction_IN
 								);
 
@@ -222,12 +225,12 @@ IF_ID : IF_ID_Stage port map(
 							--INPUT PORTS
 							reset => reset,
 							clk => clk,
-							PC_in => (others => '0'),
+							PC_in => IF_ID_PC_IN,
 							inst_in => instruction_IN,
 							insert_stall => '0',
 
 							--OUTPUT PORTS
-							--PC_out  => ,
+							PC_out  => IF_ID_PC_OUT,
 							inst_out => instruction_OUT
 
 							);

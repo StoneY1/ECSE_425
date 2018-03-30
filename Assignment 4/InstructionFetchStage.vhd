@@ -10,6 +10,7 @@ entity InstrFetchStage is
 		clock : in std_logic;
 		branch_taken : in std_logic;
 		dest_address : in std_logic_vector(31 downto 0);
+		nextPC : out std_logic_vector(31 downto 0);
 		instruction : out std_logic_vector(31 downto 0)
 	);
 end InstrFetchStage;
@@ -65,6 +66,7 @@ signal muxOut : std_logic_vector(31 downto 0);
 
 begin
 pcIn <= muxOut;
+nextPC <= muxOut;
 addr <= to_integer(unsigned(muxOut(9 downto 0)))/4;
 
 	programCounter : PC

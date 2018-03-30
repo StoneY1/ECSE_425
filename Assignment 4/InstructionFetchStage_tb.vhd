@@ -12,6 +12,7 @@ component InstructionFetchStage is
 		clock : in std_logic;
 		branch_taken : in std_logic;
 		dest_address : in std_logic_vector(31 downto 0);
+		nextPC : out std_logic_vector(31 downto 0);
 		instruction : out std_logic_vector(31 downto 0)
 	);
 end component;
@@ -20,6 +21,7 @@ constant clock_period : time := 100 ps;
 signal clock : std_logic;
 signal branch_taken : std_logic;
 signal dest_address : std_logic_vector(31 downto 0);
+signal nextPC : std_logic_vector(31 downto 0);
 signal instruction : std_logic_vector(31 downto 0);
 
 begin
@@ -29,6 +31,7 @@ IFStage : InstructionFetchStage
 		clock => clock,
 		branch_taken => branch_taken,
 		dest_address => dest_address,
+		nextPC => nextPC,
 		instruction => instruction
 	);
 
