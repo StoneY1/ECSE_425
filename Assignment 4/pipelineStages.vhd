@@ -87,8 +87,8 @@ component ID_EX_Stage port (
     	store_out     : out   std_logic;
 	load_in	: in std_logic;
 	load_out	: out std_logic;
-	dest_register_in : in word_type;
-	dest_register_out : out word_type;
+	dest_register_in : in register_type;
+	dest_register_out : out register_type;
 	immediate_operation_in : in std_logic;
 	immediate_operation_out : out std_logic;
 	write_back_in : in std_logic;
@@ -109,7 +109,7 @@ component ExecuteStage port (
 	; immediate_value_in : in word_type
         ; store_in      : in    std_logic
 	; load_in	: in std_logic
-	; dest_register_in : in address_type
+	; dest_register_in : in register_type
 	; immediate_operation_in : in std_logic
 	; write_back_in : in std_logic
 	; ALU_value_out : out word_type
@@ -126,8 +126,8 @@ component EX_MEM_Stage port (
         ; store_out     : out   std_logic
 	; load_in	: in std_logic
 	; load_out	: out std_logic
-	; dest_register_in : in address_type
-	; dest_register_out : out address_type
+	; dest_register_in : in register_type
+	; dest_register_out : out register_type
 	; write_back_in : in std_logic
 	; write_back_out : out std_logic
         ; reset               : in    std_logic
@@ -152,8 +152,8 @@ component MemoryStage port (
 component MEM_WB_Stage port (
 		MEM_value_in   : in    word_type
 	; MEM_value_out  : out   word_type
-	; dest_register_in : in address_type
-	; dest_register_out : out address_type
+	; dest_register_in : in register_type
+	; dest_register_out : out register_type
 	; write_back_in : in std_logic
 	; write_back_out : out std_logic
     ; reset               : in    std_logic
@@ -279,8 +279,8 @@ ID_EX : ID_EX_Stage port map(
 							ALU_code_out => ALU_function_ex,
 							register1_value_out => R1_EX,
 							register2_value_out => R2_EX,
-							immediate_value_out => (others => '0'),
-							immediate_operation_out =>  '0',
+							--immediate_value_out => (others => '0'),
+							--immediate_operation_out =>  '0',
 							
 							dest_register_out => output_register_ID_EX_OUT,
 							write_back_out => writeback_register_EX_MEM_IN,
