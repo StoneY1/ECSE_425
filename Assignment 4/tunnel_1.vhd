@@ -6,17 +6,17 @@ use work.definitions.all;
 
 entity tunnel_1 is 
 port(
-		word_in : in std_logic;
-		word_out : out std_logic
+		bit_IN : in std_logic;
+		bit_OUT : out std_logic
 ); end entity;
 
 architecture behavioral of tunnel_1 is
 begin 
 
-extend : process (word_in)
+extend : process (bit_IN)
 begin
 
-	word_out <= word_in;
+	bit_OUT <= bit_IN;
 
 end process;
 

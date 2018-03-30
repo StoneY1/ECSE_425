@@ -104,9 +104,14 @@ component tunnel32 port(
 		word_out : out word_type
 ); end component;
 
+component tunnel5 port(
+		bits_IN : in std_logic_vector(4 downto 0);
+		bits_OUT : out std_logic_vector(4 downto 0)
+); end component;
+
 component tunnel_1 port(
-		word_in : in std_logic;
-		word_out : out std_logic
+		bit_IN : in std_logic;
+		bit_OUT : out std_logic
 ); end component;
 
 --signal declaration
@@ -122,13 +127,19 @@ signal adder_OUT : word_type;
 signal shift_amount_OUT : std_logic_vector(4 downto 0);
 signal imm_Tunnel_IN : word_type;
 signal branch_taken_tunnel : std_logic;
+signal ALU_func_tunnel : std_logic_vector(4 downto 0);
 --signal use_imm : std_logic;
 
 begin 
 
 tunnel_branchTaken : tunnel_1 port map(
-						word_in => branch_taken_tunnel,
-						word_out => branch_taken
+						bit_IN => branch_taken_tunnel,
+						bit_OUT => branch_taken
+);
+
+ALU_function_Tunnel : tunnel5 port map (
+						bits_IN => ALU_func_tunnel,
+						bits_OUT=> ALU_function
 );
 
 tunnel_imm : tunnel32 port map(
@@ -181,7 +192,7 @@ decoderComp : decoder port map(			reset => reset,
 						instruction_in => instruction_in,
 						register1_address => regAdd_r1,
 						register2_address => regAdd_r2,
-						ALU_function => ALU_function,
+						ALU_function => ALU_func_tunnel,
 						shift_amount => shift_amount_OUT,
 						mem_store => mem_store,
 						mem_load => mem_load,

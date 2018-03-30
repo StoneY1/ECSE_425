@@ -15,7 +15,7 @@ port (
         register1_address : out std_logic_vector (4 downto 0);
         register2_address : out std_logic_vector (4 downto 0);
         ALU_function : out std_logic_vector (4 downto 0);
-        shift_amount : out std_logic_vector(4 downto 0);
+        immediate : out std_logic_vector(15 downto 0);
 		use_immediate : out std_logic;
 
         mem_store : out std_logic; --flagged for mem Write
@@ -66,35 +66,43 @@ begin
             mem_store <= '0';
             mem_load <= '0';
             writeback_register <= '1';
+			
+			--set register outputs
+            register1_address <= rs;
+            register2_address <= rt;
+            output_register <= rd;
+            shift_amount <= shamt;
+			
             case (I_function) is
 
                 when "100000" => --add 
                     ALU_function <= "00001";
+					use_immediate <= '0';
 
                 when "100010" => --sub 
                     ALU_function <= "00010";
-
+					use_immediate <= '0';
                 when "011000" => --mult 
                     ALU_function <= "00011";
-
+					
                 when "011010" => --div 
                     ALU_function <= "00100";
-
+					use_immediate <= '0';
                 when "101010" => --stl 
                     ALU_function <= "00101";
-
+					use_immediate <= '0';
                 when "100100" => --and 
                     ALU_function <= "00110";
-
+					use_immediate <= '0';
                 when "100101" => --or 
                     ALU_function <= "00111";
-
+					use_immediate <= '0';
                 when "100111" => --nor 
                     ALU_function <= "01000";
-
+					use_immediate <= '0';
                 when "100110" => --xor 
                     ALU_function <= "01001";
-
+					use_immediate <= '0';
                 when "010000" => --mfhi
                     ALU_function <= "01011";
 
@@ -103,29 +111,41 @@ begin
 
                 when "000000" => --sll (shamt needed)
                     ALU_function <= "01100";
-
+					use_immediate <= '1';
+					register1_address <= rt;
+					immediate <= std_logic_vector(resize(signed(shamt),immediate'length));
+					
                 when "000010" => --srl (shamt needed)
                     ALU_function <= "01101";
+					use_immediate <= '1';
+					register1_address <= rt;
+					immediate <= std_logic_vector(resize(signed(shamt),immediate'length));
 
                 when "000011" => --sra (shamt needed)
                     ALU_function <= "01110";
+					use_immediate <= '1';
+					register1_address <= rt;
+					immediate <= std_logic_vector(resize(signed(shamt),immediate'length));
 
                 when "001000" => --jr
                     ALU_function <= "01111";
+					use_immediate <= '1';
+					register1_address <= (others => '0');
+					register2_address <= rs;
+					branch_control <= "11";
+					offset <= '1';
+					shift_amount <= (others => '0');
+					writeback_register <= '0';
                 
                 when others =>
                     ALU_function <= "00000";
                     register1_address <= "00000";
                     register2_address <= "00000";
                     output_register <= "00000";
+					writeback_register <= '0';
 
             end case;
 
-            --set register outputs
-            register1_address <= rs;
-            register2_address <= rt;
-            output_register <= rd;
-            shift_amount <= shamt;
 
         elsif opcode = "000010" then -- J type instruction
 

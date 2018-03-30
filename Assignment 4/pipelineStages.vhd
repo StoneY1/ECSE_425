@@ -77,7 +77,7 @@ component DecodeStage port (
         mem_load : out std_logic; -- flagged for mem load
         output_register : out std_logic_vector (4 downto 0);
         writeback_register : out std_logic; --flaged when result needs to be saved back in registers
-	use_imm : out std_logic;
+	use_imm : out std_logic
 
 
 
@@ -183,6 +183,8 @@ signal branch_op : std_logic;
 signal branch_address : word_type;
 
 signal ID_PC_IN : word_type;
+signal branch_taken_ID_IF : std_logic;
+signal branch_address_ID_IF : word_type;
 
 --ID_EX
 signal ALU_function_id : std_logic_vector(4 downto 0);
@@ -199,6 +201,11 @@ signal output_register_ID_EX_IN : std_logic_vector (4 downto 0);
 signal output_register_ID_EX_OUT : std_logic_vector (4 downto 0);
 signal writeback_register_ID_EX_IN :  std_logic; --flaged when result needs to be saved back in registers
 signal writeback_register_ID_EX_OUT :  std_logic; --flaged when result needs to be saved back in registers
+signal use_imm_ID_EX_IN : std_logic;
+signal use_imm_ID_EX_OUT : std_logic;
+signal imm_ID_EX_OUT : word_type;
+signal imm_ID_EX_IN : word_type;
+
 --EX_MEM
 signal ALU_result_IN : word_type;
 signal ALU_result_OUT : word_type;
@@ -209,6 +216,7 @@ signal output_register_EX_MEM_OUT : std_logic_vector (4 downto 0);
 signal writeback_register_EX_MEM_IN :  std_logic; --flaged when result needs to be saved back in registers
 signal writeback_register_EX_MEM_OUT :  std_logic; --flaged when result needs to be saved back in registers
 signal mem_data_in : word_type;
+
 
 --MEM_WB
 signal output_register_MEM_WB_IN : std_logic_vector (4 downto 0);
@@ -224,8 +232,8 @@ begin
 IF_Stage : InstructionFetchStage port map(
 							--INPUT PORTS
 							clock => clk,
-							branch_taken => '1',
-							dest_address => (others => '0'),
+							branch_taken => branch_taken_ID_IF,
+							dest_address => branch_address_ID_IF,
 
 							--OUTPUT PORTS
 							nextPC => IF_ID_PC_IN,
@@ -260,24 +268,24 @@ ID_Stage : DecodeStage port map(
 							write_data => write_data,
 
 							--OUTPUT PORTS
-							branch_taken => ,
-							branch_address => ,
+							branch_taken => branch_taken_ID_IF,
+							branch_address => branch_address_ID_IF,
 							
 							R1 => R1_ID,
 							R2 => R2_ID,
 							ALU_function => ALU_function_id,
-							imm_out => ,
+							imm_out => imm_ID_EX_IN,
 							
 							
 							mem_store => mem_store_ID_EX_IN,--flagged for mem Write
 							mem_load => mem_load_ID_EX_IN,-- flagged for mem load
 							output_register => output_register_ID_EX_IN,
-							writeback_register => writeback_register_ID_EX_IN--flaged when result needs to be saved back in registers
-							use_imm => 
+							writeback_register => writeback_register_ID_EX_IN,--flaged when result needs to be saved back in registers
+							use_imm => use_imm_ID_EX_IN
 						
 								);
 								
-ID_EX : ID_EX_Stage port map(
+ID_EX_pipe : ID_EX_Stage port map(
 							--INPUT PORTS
 							reset => reset, -- TODO: why is this set to low??
 							clk => clk,
@@ -287,20 +295,18 @@ ID_EX : ID_EX_Stage port map(
 							load_in => mem_load_ID_EX_IN,
 							register2_value_in => R2_ID,
 							dest_register_in => output_register_ID_EX_IN,
-							immediate_value_in => (others => '0'),
-							immediate_operation_in => '0',
+							immediate_value_in => imm_ID_EX_IN,
+							immediate_operation_in => use_imm_ID_EX_IN,
 							write_back_in => writeback_register_ID_EX_IN,
 							--OUTPUT PORTS
 							ALU_code_out => ALU_function_ex,
 							register1_value_out => R1_EX,
 							register2_value_out => R2_EX,
-							--immediate_value_out => (others => '0'),
-							--immediate_operation_out =>  '0',
-							
+							immediate_value_out => imm_ID_EX_OUT,
+							immediate_operation_out =>  use_imm_ID_EX_OUT,
 							dest_register_out => output_register_ID_EX_OUT,
 							write_back_out => writeback_register_EX_MEM_IN,
 							store_out => mem_store_ID_EX_OUT,
-							
 							load_out => mem_load_ID_EX_OUT
 									
 								);
@@ -309,17 +315,21 @@ EX_Stage : ExecuteStage port map(
 							--INPUT PORTS
 							reset => reset,
 							clk => clk,
+
 							executeForward => (others => '0'),
 							memForward => (others => '0'),
 							wbForward => (others => '0'),
+
 							ALU_code_in => ALU_function_ex,
 							register1_value_in => R1_EX,
 							register2_value_in => R2_EX,
-							immediate_value_in => (others => '0'),
-							store_in => '0',
-							load_in => '0',
-							dest_register_in => (others => '0'),
-							immediate_operation_in => '0',
+							immediate_value_in => imm_ID_EX_OUT,
+							store_in => mem_store_ID_EX_OUT,
+							load_in => mem_load_ID_EX_OUT,
+							dest_register_in => output_register_ID_EX_OUT,
+							immediate_operation_in => use_imm_ID_EX_OUT,
+							
+							--TODO IMPLEMENT THIS
 							write_back_in =>'0',
 							inputOneSelect => "00",
 							inputTwoSelect => "00",
