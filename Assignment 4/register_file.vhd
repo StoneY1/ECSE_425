@@ -5,6 +5,9 @@ USE ieee.numeric_std.all;
 use work.definitions.all;
 
 ENTITY register_file IS
+	GENERIC (
+		register_size : integer := 32
+	);
 	PORT (
 		clock: IN STD_LOGIC;
 		r1, r2, write_address: IN STD_LOGIC_VECTOR (4 DOWNTO 0); --register addresses taken from instruction decoder and write info from WB stage

@@ -8,6 +8,8 @@ use ieee.std_logic_textio.all;
 entity InstrFetchStage is
 	Port ( 
 		clock : in std_logic;
+		branch_taken : in std_logic;
+		dest_address : in std_logic_vector(31 downto 0);
 		instruction : out std_logic_vector(31 downto 0)
 	);
 end InstrFetchStage;
@@ -32,6 +34,14 @@ component adder4 is
 	);
 end component;
 
+component two_one_mux is
+	Port (
+		sel : in std_logic;
+      		in1, in2 : in std_logic_vector(31 downto 0);
+      		output : out std_logic_vector(31 downto 0)
+	);
+end component;
+
 component fetchInstr is
 	GENERIC(
 		ram_size : integer := 1024
@@ -51,10 +61,11 @@ signal en : std_logic := '1';
 
 signal adderOut : std_logic_vector(31 downto 0);
 signal addr : integer range 0 to 1024-1;
+signal muxOut : std_logic_vector(31 downto 0);
 
 begin
-pcIn <= adderOut;
-addr <= to_integer(unsigned(adderOut(9 downto 0)))/4;
+pcIn <= muxOut;
+addr <= to_integer(unsigned(muxOut(9 downto 0)))/4;
 
 	programCounter : PC
 	port map ( 
@@ -69,6 +80,14 @@ addr <= to_integer(unsigned(adderOut(9 downto 0)))/4;
 	port map ( 
 			add_in => pcOut,
 			add_out => adderOut
+		);
+
+	mux : two_one_mux
+	port map (
+			sel => branch_taken,
+			in1 => dest_address,
+			in2 => adderOut,
+			output => muxOut
 		);
 			  
 	getInstr : fetchInstr
