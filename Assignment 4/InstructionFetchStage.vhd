@@ -5,7 +5,7 @@ use ieee.numeric_std.all;
 use std.textio.all;
 use ieee.std_logic_textio.all;
 
-entity InstrFetchStage is
+entity InstructionFetchStage is
 	Port ( 
 		clock : in std_logic;
 		branch_taken : in std_logic;
@@ -13,10 +13,10 @@ entity InstrFetchStage is
 		nextPC : out std_logic_vector(31 downto 0);
 		instruction : out std_logic_vector(31 downto 0)
 	);
-end InstrFetchStage;
+end InstructionFetchStage;
 
 
-architecture behaviour of InstrFetchStage is
+architecture behaviour of InstructionFetchStage is
 
 component pc is
 	Port ( 
@@ -43,7 +43,7 @@ component two_one_mux is
 	);
 end component;
 
-component fetchInstr is
+component FetchInstr is
 	GENERIC(
 		ram_size : integer := 1024
 	);
@@ -87,12 +87,12 @@ addr <= to_integer(unsigned(muxOut(9 downto 0)))/4;
 	mux : two_one_mux
 	port map (
 			sel => branch_taken,
-			in1 => dest_address,
-			in2 => adderOut,
+			in2 => dest_address,
+			in1 => adderOut,
 			outputMux => muxOut
 		);
 			  
-	getInstr : fetchInstr
+	getInstr : FetchInstr
 	port map ( 
 			clock => clock,
 			address => addr,

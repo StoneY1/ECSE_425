@@ -41,12 +41,10 @@ begin
 	branch_taken <= '0';
 	dest_address <= "00000000000000000000000000000000";
 	wait for clock_period;
-	branch_taken <= '1';
+	branch_taken <= '0';
 	dest_address <= "00000000000000000000000000000101";
 	wait for clock_period;
-	wait for clock_period;
-	wait for clock_period;
-	
+	dest_address <= "00000000000000000000000000000110";	
 	wait;
 
 end process;

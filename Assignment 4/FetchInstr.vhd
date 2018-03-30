@@ -5,7 +5,7 @@ USE ieee.numeric_std.all;
 USE std.textio.all;
 USE ieee.std_logic_textio.all;
 
-ENTITY fetchInstr IS
+ENTITY FetchInstr IS
 	GENERIC(
 		ram_size : integer := 1024
 	);
@@ -14,9 +14,9 @@ ENTITY fetchInstr IS
 		address: in integer range 0 to ram_size-1;
 		readdata: out std_logic_vector (31 downto 0)
 	);
-END fetchInstr;
+END FetchInstr;
 
-ARCHITECTURE rtl OF fetchInstr IS
+ARCHITECTURE rtl OF FetchInstr IS
 	TYPE MEM IS ARRAY(ram_size-1 downto 0) OF STD_LOGIC_VECTOR(31 DOWNTO 0);
 	SIGNAL ram_block: MEM;
 	SIGNAL read_address_reg: INTEGER RANGE 0 to ram_size-1;
@@ -31,8 +31,8 @@ BEGIN
 	
 	BEGIN
 		IF(now < 1 ps)THEN
-			file_open(f, "program.txt", read_mode);
-			while (not endfile(f)) loop
+			file_open(f, "program1.txt", read_mode);
+			while (NOT endfile(f)) loop
 				readline(f, row);
 				read(row, rowData);
 				ram_block(rowCnt) <= rowData;
