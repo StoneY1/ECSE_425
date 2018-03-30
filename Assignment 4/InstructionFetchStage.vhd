@@ -39,7 +39,7 @@ component two_one_mux is
 	Port (
 		sel : in std_logic;
       		in1, in2 : in std_logic_vector(31 downto 0);
-      		output : out std_logic_vector(31 downto 0)
+      		outputMux : out std_logic_vector(31 downto 0)
 	);
 end component;
 
@@ -89,7 +89,7 @@ addr <= to_integer(unsigned(muxOut(9 downto 0)))/4;
 			sel => branch_taken,
 			in1 => dest_address,
 			in2 => adderOut,
-			output => muxOut
+			outputMux => muxOut
 		);
 			  
 	getInstr : fetchInstr
