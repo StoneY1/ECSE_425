@@ -37,9 +37,21 @@ process(clock) begin
 		w_addr <= to_integer(unsigned(write_address));
 		if (write_enable = '1') then --TODO need to add protection for R0
 			registers(w_addr) <= write_data;
+			if(w_addr = r1_addr) then
+				r1_out <= write_data;
+				r2_out <= registers(r2_addr);
+			elsif(w_addr = r2_addr) then
+				r1_out <= registers(r1_addr);
+				r2_out <= write_data;
+			else
+				r1_out <= registers(r1_addr);
+				r2_out <= registers(r2_addr);
+			end if;
+			
+		else 		
+			r1_out <= registers(r1_addr);
+			r2_out <= registers(r2_addr);
 		end if;
-		r1_out <= registers(r1_addr);
-		r2_out <= registers(r2_addr);
 	end if;
 end process;
 end behaviour;

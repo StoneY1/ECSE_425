@@ -15,7 +15,7 @@ port (
         register1_address : out std_logic_vector (4 downto 0);
         register2_address : out std_logic_vector (4 downto 0);
         ALU_function : out std_logic_vector (4 downto 0);
-        immediate : out std_logic_vector(15 downto 0);
+        immediate : out word_type;
 		use_immediate : out std_logic;
 
         mem_store : out std_logic; --flagged for mem Write
@@ -25,6 +25,7 @@ port (
 		
 		branch_control : out std_logic_vector(1 downto 0);
 		offset : out std_logic
+
 
     ) ;
 end decoder ; -- decode
@@ -56,7 +57,7 @@ begin
     begin
         -- retreive opcode from Instruction
         opcode := instruction_in(31 downto 26);
-
+	offset <= '1';
         if opcode = "000000" then --compare function section to see what instruction it is
             rs := instruction_in(25 downto 21);
             rt := instruction_in(20 downto 16);
@@ -71,7 +72,7 @@ begin
             register1_address <= rs;
             register2_address <= rt;
             output_register <= rd;
-            shift_amount <= shamt;
+            --shift_amount <= shamt;
 			
             case (I_function) is
 
@@ -133,8 +134,8 @@ begin
 					register1_address <= (others => '0');
 					register2_address <= rs;
 					branch_control <= "11";
-					offset <= '1';
-					shift_amount <= (others => '0');
+					offset <= '0';
+					immediate  <= (others => '0');
 					writeback_register <= '0';
                 
                 when others =>
@@ -148,7 +149,15 @@ begin
 
 
         elsif opcode = "000010" then -- J type instruction
-
+		immediate <= To_StdLogicVector(to_bitvector(resize(resize(signed(instruction_in(15 downto 0)),immediate'length))) s11 2);
+		ALU_function <= "00000";
+                register1_address <= "00000";
+                register2_address <= "00000";
+                output_register <= "00000";
+		writeback_register <= '0';
+		branch_control <= "11";
+		offset <= '1';
+		
 
 
         elsif  opcode = "000011" then -- J type
@@ -162,7 +171,8 @@ begin
                 when "001000" => -- addi
                     
                     ALU_function <= "00001";
-
+			immediate <= std_logic_vector(resize(signed(instruction_in(15 downto 0)),immediate'length));
+					
                 when "001100" => -- andi
                     ALU_function <= "00110";
 
@@ -204,5 +214,8 @@ begin
 
         end if ;
     end process ; 
+
+
+
 
 end architecture ; -- arch

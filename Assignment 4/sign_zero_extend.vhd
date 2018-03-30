@@ -6,28 +6,17 @@ use work.definitions.all;
 
 entity sign_zero_extend is 
 port(
-		immediate_IN : in std_logic_vector(15 downto 0);
-		ALU_function : in std_logic_vector(4 downto 0);
+		immediate_IN : in word_type;
 		imm_out : out word_type
 ); end sign_zero_extend;
 
 architecture behavioral of sign_zero_extend is
 begin 
 
-extend : process (shift_amount)
+extend : process (immediate_IN)
 begin
-	case(ALU_function) is 
-		
-		when "00000" =>
-			imm_out <= "00000000000000000000000000000000";
-		
-		
-		when others =>
-			imm_out <= "00000000000000000000000000000000";
-	
-	
-	end case;
-	
+
+	imm_out <= immediate_IN;
 
 end process;
 
