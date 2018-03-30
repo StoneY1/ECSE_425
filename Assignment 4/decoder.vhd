@@ -15,7 +15,7 @@ port (
         register1_address : out std_logic_vector (4 downto 0);
         register2_address : out std_logic_vector (4 downto 0);
         ALU_function : out std_logic_vector (4 downto 0);
-        immediate : out std_logic_vector(15 downto 0);
+        immediate : out word_type;
 		use_immediate : out std_logic;
 
         mem_store : out std_logic; --flagged for mem Write
@@ -71,7 +71,7 @@ begin
             register1_address <= rs;
             register2_address <= rt;
             output_register <= rd;
-            shift_amount <= shamt;
+            --shift_amount <= shamt;
 			
             case (I_function) is
 
@@ -134,7 +134,7 @@ begin
 					register2_address <= rs;
 					branch_control <= "11";
 					offset <= '1';
-					shift_amount <= (others => '0');
+					--shift_amount <= (others => '0');
 					writeback_register <= '0';
                 
                 when others =>
@@ -148,6 +148,7 @@ begin
 
 
         elsif opcode = "000010" then -- J type instruction
+					--immediate <= to_stdLogicVector(to_bitvector(resize(signed(instruction_in(15 downto 0)),immediate'length)))
 
 
 
@@ -162,7 +163,8 @@ begin
                 when "001000" => -- addi
                     
                     ALU_function <= "00001";
-
+					immediate <= std_logic_vector(resize(signed(instruction_in(15 downto 0)),immediate'length));
+					
                 when "001100" => -- andi
                     ALU_function <= "00110";
 

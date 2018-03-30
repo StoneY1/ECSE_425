@@ -59,7 +59,7 @@ component decoder port (
         register1_address : out std_logic_vector (4 downto 0);
         register2_address : out std_logic_vector (4 downto 0);
         ALU_function : out std_logic_vector (4 downto 0);
-        shift_amount : out std_logic_vector(4 downto 0);
+        immediate : out word_type;
 		use_immediate : out std_logic;
 
         mem_store : out std_logic; --flagged for mem Write
@@ -95,7 +95,7 @@ component two_one_mux port (
 );  end component;
 
 component sign_zero_extend port (
-		shift_amount : in std_logic_vector(4 downto 0);
+		immediate_IN : in word_type;
 		imm_out : out word_type
 );  end component;
 
@@ -124,7 +124,7 @@ signal offset_link : std_logic;
 --signal branch_control : std_logic;
 signal offset_mux_OUT : word_type;
 signal adder_OUT : word_type;
-signal shift_amount_OUT : std_logic_vector(4 downto 0);
+signal imm_amount_OUT : word_type;
 signal imm_Tunnel_IN : word_type;
 signal branch_taken_tunnel : std_logic;
 signal ALU_func_tunnel : std_logic_vector(4 downto 0);
@@ -158,7 +158,7 @@ tunnel_R2 : tunnel32 port map(
 );
 
 signZeroExt : sign_zero_extend port map(
-						shift_amount => shift_amount_OUT,
+						immediate_IN => imm_amount_OUT,
 						imm_out => imm_Tunnel_IN);
 
 address_mux : two_one_mux port map(
@@ -193,7 +193,7 @@ decoderComp : decoder port map(			reset => reset,
 						register1_address => regAdd_r1,
 						register2_address => regAdd_r2,
 						ALU_function => ALU_func_tunnel,
-						shift_amount => shift_amount_OUT,
+						immediate => imm_amount_OUT,
 						mem_store => mem_store,
 						mem_load => mem_load,
 						output_register => output_register,
