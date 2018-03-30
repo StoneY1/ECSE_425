@@ -31,7 +31,7 @@ BEGIN
 	
 	BEGIN
 		IF(now < 1 ps)THEN
-			file_open(f, "program1.txt", read_mode);
+			file_open(f, "program.txt", read_mode);
 			while (NOT endfile(f)) loop
 				readline(f, row);
 				read(row, rowData);
