@@ -32,7 +32,7 @@ port (
         mem_load : out std_logic; -- flagged for mem load
         output_register : out std_logic_vector (4 downto 0);
         writeback_register : out std_logic; --flaged when result needs to be saved back in registers
-		offset : out std_logic
+		use_imm : out std_logic
 
     ) ;
 end DecodeStage;
@@ -115,7 +115,7 @@ signal regAdd_r2 : std_logic_vector(4 downto 0);
 signal R1_comp : word_type;
 signal R2_comp : word_type;
 signal branch_control : std_logic_vector(1 downto 0);
-signal offset : std_logic;
+signal offset_link : std_logic;
 --signal branch_control : std_logic;
 signal offset_mux_OUT : word_type;
 signal adder_OUT : word_type;
@@ -157,7 +157,7 @@ address_mux : two_one_mux port map(
 						output => branch_address);
 
 offset_mux : two_one_mux port map(
-						sel => offset,
+						sel => offset_link,
 						in1 => R1_comp,
 						in2 => imm_Tunnel_IN,
 						output => offset_mux_OUT);
@@ -187,8 +187,8 @@ decoderComp : decoder port map(			reset => reset,
 						mem_load => mem_load,
 						output_register => output_register,
 						writeback_register => writeback_register,
-						offset => offset,
-						use_immediate => imm_out,
+						offset => offset_link,
+						use_immediate => use_imm,
 						branch_control => branch_control );
 
 comparator : branch_comparator port map(

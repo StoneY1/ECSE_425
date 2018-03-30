@@ -51,27 +51,35 @@ component IF_ID_Stage port (
 
 
 component DecodeStage port (
-	-- inputs
-    reset : in std_logic;
-    clk : in std_logic;
+        -- inputs
+        reset : in std_logic;
+        clk : in std_logic;
 
-    instruction_in : in word_type;
+	PC_in : in word_type;
+        instruction_in : in word_type;
 
-    write_enable : in std_logic;
-    register_write_address : in std_logic_vector(4 downto 0);
-    write_data : in word_type;
+	write_enable : in std_logic;
+	register_write_address : in std_logic_vector(4 downto 0);
+	write_data : in word_type;
 
 
-    -- outputs to EX stage
-    R1 : out word_type;
-    R2 : out word_type;
-    ALU_function : out std_logic_vector (4 downto 0);
-    imm_out : out word_type;
+	--output to IF stage
+	branch_taken : out std_logic;
+	branch_address : out word_type;
+		
+        -- outputs to EX stage
+        R1 : out word_type;
+        R2 : out word_type;
+        ALU_function : out std_logic_vector (4 downto 0);
+        imm_out : out word_type;
 
-    mem_store : out std_logic; --flagged for mem Write
-    mem_load : out std_logic; -- flagged for mem load
-    output_register : out std_logic_vector (4 downto 0);
-    writeback_register : out std_logic --flaged when result needs to be saved back in registers
+        mem_store : out std_logic; --flagged for mem Write
+        mem_load : out std_logic; -- flagged for mem load
+        output_register : out std_logic_vector (4 downto 0);
+        writeback_register : out std_logic; --flaged when result needs to be saved back in registers
+	use_imm : out std_logic;
+
+
 
 ); end component;
 
@@ -173,6 +181,9 @@ signal IF_ID_PC_IN : word_type;
 signal IF_ID_PC_OUT : word_type;
 signal branch_op : std_logic;
 signal branch_address : word_type;
+
+signal ID_PC_IN : word_type;
+
 --ID_EX
 signal ALU_function_id : std_logic_vector(4 downto 0);
 signal ALU_function_ex : std_logic_vector(4 downto 0);
@@ -240,7 +251,7 @@ ID_Stage : DecodeStage port map(
 							--INPUT PORTS
 							reset => reset,
 							clk => clk,
-							--PC_in => ,
+							PC_in => ID_PC_IN,
 							
 							instruction_in => instruction_OUT,
 							
@@ -249,19 +260,20 @@ ID_Stage : DecodeStage port map(
 							write_data => write_data,
 
 							--OUTPUT PORTS
+							branch_taken => ,
+							branch_address => ,
+							
 							R1 => R1_ID,
 							R2 => R2_ID,
 							ALU_function => ALU_function_id,
+							imm_out => ,
+							
 							
 							mem_store => mem_store_ID_EX_IN,--flagged for mem Write
 							mem_load => mem_load_ID_EX_IN,-- flagged for mem load
 							output_register => output_register_ID_EX_IN,
 							writeback_register => writeback_register_ID_EX_IN--flaged when result needs to be saved back in registers
-							--imm_out => ,
-							--use_immediate => ,
-							
-							--branch_op => ,
-							--branch_address => 
+							use_imm => 
 						
 								);
 								
