@@ -15,15 +15,13 @@ architecture behavioral of imm_mux is
 
 
 begin
-process (clk)
+process (registerValue, immediateValue, outputSelect)
 	begin
 	
-	if rising_edge(clk) then
-		if outputSelect = '0' then
-			output <= registerValue;
-		elsif outputSelect = '1' then
-			output <= immediateValue;
-		end if;
+	if outputSelect = '0' then
+		output <= registerValue;
+	elsif outputSelect = '1' then
+		output <= immediateValue;
 	end if;
 	end process;
 
