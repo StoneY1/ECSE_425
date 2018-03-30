@@ -31,6 +31,8 @@ architecture behavioral of pipelineStages is
 component InstructionFetchStage port (
 
 	clock : in std_logic;
+	branch_taken : in std_logic;
+	dest_address : in std_logic_vector(31 downto 0);
 	instruction : out std_logic_vector(31 downto 0)
 
 ); end component;
@@ -147,7 +149,7 @@ component MemoryStage port (
 ); end component;
 
 
-component EX_MEM_Stage port (
+component MEM_WB_Stage port (
 		MEM_value_in   : in    word_type
 	; MEM_value_out  : out   word_type
 	; dest_register_in : in address_type
@@ -201,7 +203,8 @@ signal output_register_MEM_WB_IN : std_logic_vector (4 downto 0);
 signal output_register_MEM_WB_OUT : std_logic_vector (4 downto 0);
 signal writeback_register_MEM_WB_IN  :  std_logic; --flaged when result needs to be saved back in registers
 signal writeback_register_MEM_WB_OUT :  std_logic; --flaged when result needs to be saved back in registers
-
+signal writeback_data_IN : word_type;
+signal writeback_data_OUT : word_type;
 
 
 begin 
@@ -209,7 +212,8 @@ begin
 IF_Stage : InstructionFetchStage port map(
 							--INPUT PORTS
 							clock => clk,
-							
+							branch_taken => '1',
+							dest_address => (others => '0'),
 							--OUTPUT PORTS
 							instruction => instruction_IN
 								);
@@ -218,9 +222,9 @@ IF_ID : IF_ID_Stage port map(
 							--INPUT PORTS
 							reset => reset,
 							clk => clk,
-							--PC_in => ,
+							PC_in => (others => '0'),
 							inst_in => instruction_IN,
-							--insert_stall => ,
+							insert_stall => '0',
 
 							--OUTPUT PORTS
 							--PC_out  => ,
@@ -344,19 +348,19 @@ memory_Stage : MemoryStage port map(
 							--mem_out_forwarded => ,
 							dest_register_out => output_register_MEM_WB_IN,
 							write_back_enable_out => writeback_register_MEM_WB_IN,
-							mem_out => 
+							mem_out => writeback_data_IN
 								);
 								
 MEM_WB : MEM_WB_Stage port map(
 							--INPUT PORTS
 							reset => reset,
 							clk => clk,
-							MEM_value_in => ,
+							MEM_value_in => writeback_data_IN,
 							write_back_in => writeback_register_MEM_WB_IN,
 							dest_register_in => output_register_MEM_WB_IN,
 							
 							--OUTPUT PORTS
-							MEM_value_out => ,
+							MEM_value_out => writeback_data_OUT,
 							dest_register_out => output_register_MEM_WB_OUT,
 							write_back_out => writeback_register_MEM_WB_OUT
 								);
