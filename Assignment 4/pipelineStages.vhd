@@ -68,6 +68,8 @@ component DecodeStage port (
 	branch_address : out word_type;
 		
         -- outputs to EX stage
+	R1_address : out std_logic_vector (4 downto 0);
+	R2_address : out std_logic_vector (4 downto 0);
         R1 : out word_type;
         R2 : out word_type;
         ALU_function : out std_logic_vector (4 downto 0);
@@ -92,6 +94,10 @@ component ID_EX_Stage port (
 	register2_value_out : out word_type;
 	immediate_value_in : in word_type;
 	immediate_value_out : out word_type;
+	register1_address_in : in std_logic_vector(4 downto 0);
+	register1_address_out : in std_logic_vector(4 downto 0);
+	register2_address_in : in std_logic_vector(4 downto 0);
+	register2_address_out : in std_logic_vector(4 downto 0);
     	store_in      : in    std_logic;
     	store_out     : out   std_logic;
 	load_in	: in std_logic;
@@ -205,6 +211,10 @@ signal use_imm_ID_EX_IN : std_logic;
 signal use_imm_ID_EX_OUT : std_logic;
 signal imm_ID_EX_OUT : word_type;
 signal imm_ID_EX_IN : word_type;
+signal r1_address_in : std_logic_vector (4 downto 0);
+signal r1_address_out : std_logic_vector (4 downto 0); 
+signal r2_address_in : std_logic_vector (4 downto 0);
+signal r2_address_out : std_logic_vector (4 downto 0);
 
 --EX_MEM
 signal ALU_result_IN : word_type;
@@ -270,6 +280,8 @@ ID_Stage : DecodeStage port map(
 							--OUTPUT PORTS
 							branch_taken => branch_taken_ID_IF,
 							branch_address => branch_address_ID_IF,
+							R1_address => r1_address_in,
+							R2_address => r2_address_in,
 							
 							R1 => R1_ID,
 							R2 => R2_ID,
@@ -298,7 +310,12 @@ ID_EX_pipe : ID_EX_Stage port map(
 							immediate_value_in => imm_ID_EX_IN,
 							immediate_operation_in => use_imm_ID_EX_IN,
 							write_back_in => writeback_register_ID_EX_IN,
+							register1_address_in => r1_address_in,
+							register2_address_in => r2_address_in,
+							
 							--OUTPUT PORTS
+							register2_address_out => r2_address_out,
+							register1_address_out => r1_address_out,
 							ALU_code_out => ALU_function_ex,
 							register1_value_out => R1_EX,
 							register2_value_out => R2_EX,

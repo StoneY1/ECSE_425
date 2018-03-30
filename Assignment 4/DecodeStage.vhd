@@ -23,6 +23,8 @@ port (
 		branch_address : out word_type;
 		
         -- outputs to EX stage
+	R1_address : out std_logic_vector (4 downto 0);
+	R2_address : out std_logic_vector (4 downto 0);
         R1 : out word_type;
         R2 : out word_type;
         ALU_function : out std_logic_vector (4 downto 0);
@@ -140,6 +142,16 @@ tunnel_branchTaken : tunnel_1 port map(
 ALU_function_Tunnel : tunnel5 port map (
 						bits_IN => ALU_func_tunnel,
 						bits_OUT=> ALU_function
+);
+
+register1_address_tunnel : tunnel5 port map (
+						bits_IN => regAdd_r1,
+						bits_OUT=> R1_address
+);
+
+register2_address_tunnel : tunnel5 port map (
+						bits_IN => regAdd_r2,
+						bits_OUT=> R2_address
 );
 
 tunnel_imm : tunnel32 port map(

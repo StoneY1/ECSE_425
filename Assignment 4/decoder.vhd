@@ -26,6 +26,7 @@ port (
 		branch_control : out std_logic_vector(1 downto 0);
 		offset : out std_logic
 
+
     ) ;
 end decoder ; -- decode
 

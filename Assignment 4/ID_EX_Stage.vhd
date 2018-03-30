@@ -10,6 +10,10 @@ entity ID_EX_Stage is
         ; ALU_code_out  : out   std_logic_vector(4 downto 0)
 	; register1_value_in : in word_type
 	; register1_value_out : out word_type
+	; register1_address_in : in std_logic_vector(4 downto 0)
+	; register1_address_out : in std_logic_vector(4 downto 0)
+	; register2_address_in : in std_logic_vector(4 downto 0)
+	; register2_address_out : in std_logic_vector(4 downto 0)
 	; register2_value_in : in word_type
 	; register2_value_out : out word_type
 	; immediate_value_in : in word_type
