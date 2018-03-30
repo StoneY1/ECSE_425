@@ -1,3 +1,4 @@
+#MIPS test program for our processor to make sure branching and storing are working
 addi $10,$10,4 #set R10 to 4 for memory addressing
 addi $7,$7,30 #register 7 will be 30 for the bne
 start: add $2,$1,$2 
