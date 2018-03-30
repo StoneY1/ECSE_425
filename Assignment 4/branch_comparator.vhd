@@ -23,7 +23,7 @@ begin
 	if control = "11" then --taken
 		taken <= '1';
 	
-	elsif control = "10" then 
+	elsif control = "10" then --bne
 		if register1 = register2 then
 			taken <= '0';
 		else

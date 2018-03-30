@@ -143,13 +143,19 @@ begin
                     register1_address <= "00000";
                     register2_address <= "00000";
                     output_register <= "00000";
-					writeback_register <= '0';
+			writeback_register <= '0';
 
             end case;
 
 
         elsif opcode = "000010" then -- J type instruction
-		immediate <= To_StdLogicVector(to_bitvector(resize(resize(signed(instruction_in(15 downto 0)),immediate'length))) s11 2);
+		--immediate <= To_StdLogicVector(to_bitvector(std_logic_vector(resize(signed(instruction_in(15 downto 0)),immediate'length))) s11 2);
+		if (instruction_in(15) = '1') then
+			immediate <= "1111111111111111" & instruction_in(15 downto 0);
+		else 
+			immediate <= "0000000000000000" & instruction_in(15 downto 0);
+		end if;
+
 		ALU_function <= "00000";
                 register1_address <= "00000";
                 register2_address <= "00000";
@@ -161,48 +167,80 @@ begin
 
 
         elsif  opcode = "000011" then -- J type
+		if (instruction_in(15) = '1') then
+			immediate <= "1111111111111111" & instruction_in(15 downto 0);
+		else 
+			immediate <= "0000000000000000" & instruction_in(15 downto 0);
+		end if;
 
+		ALU_function <= "00000";
+                register1_address <= "00000";
+                register2_address <= "00000";
+                output_register <= "00000";
+		writeback_register <= '0';
+		branch_control <= "11";
+		offset <= '1';
 
 
         else -- I type
-
+		if (instruction_in(15) = '1') then
+			immediate <= "1111111111111111" & instruction_in(15 downto 0);
+		else 
+			immediate <= "0000000000000000" & instruction_in(15 downto 0);
+		end if;
             case (opcode) is
 
-                when "001000" => -- addi
-                    
+                when "001000" => -- addi OK
                     ALU_function <= "00001";
-			immediate <= std_logic_vector(resize(signed(instruction_in(15 downto 0)),immediate'length));
+			use_immediate <= '1';
+
 					
-                when "001100" => -- andi
+                when "001100" => -- andi 
                     ALU_function <= "00110";
+			use_immediate <= '1';
 
                 when "001101" => -- ori
                     ALU_function <= "00111";
-
+			use_immediate <= '1';
 
                 when "001110" => -- xori
                     ALU_function <= "01001";
+			use_immediate <= '1';
 
 
                 when "100011" => -- lw
-                    ALU_function <= "00001";
+                    ALU_function <= "00000";
+			use_immediate <= '0';
+			mem_load <= '1';
+			writeback_register <= '1';
 
-
-                when "001111" => -- lui
-                    ALU_function <= "10000";
-
+                when "001111" => -- lui OK
+                    ALU_function <= "10000"; --correct op code?
+			use_immediate <= '1';
+			writeback_register <= '1';
 
                 when "101011" => -- sw
-                    ALU_function <= "00001";
+                    ALU_function <= "00000";
+			mem_store <= '1';
+			writeback_register <= '0';
+			
 
 
                 when "000100" => -- beq
-                    ALU_function <= "10001";
+                    ALU_function <= "00000";
+			use_immediate <= '0';
+			branch_control <= "01";
+
+			writeback_register <= '0';
 
 
                 when "000101" => -- bne
-                    ALU_function <= "10010";
+                    ALU_function <= "00000";
+			use_immediate <= '0';
+			branch_control <= "10";
 
+			
+			writeback_register <= '0';
 
                 when others =>
                     ALU_function <= "00000";
