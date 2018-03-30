@@ -92,8 +92,8 @@ component adder port (
 component two_one_mux port (
       	sel : in std_logic;
       	in1 : in std_logic_vector(31 downto 0);
-		in2 : in std_logic_vector(31 downto 0);
-      	output : out std_logic_vector(31 downto 0)
+	in2 : in std_logic_vector(31 downto 0);
+      	outputMux : out std_logic_vector(31 downto 0)
 );  end component;
 
 component sign_zero_extend port (
@@ -177,13 +177,13 @@ address_mux : two_one_mux port map(
 						sel => branch_taken_tunnel,
 						in1 => PC_in,
 						in2 => adder_OUT,
-						output => branch_address);
+						outputMux => branch_address);
 
 offset_mux : two_one_mux port map(
 						sel => offset_link,
-						in1 => R1_comp,
+						in1 => R2_comp,
 						in2 => imm_Tunnel_IN,
-						output => offset_mux_OUT);
+						outputMux => offset_mux_OUT);
 
 PC_jump_adder : adder port map(
 						input1 => PC_in,
@@ -221,6 +221,13 @@ comparator : branch_comparator port map(
 						taken => branch_taken_tunnel
 
 );
+
+
+--offsetSel : process(immediate, offset, R2_Comp) --sets the appropriate control signals for offset value (either immadiate or R21_comp)
+--begin
+--end process; 
+
+
 
 
 end architecture; 

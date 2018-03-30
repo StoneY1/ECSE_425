@@ -80,4 +80,4 @@ reg : register_file port map(	clock => clock,
 	  wait for clock_period/2;
   end process;
 
-end architecture;
+end architecture; 

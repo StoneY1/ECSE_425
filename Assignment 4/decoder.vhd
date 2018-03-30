@@ -57,7 +57,7 @@ begin
     begin
         -- retreive opcode from Instruction
         opcode := instruction_in(31 downto 26);
-
+	offset <= '1';
         if opcode = "000000" then --compare function section to see what instruction it is
             rs := instruction_in(25 downto 21);
             rt := instruction_in(20 downto 16);
@@ -134,8 +134,8 @@ begin
 					register1_address <= (others => '0');
 					register2_address <= rs;
 					branch_control <= "11";
-					offset <= '1';
-					--shift_amount <= (others => '0');
+					offset <= '0';
+					immediate  <= (others => '0');
 					writeback_register <= '0';
                 
                 when others =>
@@ -149,8 +149,15 @@ begin
 
 
         elsif opcode = "000010" then -- J type instruction
-					--immediate <= to_stdLogicVector(to_bitvector(resize(signed(instruction_in(15 downto 0)),immediate'length)))
-
+		immediate <= To_StdLogicVector(to_bitvector(resize(resize(signed(instruction_in(15 downto 0)),immediate'length))) s11 2);
+		ALU_function <= "00000";
+                register1_address <= "00000";
+                register2_address <= "00000";
+                output_register <= "00000";
+		writeback_register <= '0';
+		branch_control <= "11";
+		offset <= '1';
+		
 
 
         elsif  opcode = "000011" then -- J type
@@ -164,7 +171,7 @@ begin
                 when "001000" => -- addi
                     
                     ALU_function <= "00001";
-					immediate <= std_logic_vector(resize(signed(instruction_in(15 downto 0)),immediate'length));
+			immediate <= std_logic_vector(resize(signed(instruction_in(15 downto 0)),immediate'length));
 					
                 when "001100" => -- andi
                     ALU_function <= "00110";
@@ -207,5 +214,8 @@ begin
 
         end if ;
     end process ; 
+
+
+
 
 end architecture ; -- arch
