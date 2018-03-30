@@ -66,7 +66,7 @@ component DecodeStage port (
     R1 : out word_type;
     R2 : out word_type;
     ALU_function : out std_logic_vector (4 downto 0);
-    shift_amount : out std_logic_vector(4 downto 0);
+    imm_out : out word_type;
 
     mem_store : out std_logic; --flagged for mem Write
     mem_load : out std_logic; -- flagged for mem load
@@ -257,7 +257,7 @@ ID_Stage : DecodeStage port map(
 							mem_load => mem_load_ID_EX_IN,-- flagged for mem load
 							output_register => output_register_ID_EX_IN,
 							writeback_register => writeback_register_ID_EX_IN--flaged when result needs to be saved back in registers
-							--shift_amount => ,
+							--imm_out => ,
 							--use_immediate => ,
 							
 							--branch_op => ,

@@ -20,7 +20,10 @@ port (
         mem_store : out std_logic; --flagged for mem Write
         mem_load : out std_logic; -- flagged for mem load
         output_register : out std_logic_vector (4 downto 0);
-        writeback_register : out std_logic --flaged when result needs to be saved back in registers
+        writeback_register : out std_logic; --flaged when result needs to be saved back in registers
+		
+		branch_control : out std_logic_vector(1 downto 0);
+		offset : out std_logic
 
     ) ;
 end decoder ; -- decode
