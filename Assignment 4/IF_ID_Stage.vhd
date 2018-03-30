@@ -31,7 +31,8 @@ begin
 		if reset = '1' then
 			PC_out <= (others => '0');
 			inst_out <= (others => '0');
-			
+		elsif insert_stall = '1' then
+			inst_out <= "00000000000000000000000000111111";
 		elsif rising_edge(clk) then
 			PC_out <= PC_in;
 			inst_out <= inst_in;

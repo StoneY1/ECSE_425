@@ -14,6 +14,8 @@ end ALU;
 architecture behavioral of ALU is
 
 signal temp : integer := 0;
+signal LO : word_type;
+signal HI : word_type;
 
 begin
 process (inputOne, inputTwo, ALU_function)
@@ -83,24 +85,6 @@ process (inputOne, inputTwo, ALU_function)
 	-- lui
 	elsif ALU_function = "10000" then
 		output <=  std_logic_vector(shift_left(unsigned(inputTwo), 16));
-
-
-	--beq
-	elsif ALU_function = "10001" then
-		if inputOne = inputTwo then
-			output <= std_logic_vector(to_unsigned(1, 32));
-		else
-			output <= std_logic_vector(to_unsigned(0, 32));
-		end if;
-	
-	--bne
-	elsif ALU_function = "10010" then
-		if inputOne = inputTwo then
-			output <= std_logic_vector(to_unsigned(0, 32));
-		else
-			output <= std_logic_vector(to_unsigned(1, 32));
-		end if;
-
 
 	-- no OP code
 	elsif ALU_function = "00000" then

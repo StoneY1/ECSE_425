@@ -113,21 +113,26 @@ component ID_EX_Stage port (
 ); end component;
 
 component ExecuteStage port (
-          reset : in std_logic
-        ; clk : in std_logic
-	; executeForward, memForward, wbForward : in word_type
-	; inputOneSelect : in std_logic_vector(1 downto 0)
-	; inputTwoSelect : in std_logic_vector(1 downto 0)
-	; ALU_code_in   : in    std_logic_vector(4 downto 0)
+    reset : in std_logic
+    ; clk : in std_logic
+	; memAddr, wbAddr : in register_type
+	; memForward, wbForward : in word_type
+	; ALU_code_in   : in std_logic_vector(4 downto 0)
+	; register1_address_in : in register_type
+	; register2_address_in : in register_type
 	; register1_value_in : in word_type
 	; register2_value_in : in word_type
 	; immediate_value_in : in word_type
-        ; store_in      : in    std_logic
+    ; store_in      : in std_logic
 	; load_in	: in std_logic
 	; dest_register_in : in register_type
 	; immediate_operation_in : in std_logic
 	; write_back_in : in std_logic
 	; ALU_value_out : out word_type
+	; store_out      : out std_logic
+	; load_out	: out std_logic
+	; dest_register_out : out register_type
+	; write_back_out : out std_logic
 ); end component;
 
 
@@ -212,13 +217,15 @@ signal use_imm_ID_EX_OUT : std_logic;
 signal imm_ID_EX_OUT : word_type;
 signal imm_ID_EX_IN : word_type;
 signal r1_address_in : std_logic_vector (4 downto 0);
-signal r1_address_out : std_logic_vector (4 downto 0); 
+signal r1_address_ID_EX_OUT : std_logic_vector (4 downto 0); 
 signal r2_address_in : std_logic_vector (4 downto 0);
-signal r2_address_out : std_logic_vector (4 downto 0);
+signal r2_address_ID_EX_OUT : std_logic_vector (4 downto 0);
 
 --EX_MEM
 signal ALU_result_IN : word_type;
 signal ALU_result_OUT : word_type;
+signal mem_load_EX_MEM_IN : std_logic;
+signal mem_store_EX_MEM_IN : std_logic;
 signal mem_load_EX_MEM_OUT : std_logic;
 signal mem_store_EX_MEM_OUT : std_logic;
 signal output_register_EX_MEM_IN : std_logic_vector (4 downto 0);
@@ -256,7 +263,7 @@ IF_ID : IF_ID_Stage port map(
 							clk => clk,
 							PC_in => IF_ID_PC_IN,
 							inst_in => instruction_IN,
-							insert_stall => '0',
+							insert_stall => branch_taken_ID_IF,
 
 							--OUTPUT PORTS
 							PC_out  => IF_ID_PC_OUT,
@@ -273,9 +280,9 @@ ID_Stage : DecodeStage port map(
 							
 							instruction_in => instruction_OUT,
 							
-							write_enable => write_enable,
-							register_write_address => register_write_address,
-							write_data => write_data,
+							write_enable => writeback_register_MEM_WB_OUT,
+							register_write_address => output_register_MEM_WB_OUT,
+							write_data => writeback_data_OUT,
 
 							--OUTPUT PORTS
 							branch_taken => branch_taken_ID_IF,
@@ -314,29 +321,32 @@ ID_EX_pipe : ID_EX_Stage port map(
 							register2_address_in => r2_address_in,
 							
 							--OUTPUT PORTS
-							register2_address_out => r2_address_out,
-							register1_address_out => r1_address_out,
+							register2_address_out => r2_address_ID_EX_OUT,
+							register1_address_out => r1_address_ID_EX_OUT,
 							ALU_code_out => ALU_function_ex,
 							register1_value_out => R1_EX,
 							register2_value_out => R2_EX,
 							immediate_value_out => imm_ID_EX_OUT,
 							immediate_operation_out =>  use_imm_ID_EX_OUT,
 							dest_register_out => output_register_ID_EX_OUT,
-							write_back_out => writeback_register_EX_MEM_IN,
+							write_back_out => writeback_register_ID_EX_OUT,
 							store_out => mem_store_ID_EX_OUT,
 							load_out => mem_load_ID_EX_OUT
 									
 								);
 								
 EX_Stage : ExecuteStage port map(
+
 							--INPUT PORTS
 							reset => reset,
 							clk => clk,
+							memAddr => output_register_MEM_WB_IN,
+							wbAddr => output_register_MEM_WB_OUT,
+							memForward => writeback_data_IN,
+							wbForward => writeback_data_OUT,
 
-							executeForward => (others => '0'),
-							memForward => (others => '0'),
-							wbForward => (others => '0'),
-
+							register1_address_in => r1_address_ID_EX_OUT,
+							register2_address_in => r2_address_ID_EX_OUT,
 							ALU_code_in => ALU_function_ex,
 							register1_value_in => R1_EX,
 							register2_value_in => R2_EX,
@@ -345,15 +355,16 @@ EX_Stage : ExecuteStage port map(
 							load_in => mem_load_ID_EX_OUT,
 							dest_register_in => output_register_ID_EX_OUT,
 							immediate_operation_in => use_imm_ID_EX_OUT,
-							
-							--TODO IMPLEMENT THIS
-							write_back_in =>'0',
-							inputOneSelect => "00",
-							inputTwoSelect => "00",
+							write_back_in => writeback_register_ID_EX_OUT,
+
 							
 							--OUTPUT PORTS
-							ALU_value_out => ALU_result_IN
-								);
+							ALU_value_out => ALU_result_IN,
+							store_out => mem_store_EX_MEM_IN,
+							load_out => mem_load_EX_MEM_IN,
+							dest_register_out => output_register_EX_MEM_IN,
+							write_back_out => writeback_register_EX_MEM_IN
+							);
 								
 								
 EX_MEM : EX_MEM_Stage port map(
@@ -362,10 +373,10 @@ EX_MEM : EX_MEM_Stage port map(
 							clk => clk,
 							ALU_value_in => ALU_result_IN,
 							register2_value_in => R2_EX,
-							dest_register_in => output_register_ID_EX_OUT,
-							store_in => mem_store_ID_EX_OUT,
-							write_back_in => writeback_register_ID_EX_OUT,
-	 						load_in => mem_load_ID_EX_OUT,
+							dest_register_in => output_register_EX_MEM_IN,
+							store_in => mem_store_EX_MEM_IN,
+							write_back_in => writeback_register_EX_MEM_IN,
+	 						load_in => mem_load_EX_MEM_IN,
 							--OUTPUT PORTS
 							ALU_value_out => ALU_result_OUT,
 							register2_value_out => mem_data_in,
@@ -386,8 +397,6 @@ memory_Stage : MemoryStage port map(
 							mem_data_in => mem_data_in,
 							
 							--OUTPUT PORTS
-							--ALU_value_forwarded => , --TODO: connect forwarded signal back to ExecuteStage.
-							--mem_out_forwarded => ,
 							dest_register_out => output_register_MEM_WB_IN,
 							write_back_enable_out => writeback_register_MEM_WB_IN,
 							mem_out => writeback_data_IN
