@@ -58,14 +58,15 @@ begin
         -- retreive opcode from Instruction
         opcode := instruction_in(31 downto 26);
 	offset <= '1';
+            mem_store <= '0';
+            mem_load <= '0';
         if opcode = "000000" then --compare function section to see what instruction it is
             rs := instruction_in(25 downto 21);
             rt := instruction_in(20 downto 16);
             rd := instruction_in(15 downto 11);
             shamt := instruction_in(10 downto 6);
             I_function := instruction_in(5 downto 0);
-            mem_store <= '0';
-            mem_load <= '0';
+
             writeback_register <= '1';
 			
 			--set register outputs
@@ -78,38 +79,40 @@ begin
 
                 when "100000" => --add 
                     ALU_function <= "00001";
-					use_immediate <= '0';
+			use_immediate <= '0';
 
                 when "100010" => --sub 
                     ALU_function <= "00010";
-					use_immediate <= '0';
+			use_immediate <= '0';
                 when "011000" => --mult 
                     ALU_function <= "00011";
-					
+			writeback_register <= '0';
+			use_immediate <= '0';	
                 when "011010" => --div 
                     ALU_function <= "00100";
-					use_immediate <= '0';
-                when "101010" => --stl 
+			use_immediate <= '0';
+			writeback_register <= '0';
+                when "101010" => --slt 
                     ALU_function <= "00101";
-					use_immediate <= '0';
+			use_immediate <= '0';
                 when "100100" => --and 
                     ALU_function <= "00110";
-					use_immediate <= '0';
+			use_immediate <= '0';
                 when "100101" => --or 
                     ALU_function <= "00111";
-					use_immediate <= '0';
+			use_immediate <= '0';
                 when "100111" => --nor 
                     ALU_function <= "01000";
-					use_immediate <= '0';
+			use_immediate <= '0';
                 when "100110" => --xor 
                     ALU_function <= "01001";
-					use_immediate <= '0';
+			use_immediate <= '0';
                 when "010000" => --mfhi
                     ALU_function <= "01011";
-
+			use_immediate <= '0';
                 when "010010" => --mflo
-                    ALU_function <= "01011";
-
+                    ALU_function <= "11011";
+			use_immediate <= '0';
                 when "000000" => --sll (shamt needed)
                     ALU_function <= "01100";
 					use_immediate <= '1';
@@ -129,8 +132,8 @@ begin
 					immediate <= std_logic_vector(resize(signed(shamt),immediate'length));
 
                 when "001000" => --jr
-                    ALU_function <= "01111";
-					use_immediate <= '1';
+                    ALU_function <= "00000";
+					use_immediate <= '0';
 					register1_address <= (others => '0');
 					register2_address <= rs;
 					branch_control <= "11";
@@ -183,6 +186,8 @@ begin
 
 
         else -- I type
+		 	rs := instruction_in(25 downto 21);
+            		rt := instruction_in(20 downto 16);
 		if (instruction_in(15) = '1') then
 			immediate <= "1111111111111111" & instruction_in(15 downto 0);
 		else 
@@ -210,7 +215,7 @@ begin
 
                 when "100011" => -- lw
                     ALU_function <= "00000";
-			use_immediate <= '0';
+			use_immediate <= '1';
 			mem_load <= '1';
 			writeback_register <= '1';
 
@@ -220,10 +225,10 @@ begin
 			writeback_register <= '1';
 
                 when "101011" => -- sw
-                    ALU_function <= "00000";
+                    ALU_function <= "00001";
 			mem_store <= '1';
 			writeback_register <= '0';
-			
+			use_immediate <= '1';
 
 
                 when "000100" => -- beq
@@ -249,7 +254,8 @@ begin
                     output_register <= "00000";
 
             end case ;
-
+	          register1_address <= rs;
+		output_register <= rt;
         end if ;
     end process ; 
 
