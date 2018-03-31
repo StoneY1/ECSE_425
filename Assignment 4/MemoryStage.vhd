@@ -30,7 +30,7 @@ GENERIC(
 port(
     clock: IN STD_LOGIC;
     writedata: IN STD_LOGIC_VECTOR (31 DOWNTO 0); --Processor will read and write 32-bits at a time.
-    address: IN INTEGER RANGE 0 TO ram_size-1;
+    address: IN INTEGER;
     memwrite: IN STD_LOGIC;
     readdata: OUT STD_LOGIC_VECTOR (31 DOWNTO 0)      
 );
