@@ -22,8 +22,8 @@ entity ID_EX_Stage is
         ; store_out     : out   std_logic
 	; load_in	: in std_logic
 	; load_out	: out std_logic
-	; dest_register_in : in word_type
-	; dest_register_out : out word_type
+	; dest_register_in : in register_type
+	; dest_register_out : out register_type
 	; immediate_operation_in : in std_logic
 	; immediate_operation_out : out std_logic
 	; write_back_in : in std_logic

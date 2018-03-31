@@ -2,6 +2,8 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
 USE ieee.numeric_std.all;
+use std.textio.all;
+use ieee.std_logic_textio.all;
 use work.definitions.all;
 
 ENTITY register_file IS
@@ -25,13 +27,21 @@ SIGNAL r1_addr : INTEGER := 0;
 SIGNAL r2_addr : INTEGER := 0;
 SIGNAL w_addr: INTEGER := 0;
 BEGIN
-process(clock) begin
+process(clock) 
+variable printCounter : INTEGER := 0;
+variable flag : INTEGER := 0;
+file register_file : text open write_mode is "register_file.txt";
+variable outLine : line;	
+variable rowLine : integer := 0;
+variable test : std_logic_vector(31 downto 0) := "00100000000000010000000000000001";
+begin
 	if(now < 1 ps)then
 		For i in 0 to register_size-1 loop
 			registers(i) <= std_logic_vector(to_unsigned(0,32));
 		end loop;
 	end if;
 	if (rising_edge(clock)) then
+		printCounter := printCounter + 1;
 		r1_addr <= to_integer(unsigned(r1));
 		r2_addr <= to_integer(unsigned(r2));
 		w_addr <= to_integer(unsigned(write_address));
@@ -53,5 +63,19 @@ process(clock) begin
 			r2_out <= registers(r2_addr);
 		end if;
 	end if;
+
+	if (printCounter = 20) then
+	
+		while (rowLine < 32) loop 
+	
+			write(outLine, registers(rowLine));
+			writeline(register_file, outLine);
+			rowLine := rowLine + 1;
+	
+		end loop;
+	
+	
+	end if;
 end process;
+
 end behaviour;

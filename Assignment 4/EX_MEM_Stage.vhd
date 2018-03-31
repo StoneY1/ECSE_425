@@ -14,8 +14,8 @@ entity EX_MEM_Stage is
         ; store_out     : out   std_logic
 	; load_in	: in std_logic
 	; load_out	: out std_logic
-	; dest_register_in : in address_type
-	; dest_register_out : out address_type
+	; dest_register_in : in register_type
+	; dest_register_out : out register_type
 	; write_back_in : in std_logic
 	; write_back_out : out std_logic
         ; reset               : in    std_logic

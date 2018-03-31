@@ -7,17 +7,14 @@ entity pipelineStages is
 port (
 		--inputs
 		reset : in std_logic;
-		clk : in std_logic;
+		clk : in std_logic
 		
-		write_enable : in std_logic;
-		register_write_address : in std_logic_vector(4 downto 0);
-		write_data : in word_type;
 		
 		--outputs
 		--mem_store : out std_logic; --flagged for mem Write
         --mem_load : out std_logic; -- flagged for mem load
-        output_register : out std_logic_vector (4 downto 0);
-        writeback_register : out std_logic --flaged when result needs to be saved back in registers
+       -- output_register : out std_logic_vector (4 downto 0);
+        --writeback_register : out std_logic --flaged when result needs to be saved back in registers
 
 );
 

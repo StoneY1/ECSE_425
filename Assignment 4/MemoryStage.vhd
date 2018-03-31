@@ -37,10 +37,9 @@ port(
 end component;
 
 component two_one_mux port(
-    clk : in std_logic;
     sel : in std_logic;
     in1, in2 : in std_logic_vector(31 downto 0);
-    output : out std_logic_vector(31 downto 0)
+    outputMux : out std_logic_vector(31 downto 0)
 );
 end component;
 --signal declarations
@@ -59,11 +58,11 @@ main_memory : data_memory port map(
 							readdata => read_out
 								);
 mux : two_one_mux port map(
-							clk => clk,
+							
 							in1 => ALU_value_out,
 							in2 => read_out,
 							sel => load_enable,
-							output => mem_out
+							outputMux => mem_out
 								);
 dest_register_out <= dest_register_in;
 write_back_enable_out <= write_back_enable_in;

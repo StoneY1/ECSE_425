@@ -8,8 +8,8 @@ entity MEM_WB_Stage is
 	--Check ALU code lengths
         ( MEM_value_in   : in    word_type
         ; MEM_value_out  : out   word_type
-	; dest_register_in : in address_type
-	; dest_register_out : out address_type
+	; dest_register_in : in register_type
+	; dest_register_out : out register_type
 	; write_back_in : in std_logic
 	; write_back_out : out std_logic
         ; reset               : in    std_logic
