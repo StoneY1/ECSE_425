@@ -117,7 +117,7 @@ decodeStageComp : DecodeStage port map(
 	wait for 3.5*clock_period;
     	
 	PC_in <= "00000000000000000000000000011111";
-	instruction_in <= "00000000001000100001100000100000"; --add r1 + r2 -> r3
+	instruction_in <= "00100000001000010000000000000100"; --add r1 + r2 -> r3
 	--write_enable '0', inputs dont matter
 	write_enable <= '0';
 	register_write_address <= "00001";

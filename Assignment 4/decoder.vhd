@@ -55,6 +55,7 @@ begin
     variable I_function : std_logic_vector(5 downto 0);
 
     begin
+	if rising_edge(clk) then
         -- retreive opcode from Instruction
         opcode := instruction_in(31 downto 26);
 	offset <= '1';
@@ -143,8 +144,10 @@ begin
                 
                 when others =>
                     ALU_function <= "00000";
-                    register1_address <= "00000";
-                    register2_address <= "00000";
+                    --register1_address <= "00000";
+                    --register2_address <= "00000";
+			register2_address <= rt;
+			register1_address <= rs;
                     output_register <= "00000";
 			writeback_register <= '0';
 
@@ -198,19 +201,23 @@ begin
                 when "001000" => -- addi OK
                     ALU_function <= "00001";
 			use_immediate <= '1';
+			writeback_register <= '1';
 
 					
                 when "001100" => -- andi 
                     ALU_function <= "00110";
 			use_immediate <= '1';
+			writeback_register <= '1';
 
                 when "001101" => -- ori
                     ALU_function <= "00111";
 			use_immediate <= '1';
+			writeback_register <= '1';
 
                 when "001110" => -- xori
                     ALU_function <= "01001";
 			use_immediate <= '1';
+			writeback_register <= '1';
 
 
                 when "100011" => -- lw
@@ -255,8 +262,10 @@ begin
 
             end case ;
 	          register1_address <= rs;
+		register2_address <= "00000";
 		output_register <= rt;
         end if ;
+	end if ;
     end process ; 
 
 

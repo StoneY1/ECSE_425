@@ -55,10 +55,11 @@ reg : register_file port map(	clock => clock,
     	write_enable <= '1';
 	wait for clock_period;
 	write_data <= "11000000000000000000000000000001";
-	write_enable <= '0';
+	write_enable <= '1';
 	write_address <= "00010";
 	wait for clock_period;
 	write_enable <= '1';
+	write_address <= "00001";
 	write_data <= "11000000000001110000000000000001";
 	wait for clock_period;
 

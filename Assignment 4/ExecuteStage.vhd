@@ -31,6 +31,10 @@ port (
 end ExecuteStage;
 
 architecture behavioral of ExecuteStage is
+
+
+-- Overlaying module for the execute stage, includes the ALU, ALU input mux's for forwarding and immediate muxMux for choosing the inputs to the ALU
+
 --component declaration
 component ALU port (
 	clk : in std_logic;

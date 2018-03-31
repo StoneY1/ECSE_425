@@ -11,9 +11,9 @@ entity ID_EX_Stage is
 	; register1_value_in : in word_type
 	; register1_value_out : out word_type
 	; register1_address_in : in std_logic_vector(4 downto 0)
-	; register1_address_out : in std_logic_vector(4 downto 0)
+	; register1_address_out : out std_logic_vector(4 downto 0)
 	; register2_address_in : in std_logic_vector(4 downto 0)
-	; register2_address_out : in std_logic_vector(4 downto 0)
+	; register2_address_out : out std_logic_vector(4 downto 0)
 	; register2_value_in : in word_type
 	; register2_value_out : out word_type
 	; immediate_value_in : in word_type
@@ -67,6 +67,8 @@ begin
 			dest_register_out <= dest_register_in;
 			immediate_operation_out <= immediate_operation_in;
 			write_back_out <= write_back_in;
+			register1_address_out <= register1_address_in;
+			register2_address_out <= register2_address_in;
 		end if;		
 	end process;
 
