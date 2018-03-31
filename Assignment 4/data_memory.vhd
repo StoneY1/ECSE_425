@@ -12,7 +12,7 @@ ENTITY data_memory IS
 	PORT (
 		clock: IN STD_LOGIC;
 		writedata: IN STD_LOGIC_VECTOR (31 DOWNTO 0); --Processor will read and write 32-bits at a time.
-		address: IN INTEGER RANGE 0 TO ram_size-1;
+		address: IN INTEGER;
 		memwrite: IN STD_LOGIC;
 		readdata: OUT STD_LOGIC_VECTOR (31 DOWNTO 0)
 	);
@@ -37,10 +37,14 @@ BEGIN
 
 		--This is the actual synthesizable SRAM block
 		IF (clock'event AND clock = '1') THEN
-			IF (memwrite = '1') THEN
-				ram_block(address) <= writedata;
+			IF (address < 0 or address > ram_size-1) THEN
+				read_address_reg <= 0;
+			ELSE
+				IF (memwrite = '1') THEN
+					ram_block(address) <= writedata;
+				END IF;
+				read_address_reg <= address;
 			END IF;
-		read_address_reg <= address;
 		END IF;
 	END PROCESS;
 	readdata <= ram_block(read_address_reg);
