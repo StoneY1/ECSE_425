@@ -5,14 +5,12 @@ sub $10,$10,$11 #R10 = R10-R11 = 4
 addi $12,$12,2 #R12 = 2
 addi $7,$7,30 #load 30 into R7
 mult $7,$12 # $LO should be 30 now
-mflo $9 $free up LO register for testing div
+mflo $9 #free up LO register for testing div
 addi $8,$8,-30 #testing negative add immediate
 start: add $2,$1,$2 
 add $3,$2,$2
 bne $3,$7,start #keeps looping until R3 = R7 (30)
-
-jal: next #jump to next set of tests
-
+jal next #jump to next set of tests
 sw $1,0($10) #store into memory at address 4
 sw $2,1($10) #address 5
 sw $3,2($0) #address 2
@@ -32,17 +30,13 @@ lw $4,0($10) #load the contents previously stored into new registers
 lw $5,1($10)
 lw $6,2($0)
 j infloop
-
 next: addi $13,$13,1
 addi $14,$14,5
 div $14,$13 # 5/1 test divide
 mflo $15
 addi $16,$16,37
 sll $16,$16,$11 #shift left by 2
-srl $17,$3,$13 #shift right by 1
 xor $18,$17,$16 
-
 jr $31 #will go to the storing and loading to wrap up our tests
-
 infloop: add $0,$0,$0
 beq $0,$0,infloop #programming ending in an infinite loop
