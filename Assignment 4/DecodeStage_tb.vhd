@@ -107,17 +107,18 @@ decodeStageComp : DecodeStage port map(
     -- Put initialisation code here
 	reset<= '0';
 	--"000000 00000 00000 00000 00000 000111"
-	PC_in <= "00000000000000000000000000000111";
+	PC_in <= "00000000000000000000000000000000";
 	instruction_in <= "00000000001000100001100000111111"; --DO nothing
 	--write_enable '0', inputs dont matter
 	write_enable <= '0';
 	register_write_address <= "00001";
 	write_data <= "11111111111111111111111111111111";
 
-	wait for 3.5*clock_period;
+	wait for 2*clock_period;
     	
-	PC_in <= "00000000000000000000000000011111";
-	instruction_in <= "00100000001000010000000000000100"; --add r1 + r2 -> r3
+	--PC_in <= "00000000000000000000000000000100";
+	PC_in <= "00000000000000000000000000000100";
+	instruction_in <= "00100000001000100000000000000101"; --add r1 + 5 -> r2
 	--write_enable '0', inputs dont matter
 	write_enable <= '0';
 	register_write_address <= "00001";
@@ -125,14 +126,30 @@ decodeStageComp : DecodeStage port map(
 
 
 	wait for 2*clock_period;
-	PC_in <= "00000000000000000000000000011111";
-	instruction_in <= "00000000001000100001100000100000"; --add r1 + r2 -> r3
+
+	instruction_in <= "00000000001000010001100000111111"; --DO nothing
 	--write_enable '0', inputs dont matter
-	write_enable <= '1';
+	write_enable <= '0';
 	register_write_address <= "00001";
 	write_data <= "11111111111111111111111111111111";
 
 	wait for 2*clock_period;
+
+	PC_in <= "00000000000000000000000000001000";
+	instruction_in <= "00000000011000100010000000100000"; --add r3 + r2 -> r4
+	--write_enable '0', inputs dont matter
+	write_enable <= '1';
+	register_write_address <= "00011";
+	write_data <= "00111000111000111000111000111000";
+
+	wait for 2*clock_period;
+
+	PC_in <= "00000000000000000000000000001000";
+	instruction_in <= "10101100001000110000000000000100"; --sw r1(mem row), imm(offset), value at R3
+	--write_enable '0', inputs dont matter
+	write_enable <= '0';
+	register_write_address <= "00011";
+	write_data <= "11111111111111111111111111111111";
 
 	wait for clock_period;
 

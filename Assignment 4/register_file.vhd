@@ -45,31 +45,19 @@ begin
 
 	if (rising_edge(clock)) then
 		printCounter := printCounter + 1;
-		r1_addr := to_integer(unsigned(r1));
-		r2_addr := to_integer(unsigned(r2));
+
 		w_addr := to_integer(unsigned(write_address));
 		if (write_enable = '1') then --TODO need to add protection for R0
-			registers(w_addr) <= write_data;
-			if(w_addr = r2_addr and w_addr = r1_addr) then
-				r1_out <= write_data;
-				r2_out <= write_data;
-			elsif(w_addr = r1_addr) then
-				r1_out <= write_data;
-				--r1_out <= registers(r1_addr);
-				r2_out <= registers(r2_addr);
-			elsif(w_addr = r2_addr) then
-				r1_out <= registers(r1_addr);
-				--r2_out <= registers(r2_addr);
-				r2_out <= write_data;
-			else
-				r1_out <= registers(r1_addr);
-				r2_out <= registers(r2_addr);
-			end if;
 			
-		else 		
-			r1_out <= registers(r1_addr);
-			r2_out <= registers(r2_addr);
+			registers(w_addr) <= write_data;	
 		end if;
+		
+	elsif(falling_edge(clock)) then
+		r1_addr := to_integer(unsigned(r1));
+		r2_addr := to_integer(unsigned(r2));
+		r1_out <= registers(r1_addr);
+		r2_out <= registers(r2_addr);
+
 	end if;
 
 	if (printCounter = 51) then

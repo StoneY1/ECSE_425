@@ -261,8 +261,8 @@ begin
                     output_register <= "00000";
 
             end case ;
-	          register1_address <= rs;
-		register2_address <= "00000";
+	        register1_address <= rs;
+		register2_address <= rt;
 		output_register <= rt;
         end if ;
 	end if ;
