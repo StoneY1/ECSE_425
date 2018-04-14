@@ -85,8 +85,8 @@ exec : ExecuteStage port map(
 	register1_address_in <= "00000";
 	register2_address_in <= "00000";
 	ALU_code_in <= "00001";
-	register1_value_in <= "00000000000000000000000000000001";
-	register2_value_in <= "00000000000000000000000000000001";
+	register1_value_in <= "00000000000000000000000000000000";
+	register2_value_in <= "00000000000000000000000000000000";
 	immediate_value_in <= "00000000000000000000000000001000";
 	store_in <= '0';
 	load_in <= '0';
@@ -106,6 +106,22 @@ exec : ExecuteStage port map(
 
 	register1_address_in <= "00011";
 	register2_address_in <= "00011";
+
+	wait for clock_period;
+	
+	immediate_operation_in <= '1';
+	
+	wait for clock_period;
+
+	memAddr <= "00101";
+	memForward <= "00000000000000000000000000000111";
+	register1_address_in <= "00101";
+
+	wait for clock_period;
+
+	wbAddr <= "01111";
+	wbForward <= "00000000000000000000000000011111";
+	register1_address_in <= "01111";
 
 	wait;
   end process;

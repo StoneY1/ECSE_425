@@ -273,7 +273,7 @@ ID_Stage : DecodeStage port map(
 							--INPUT PORTS
 							reset => reset,
 							clk => clk,
-							PC_in => ID_PC_IN,
+							PC_in => IF_ID_PC_OUT,
 							
 							instruction_in => instruction_OUT,
 							
@@ -284,9 +284,9 @@ ID_Stage : DecodeStage port map(
 							--OUTPUT PORTS
 							branch_taken => branch_taken_ID_IF,
 							branch_address => branch_address_ID_IF,
+
 							R1_address => r1_address_in,
 							R2_address => r2_address_in,
-							
 							R1 => R1_ID,
 							R2 => R2_ID,
 							ALU_function => ALU_function_id,

@@ -3,14 +3,14 @@ use IEEE.STD_LOGIC_1164.ALL;
 use ieee.numeric_std.all;
 use work.definitions.all;
 
-entity forwardSelect is
+entity forwardSelectOne is
 port (
       inputAddress, memAddress, wbAddress : in register_type;
       output : out std_logic_vector(1 downto 0)
   );
-end forwardSelect;
+end forwardSelectOne;
 
-architecture behavioral of forwardSelect is
+architecture behavioral of forwardSelectOne is
 
 begin
 process (inputAddress, memAddress, wbAddress)

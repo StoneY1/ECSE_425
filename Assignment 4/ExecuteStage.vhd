@@ -58,8 +58,14 @@ component imm_mux port (
       	output : out word_type
 ); end component;
 
-component forwardSelect port (
+component forwardSelectOne port (
       inputAddress, memAddress, wbAddress : in register_type;
+      output : out std_logic_vector(1 downto 0)
+); end component;
+
+component forwardSelectTwo port (
+      inputAddress, memAddress, wbAddress : in register_type;
+      use_imm : in std_logic;
       output : out std_logic_vector(1 downto 0)
 ); end component;
 
@@ -109,16 +115,17 @@ aluBlock : ALU port map(
 	ALU_function => ALU_code_in,
 	output => ALU_value_out);
 
-forwardSelectOne : forwardSelect port map(
+forwardSelectFirst : forwardSelectOne port map(
 	inputAddress => register1_address_in,
 	memAddress => memAddr,
 	wbAddress => wbAddr,
 	output => inputOneSelect);
 
-forwardSelectTwo : forwardSelect port map(
+forwardSelectSecond : forwardSelectTwo port map(
 	inputAddress => register2_address_in,
 	memAddress => memAddr,
 	wbAddress => wbAddr,
+	use_imm => immediate_operation_in,
 	output => inputTwoSelect);
 
 end architecture; 
