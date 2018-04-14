@@ -1,0 +1,14 @@
+MIPS instructions:
+
+R type:
+		000000 00001 00010 00011 00000 100000 //add R1 & R2 into R3
+
+
+I type:
+		001000 00001 00010 0000000000000101  //add R1 & imm(5) into R2
+
+
+J type:
+
+
+
