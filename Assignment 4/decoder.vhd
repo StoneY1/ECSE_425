@@ -144,10 +144,10 @@ begin
                 
                 when others =>
                     ALU_function <= "00000";
-                    --register1_address <= "00000";
-                    --register2_address <= "00000";
-			register2_address <= rt;
-			register1_address <= rs;
+                    register1_address <= "00000";
+                    register2_address <= "00000";
+		    --register2_address <= rt;
+			--register1_address <= rs;
                     output_register <= "00000";
 			writeback_register <= '0';
 

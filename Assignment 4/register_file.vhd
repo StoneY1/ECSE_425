@@ -26,7 +26,7 @@ SIGNAL registers : REG;
 
 
 BEGIN
-process(clock) 
+process(clock, write_enable, write_data) 
 variable printCounter : INTEGER := 0;
 variable flag : INTEGER := 0;
 file register_file : text open write_mode is "register_file.txt";
@@ -43,7 +43,7 @@ begin
 		end loop;
 	end if;
 
-	if (rising_edge(clock)) then
+	if (write_enable = '1') then
 		printCounter := printCounter + 1;
 
 		w_addr := to_integer(unsigned(write_address));
