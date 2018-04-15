@@ -2,6 +2,9 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
 USE ieee.numeric_std.all;
+use std.textio.all;
+use ieee.std_logic_textio.all;
+use work.definitions.all;
 
 ENTITY data_memory IS
 	GENERIC(
@@ -24,9 +27,15 @@ ARCHITECTURE rtl OF data_memory IS
 	SIGNAL read_address_reg: INTEGER RANGE 0 to ram_size-1;
 	SIGNAL write_waitreq_reg: STD_LOGIC := '1';
 	SIGNAL read_waitreq_reg: STD_LOGIC := '1';
+
 BEGIN
 	--This is the main section of the SRAM model
 	mem_process: PROCESS (clock)
+
+	file memory_file : text open write_mode is "memory_file.txt";
+	variable printCounter : INTEGER := 0;
+	variable outLine : line;	
+	variable rowLine : integer := 0;
 	BEGIN
 		--This is a cheap trick to initialize the SRAM in simulation
 		IF(now < 1 ps)THEN
@@ -34,9 +43,10 @@ BEGIN
 				ram_block(i) <= std_logic_vector(to_unsigned(0,32));
 			END LOOP;
 		end if;
-
+		
 		--This is the actual synthesizable SRAM block
 		IF (clock'event AND clock = '1') THEN
+			printCounter := printCounter + 1;
 			IF (address < 0 or address > ram_size-1) THEN
 				read_address_reg <= 0;
 			ELSE
@@ -46,6 +56,20 @@ BEGIN
 				read_address_reg <= address;
 			END IF;
 		END IF;
+
+
+		if (printCounter = 51) then
+	
+			while (rowLine < ram_size-1) loop 
+	
+				write(outLine, ram_block(rowLine));
+				writeline(memory_file, outLine);
+				rowLine := rowLine + 1;
+	
+			end loop;
+	
+	
+		end if;
 	END PROCESS;
 	readdata <= ram_block(read_address_reg);
 
